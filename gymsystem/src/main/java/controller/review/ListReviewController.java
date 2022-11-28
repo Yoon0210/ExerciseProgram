@@ -49,12 +49,12 @@ public class ListReviewController implements Controller {
 		List<Review> reviewList = manager.findReviewList(workoutType, orderBy, searchContent);
 //		List<Review> reviewList = manager.findReviewList(currentPage, countPerPage, request.getParameter("orderType"));
 
-		List<Trainer> trList = (manager).findTrainerList();
+//		List<Trainer> trList = (manager).findTrainerList();
 		List<Workout> wList = manager.findWorkoutList();
 //		List<Likey> lList = manager.findLikeyList(UserSessionUtils.getLoginUserId(request.getSession()));
 
 		request.setAttribute("reviewList", reviewList);
-		request.setAttribute("trList", trList);
+//		request.setAttribute("trList", trList);
 		request.setAttribute("wList", wList);
 		request.setAttribute("orderType", orderBy);
 		request.setAttribute("workoutType", workoutType);
