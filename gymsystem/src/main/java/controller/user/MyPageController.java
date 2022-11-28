@@ -26,9 +26,9 @@ public class MyPageController implements Controller{
     	User member = new User();
     	
     	try {
-    		userDao = User.searchUserInfo(userId);
+    		member = userDao.findUser(userId);
         	//member객체를 request에 저장하여 뷰로 전달
-        	request.setAttribute("user", userId);
+        	request.setAttribute("user", member);
     		return "/user/myPage.jsp";
     		
     	}catch(Exception e) {
