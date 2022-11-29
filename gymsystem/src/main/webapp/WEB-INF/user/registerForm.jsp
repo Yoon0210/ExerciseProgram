@@ -94,8 +94,7 @@
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="password2" class="col-lg-2 col-form-label">연락처
-						확인</label>
+					<label for="password2" class="col-lg-2 col-form-label">연락처</label>
 					<div class="col-lg-10" style="margin: auto">
 						<input type="text" name="phone" class="form-control"
 							placeholder="연락처">
