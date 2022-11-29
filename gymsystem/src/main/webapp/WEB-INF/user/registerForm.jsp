@@ -93,7 +93,21 @@
 							<c:if test="${registerFailed}">value="${user.email}"</c:if>>
 					</div>
 				</div>
-
+				<div class="form-group row">
+					<label for="password2" class="col-lg-2 col-form-label">연락처
+						확인</label>
+					<div class="col-lg-10" style="margin: auto">
+						<input type="text" name="phone" class="form-control"
+							placeholder="연락처">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password2" class="col-lg-2 col-form-label">이름</label>
+					<div class="col-lg-10" style="margin: auto">
+						<input type="text" name="name" class="form-control"
+							placeholder="이름">
+					</div>
+				</div>
 				<br>
 				<div class="form-group">
 					<input type="button" class="btn btn-primary" value="가입"
@@ -102,7 +116,7 @@
 			</form>
 		</section>
 	</div>
-	
+
 	<!-- footer -->
 	<%@include file="/WEB-INF/footer.jsp"%>
 </body>

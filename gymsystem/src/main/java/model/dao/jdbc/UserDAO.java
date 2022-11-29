@@ -21,9 +21,9 @@ public class UserDAO {
 	 * 사용자 관리 테이블에 새로운 사용자 생성.
 	 */
 	public int create(User user) throws SQLException {
-		String sql = "INSERT INTO UserInfo VALUES (?, ?, ?, NULL, NULL)";		
+		String sql = "INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?)";		
 		Object[] param = new Object[] { user.getUserId(), user.getPassword(), 
-						 user.getEmail() };				
+						 user.getEmail(), user.getPhone(), user.getName() };				
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil 에 insert문과 매개 변수 설정
 						
 		try {				
@@ -44,11 +44,11 @@ public class UserDAO {
 	 */
 	public int update(User user) throws SQLException {
 		String sql = "UPDATE UserInfo "
-					+ "SET password=?, email=?"
+					+ "SET password=?, email=?, phone=?, username=?"
 					+ "WHERE userid=?";
 		Object[] param = new Object[] {user.getPassword(), 
 					user.getEmail(),  
-					user.getUserId()};				
+					user.getUserId(), user.getPhone(), user.getName()};				
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 			
 		try {				
@@ -91,7 +91,7 @@ public class UserDAO {
 	 * 저장하여 반환.
 	 */
 	public User findUser(String userId) throws SQLException {
-        String sql = "SELECT password, email "
+        String sql = "SELECT password, email, phone, username "
         			+ "FROM UserInfo "
         			+ "WHERE userid=? ";              
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userId});	// JDBCUtil에 query문과 매개 변수 설정
@@ -102,7 +102,9 @@ public class UserDAO {
 				User user = new User(		// User 객체를 생성하여 학생 정보를 저장
 					userId,
 					rs.getString("password"),
-					rs.getString("email")
+					rs.getString("email"),
+					rs.getString("phone"),
+					rs.getString("username")
 					);
 				return user;
 			}
