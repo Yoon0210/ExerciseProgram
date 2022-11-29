@@ -49,7 +49,8 @@
 				class="form-control mx-1 mt-2" placeholder="내용을 입력하세요" value="${searchContent }">
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal"
-				href="#registerModal">등록하기</a> <a class="btn btn-danger mx-1 mt-2"
+				href="#registerModal">등록하기</a> 
+				<a class="btn btn-danger mx-1 mt-2"
 				data-toggle="modal" href="#reportModal">신고</a>
 		</form>
 		<div class="col-lg-12 text-center text-danger">
@@ -84,7 +85,7 @@
 							<!-- 						</form> -->
 							<a onclick="return confirm('추천하시겠습니까?')"
 								href="<c:url value='/review/like' > <c:param name='reviewId' value='${review.getReviewId()}'/> </c:url>">추천&nbsp;</a>
-
+							
 							<!-- 작성자==현재로그인유저 일 경우 삭제버튼 표시 -->
 							<c:if test="${curUserId eq review.getUserId() || curUserId eq 'admin'}">
 								<a onclick="return confirm('삭제하시겠습니까?')"
