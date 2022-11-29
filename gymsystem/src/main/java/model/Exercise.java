@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.Date;
 @SuppressWarnings("serial")
-//운동종목, 운동 카테고리, 운동 트레이너id, 운동 번호, 운동 가격, 운동 시작,끝날짜, 운동 강도
+//운동종목, 운동 카테고리, 운동 트레이너id, 운동 번호, 운동 가격, 운동 시작, 끝날짜, 운동 강도
 public class Exercise implements Serializable{
 	private int exerciseId;
 	private String name;
