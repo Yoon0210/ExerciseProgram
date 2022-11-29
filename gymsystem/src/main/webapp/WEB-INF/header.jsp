@@ -15,7 +15,7 @@
 		<div class="container p-3">
 			<div class="row">
 				<div class="col">
-					<a style="text-decoration: none;color: inherit;" href='<c:url value="" />'  >시간표 관리</a>
+					<a style="text-decoration: none;color: inherit;" href='<c:url value="/exercise/search" />'  >시간표 관리</a>
 				</div>
 				<div class="col">
 					<a style="text-decoration: none;color: inherit;" href='<c:url value="" />' >내 시간표</a>

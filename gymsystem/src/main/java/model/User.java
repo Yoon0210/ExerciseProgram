@@ -10,28 +10,34 @@ public class User implements Serializable {
 	private String userId;
 	private String password;
 	private String email;
+	private String phone;
+	private String name;
+
+	public User(String userId, String password, String email, String phone, String name) {
+		super();
+		this.userId = userId;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.name = name;
+	}
 
 	public User() { }		// 기본 생성자
 	
 	public User(String userId, String password, String email) {
 		this.userId = userId;
 		this.password = password;
-		
 		this.email = email;
-		
-		
 	}
 
-	public User(String userId, String name, String email, String phone) {
-		this.userId = userId;
-		this.email = email;	
-	}
 	
 	/*public void update(User updateUser) {
         this.password = updateUser.password;
         this.email = updateUser.email;
     }*/
 	
+	
+
 	public String getUserId() {
 		return userId;
 	}
@@ -56,6 +62,22 @@ public class User implements Serializable {
 		this.email = email;
 	}
 	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	/* 비밀번호 검사 */
 	public boolean matchPassword(String password) {
 		if (password == null) {
