@@ -8,7 +8,9 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Reservation implements Serializable {
-	private int resId; 
+	private int resId;
+	private String userId;
+	private int exerciseId;
 	private int trainerId; //강사번호
 	private String exerciseName; //운동 이름 및 종목
 	private int exercisePrice; //운동가격

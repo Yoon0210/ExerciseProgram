@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import controller.Controller;
 import controller.user.UserSessionUtils;
@@ -29,36 +30,62 @@ public class ListReviewController implements Controller {
 //		if (currentPageStr != null && !currentPageStr.equals("")) {
 //			currentPage = Integer.parseInt(currentPageStr);
 //		}		
-		int workoutType = -1;
-		if (request.getParameter("workoutType") != null)
-			workoutType = Integer.parseInt(request.getParameter("workoutType"));
-
-		String orderBy;
-		if(request.getParameter("orderType") != null && !request.getParameter("orderType").equals(""))
-			orderBy = request.getParameter("orderType");
-		else orderBy = "reviewId DESC";
 		
-		String searchContent;
-		if (request.getParameter("searchContent") != null && !request.getParameter("searchContent").equals("")) {
-			searchContent = request.getParameter("searchContent");
-		}
-		else searchContent = "-";
-
 		UserManager manager = UserManager.getInstance();
+		
+		HttpSession session = request.getSession();
+		
+		if(request.getServletPath().equals("/review/list")) {
+			session.setAttribute("workoutType", -1);
+			session.setAttribute("orderType", "reviewId DESC");
+			session.setAttribute("searchContent", "-");
+		}
+		
+		if(request.getServletPath().equals("/review/search")) {
+			if (request.getParameter("workoutType") != null) {
+				session.setAttribute("workoutType", Integer.parseInt(request.getParameter("workoutType")));
+			}
 
-		List<Review> reviewList = manager.findReviewList(workoutType, orderBy, searchContent);
+			if(request.getParameter("orderType") != null && !request.getParameter("orderType").equals("")) {
+				session.setAttribute("orderType", request.getParameter("orderType"));
+			}
+			
+			if (request.getParameter("searchContent") != null && !request.getParameter("searchContent").equals("")) {
+				session.setAttribute("searchContent", request.getParameter("searchContent"));
+			}
+		}
+		
+		if(request.getServletPath().equals("/review/delete")) {
+			int reviewId = Integer.parseInt(request.getParameter("reviewId"));
+			try {
+				manager.removeReview(reviewId);
+			} catch (Exception e) {		
+	            request.setAttribute("removeFailed", true);
+	            request.setAttribute("exception", e);
+				return "/review/reviewList.jsp";
+			}
+			return "redirect:/review/list";
+		}
+		
+		
+
+		
+
+		List<Review> reviewList = manager.findReviewList(Integer.parseInt(session.getAttribute("workoutType").toString()),
+				session.getAttribute("orderType").toString(),
+				session.getAttribute("searchContent").toString());
 //		List<Review> reviewList = manager.findReviewList(currentPage, countPerPage, request.getParameter("orderType"));
 
 //		List<Trainer> trList = (manager).findTrainerList();
 		List<Workout> wList = manager.findWorkoutList();
-//		List<Likey> lList = manager.findLikeyList(UserSessionUtils.getLoginUserId(request.getSession()));
 
-		request.setAttribute("reviewList", reviewList);
+
+		session.setAttribute("reviewList", reviewList);
 //		request.setAttribute("trList", trList);
-		request.setAttribute("wList", wList);
-		request.setAttribute("orderType", orderBy);
-		request.setAttribute("workoutType", workoutType);
+		session.setAttribute("wList", wList);
 
+
+		
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
 
 		return "/review/reviewList.jsp";

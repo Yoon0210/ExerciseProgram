@@ -109,8 +109,11 @@ public class UserManager {
 			return reviewDAO.findReviewList(orderBy);
 	}
 
-	public int removeReview(int rId) throws SQLException {
-		return reviewDAO.remove(rId);
+	public boolean removeReview(int rId) throws SQLException, FailRemoveException {
+		if(reviewDAO.remove(rId) != 1) {
+			throw new FailRemoveException("정상적으로 삭제되지 않았습니다.다시 시도해주세요.");
+		}
+		return true;
 
 	}
 
