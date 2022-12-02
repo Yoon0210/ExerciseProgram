@@ -42,7 +42,7 @@ public class RequestMapping {
         
         mappings.put("/review/list", new ListReviewController());
         mappings.put("/review/create/form", new CreateReviewController());
-        mappings.put("/review/delete", new DeleteReviewController());
+        mappings.put("/review/delete", new ListReviewController());
         mappings.put("/review/search", new ListReviewController());
         mappings.put("/review/like", new ClickLikeyController());
         
