@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import controller.Controller;
 import controller.user.UserSessionUtils;
+import model.Exercise;
+import model.Report;
 import model.Review;
 import model.Workout;
 import model.Trainer;
@@ -52,6 +54,8 @@ public class ListReviewController implements Controller {
 			
 			if (request.getParameter("searchContent") != null && !request.getParameter("searchContent").equals("")) {
 				session.setAttribute("searchContent", request.getParameter("searchContent"));
+			} else {
+				session.setAttribute("searchContent", "-");
 			}
 		}
 		
@@ -67,6 +71,14 @@ public class ListReviewController implements Controller {
 			return "redirect:/review/list";
 		}
 		
+		if(request.getServletPath().equals("/review/report")) {
+			Report report = new Report(
+					UserSessionUtils.getLoginUserId(request.getSession()), Integer.parseInt(request.getParameter("reportReviewId")), request.getParameter("reportReason")
+					);
+			
+			manager.createReport(report);
+		}
+		
 		
 
 		
@@ -77,13 +89,11 @@ public class ListReviewController implements Controller {
 //		List<Review> reviewList = manager.findReviewList(currentPage, countPerPage, request.getParameter("orderType"));
 
 //		List<Trainer> trList = (manager).findTrainerList();
-		List<Workout> wList = manager.findWorkoutList();
+		List<Exercise> wList = manager.findExerciseName();
 
 
 		session.setAttribute("reviewList", reviewList);
-//		request.setAttribute("trList", trList);
 		session.setAttribute("wList", wList);
-
 
 		
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));

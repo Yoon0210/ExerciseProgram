@@ -6,10 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.Exercise.ExerciseReservationController;
-import controller.Exercise.ExerciseViewController;
 import controller.likey.ClickLikeyController;
 import controller.review.CreateReviewController;
-import controller.review.DeleteReviewController;
 import controller.review.ListReviewController;
 import controller.user.*;
 
@@ -45,6 +43,7 @@ public class RequestMapping {
         mappings.put("/review/delete", new ListReviewController());
         mappings.put("/review/search", new ListReviewController());
         mappings.put("/review/like", new ClickLikeyController());
+        mappings.put("/review/report", new ListReviewController());
         
         mappings.put("/exercise/search", new ExerciseReservationController());
         

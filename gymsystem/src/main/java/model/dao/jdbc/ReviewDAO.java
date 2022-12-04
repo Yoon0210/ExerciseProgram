@@ -15,8 +15,8 @@ public class ReviewDAO {
 	}
 
 	public Review create(Review rev) throws SQLException {
-		String sql = "INSERT INTO Review VALUES (reviewId_seq.nextval, ?, ?, ?, ?, ?, ?, ?, DEFAULT)";
-		Object[] param = new Object[] { rev.getUserId(), rev.getWorkoutId(), rev.getTrainerId(), rev.getTitle(),
+		String sql = "INSERT INTO Review VALUES (reviewId_seq.nextval, ?, ?, ?, ?, ?, ?, DEFAULT)";
+		Object[] param = new Object[] { rev.getUserId(), rev.getWorkoutId(), rev.getTitle(),
 				rev.getContent(), rev.getScore(), 0 };
 		jdbcUtil.setSqlAndParameters(sql, param); // JDBCUtil 에 insert문과 매개 변수 설정
 
@@ -40,16 +40,17 @@ public class ReviewDAO {
 	}
 
 	public Review findReview(String reviewId) throws SQLException {
-		String sql = "SELECT * FROM Review "
-				+ "WHERE reviewId=? ";
+		String sql = "SELECT r.reviewId, r.userid, r.workoutId, r.title, r.content, r.score, r.likecount, r.posteddate, e.exerciseName, t.name "
+				+ "FROM Review r, Exercise e, Trainer t " 
+				+ "WHERE r.workoutId = e.exerciseId AND e.trainerId = t.trainerId AND reviewId=? ";
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { reviewId }); // JDBCUtil에 query문과 매개 변수 설정
 		Review comm = null;
 		try {
 			ResultSet rs = jdbcUtil.executeQuery(); // query 실행
 			if (rs.next()) { // 학생 정보 발견
 				comm = new Review( // Review 객체를 생성하여 커뮤니티 정보를 저장
-						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"), rs.getInt("trainerId"),
-						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate") );
+						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate") , rs.getString("exerciseName"), rs.getString("name"));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -65,7 +66,10 @@ public class ReviewDAO {
 
 	public List<Review> findReviewList(String orderBy) throws SQLException {
 
-		String sql = "SELECT * " + "FROM Review " + "ORDER BY " + orderBy;
+		String sql = "SELECT r.reviewId, r.userid, r.workoutId, r.title, r.content, r.score, r.likecount, r.posteddate, e.exerciseName, t.name "
+				+ "FROM Review r, Exercise e, Trainer t " 
+				+ "WHERE r.workoutId = e.exerciseId AND e.trainerId = t.trainerId "
+				+ "ORDER BY " + orderBy;
 		jdbcUtil.setSqlAndParameters(sql, null); // JDBCUtil에 query문 설정
 
 		try {
@@ -73,8 +77,8 @@ public class ReviewDAO {
 			List<Review> revList = new ArrayList<Review>(); // Review들의 리스트 생성
 			while (rs.next()) {
 				Review review = new Review( // Review 객체를 생성하여 현재 행의 정보를 저장
-						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"), rs.getInt("trainerId"),
-						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate"));
+						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate"), rs.getString("exerciseName"), rs.getString("name"));
 				revList.add(review); // List에 Review 객체 저장
 			}
 			return revList;
@@ -89,7 +93,10 @@ public class ReviewDAO {
 
 	public List<Review> findReviewList(String orderBy, String searchContent) throws SQLException {
 
-		String sql = "SELECT * " + "FROM Review " + "WHERE (Title LIKE ?) OR (Content LIKE ?) " + "ORDER BY " + orderBy;
+		String sql = "SELECT r.reviewId, r.userid, r.workoutId, r.title, r.content, r.score, r.likecount, r.posteddate, e.exerciseName, t.name "
+				+ "FROM Review r, Exercise e, Trainer t " 
+				+ "WHERE r.workoutId = e.exerciseId AND e.trainerId = t.trainerId AND ( (Title LIKE ?) OR (Content LIKE ?) ) "
+				+ "ORDER BY " + orderBy;
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { "%" + searchContent + "%", "%" + searchContent + "%" }); // JDBCUtil에
 																													// query문
 																													// 설정
@@ -99,8 +106,9 @@ public class ReviewDAO {
 			List<Review> revList = new ArrayList<Review>(); // Review들의 리스트 생성
 			while (rs.next()) {
 				Review review = new Review( // Review 객체를 생성하여 현재 행의 정보를 저장
-						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"), rs.getInt("trainerId"),
-						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate"));
+						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate")
+						, rs.getString("exerciseName"), rs.getString("name"));
 				revList.add(review); // List에 Review 객체 저장
 			}
 			return revList;
@@ -115,9 +123,9 @@ public class ReviewDAO {
 
 	public List<Review> findReviewList(int workoutId, String orderBy, String searchContent) throws SQLException {
 
-		String sql = "SELECT * "
-					+ "FROM Review " 
-					+ "WHERE WorkoutId=? AND ( (Title LIKE ?) OR (Content LIKE ?)) "
+		String sql =  "SELECT r.reviewId, r.userid, r.workoutId, r.title, r.content, r.score, r.likecount, r.posteddate, e.exerciseName, t.name "
+				+ "FROM Review r, Exercise e, Trainer t " 
+				+ "WHERE r.workoutId = e.exerciseId AND e.trainerId = t.trainerId AND WorkoutId=? AND ( (Title LIKE ?) OR (Content LIKE ?) ) "
 					+ "ORDER BY " + orderBy;
 		jdbcUtil.setSqlAndParameters(sql,
 				new Object[] { workoutId, "%" + searchContent + "%", "%" + searchContent + "%" }); // JDBCUtil에 query문
@@ -128,8 +136,8 @@ public class ReviewDAO {
 			List<Review> revList = new ArrayList<Review>(); // Review들의 리스트 생성
 			while (rs.next()) {
 				Review review = new Review( // Review 객체를 생성하여 현재 행의 정보를 저장
-						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"), rs.getInt("trainerId"),
-						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate"));
+						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate") , rs.getString("exerciseName"), rs.getString("name"));
 				revList.add(review); // List에 Review 객체 저장
 			}
 			return revList;
@@ -144,9 +152,9 @@ public class ReviewDAO {
 
 	public List<Review> findReviewList(int workoutId, String orderBy) throws SQLException {
 
-		String sql = "SELECT * "
-					+ "FROM Review " 
-					+ "WHERE WorkoutId=? "
+		String sql = "SELECT r.reviewId, r.userid, r.workoutId, r.title, r.content, r.score, r.likecount, r.posteddate, e.exerciseName, t.name "
+					+ "FROM Review r, Exercise e, Trainer t " 
+					+ "WHERE r.workoutId = e.exerciseId AND e.trainerId = t.trainerId AND WorkoutId=? "
 					+ "ORDER BY " + orderBy;
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { workoutId }); // JDBCUtil에 query문 설정
 
@@ -155,8 +163,8 @@ public class ReviewDAO {
 			List<Review> revList = new ArrayList<Review>(); // Review들의 리스트 생성
 			while (rs.next()) {
 				Review review = new Review( // Review 객체를 생성하여 현재 행의 정보를 저장
-						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"), rs.getInt("trainerId"),
-						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate"));
+						rs.getInt("reviewId"), rs.getString("userId"), rs.getInt("workoutId"),
+						rs.getString("title"), rs.getString("content"), rs.getInt("score"), rs.getInt("likeCount"), rs.getString("postedDate"), rs.getString("exerciseName"), rs.getString("name") );
 				revList.add(review); // List에 Review 객체 저장
 			}
 			return revList;

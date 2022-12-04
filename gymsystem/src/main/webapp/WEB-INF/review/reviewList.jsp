@@ -22,8 +22,8 @@
 
 <script>
 function report(a, b){
-	document.getElementById("rrt").value = String(a);
-	document.getElementById("rri").value = String(b);
+	$('#rrt').attr("value", a);
+	$('#rri').attr("value", b);
 }
 </script>
 
@@ -41,8 +41,8 @@ function report(a, b){
 			<select name="workoutType" class="form-control mx-1 mt-2">
 				<option value="-1">전체</option>
 				<c:forEach var="workout" items="${wList}">
-					<option value="${workout.getWorkoutId()}"
-						<c:if test='${workout.getWorkoutId() eq workoutType}'> selected="selected" </c:if>>${workout.getName()}</option>
+					<option value="${workout.getExerciseId()}"
+						<c:if test='${workout.getExerciseId() eq workoutType}'> selected="selected" </c:if>>${workout.getName()}</option>
 				</c:forEach>
 			</select> <select name="orderType" class="form-control mx-1 mt-2">
 				<option value="reviewId DESC">최신순</option>
@@ -66,19 +66,26 @@ function report(a, b){
 
 				<div class="card-header bg-light">
 					<div class="row">
-						<div class="col-8 text-left">${wList.get(review.getWorkoutId()-1).getName() }
-							&nbsp;점수&nbsp; &nbsp;<small style="color: grey">${review.getPostedDate() }</small>
+						<div class="col-8 text-left">${review.getWorkoutName() }
+							&nbsp;<small>${review.getTrainerName() }</small> &nbsp;<small
+								style="color: grey">${review.getPostedDate() }</small>
 						</div>
 					</div>
 				</div>
 				<div class="card-body">
-					<h4 class="card-title">${review.getTitle() }
-						<div class="wrap-star">
-							<div class='star-rating'>
-								<span style="width:${review.getScore()*20 }%"></span>
+					<div class="card-title">
+						<div
+							style="vertical-align: middle; display: flex; align-items: center;">
+							<h5 style="display: inline-block; margin: auto 0">${review.getTitle() }&nbsp;</h5>
+							<div style="display: inline-block; margin: auto 0"
+								class="wrap-star">
+
+								<div class='star-rating'>
+									<span style="width:${review.getScore()*20 }%"></span>
+								</div>
 							</div>
 						</div>
-					</h4>
+					</div>
 					<p class="card-text">${review.getContent() }</p>
 					<div class="row" style="margin: 0; width: 100%; float: right;">
 
@@ -92,7 +99,7 @@ function report(a, b){
 						<div class="col-3 text-right">
 							<a style="color: red;" data-toggle="modal"
 								data-target="#reportModal"
-								onclick="report(${review.getTitle()}, ${review.getReviewId() });">신고</a>
+								onclick="report('<c:out value='${review.getTitle()} (작성자: ${review.getUserId() })'/>', '<c:out value='${review.getReviewId() }'/>');">신고</a>
 
 							<!-- 작성자==현재로그인유저 일 경우 삭제버튼 표시 -->
 							<c:if
@@ -145,27 +152,17 @@ function report(a, b){
 				<div class="modal-body">
 					<form action="<c:url value='/review/create/form'/>" method="post">
 						<div class="form-row">
-							<!-- 강사명 trainer 테이블에서 불러오기 -->
+							<!-- Exercise List 불러오기 -->
 							<div class="form-group col-sm-6">
-								<label>강사명</label> <select id="trainerSelect" name="trainerId"
+								<label>운동 선택</label> <select id="trainerSelect" name="workoutId"
 									class="form-control">
-									<c:forEach var="tr" items="${trList}">
-										<option value="${tr.getTrainerId()}">${tr.getName()}</option>
+									<c:forEach var="ex" items="${wList}">
+										<option value="${ex.getExerciseId()}">${ex.toString()}</option>
 									</c:forEach>
 								</select>
 							</div>
 						</div>
-						<!-- 운동 workout 테이블에서 불러오기 -->
-						<div class="form-row">
-							<div class="form-group col-sm-4">
-								<label>운동 구분</label> <select name="workoutId"
-									class="form-control">
-									<c:forEach var="w" items="${wList}">
-										<option value="${w.getWorkoutId()}">${w.getName()}</option>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
+
 						<div class="form-group">
 							<label>제목</label> <input type="text" name="reviewTitle"
 								class="form-control" maxlength="30">
@@ -215,17 +212,45 @@ function report(a, b){
 				</div>
 
 				<div class="modal-body">
-					<form action="./repoartAction.jsp" method="post">
+					<form action="<c:url value='/review/report'/>" method="post">
 						<div class="form-group">
-							<label><input id="rrt" type="text"
-								name="reportReviewTitle" class="form-control" maxlength="30"
-								value=" "></label> <input id="rri" type="hidden"
-								name="reportReviewId" value=" ">
+							<div class="col-xs-4">
+								<label>신고할 리뷰</label><input id="rrt" type="text"
+									name="reportReviewTitle" class="form-control" maxlength="60"
+									value=" "> <input id="rri" type="hidden"
+									name="reportReviewId" value=" ">
+							</div>
 						</div>
 						<div class="form-group">
-							<label>신고 내용</label>
-							<textarea name="reportContent" class="form-control"
-								maxlength="2048" style="height: 180px;"></textarea>
+							<label>신고 사유를 선택해주세요.</label>
+							<div class="form-check">
+								<input value="폭력적인 컨텐츠" class="form-check-input" type="radio"
+									name="reportReason" id="flexRadioDefault1" checked> <label
+									class="form-check-label" for="flexRadioDefault1"> 폭력적
+									컨텐츠 </label>
+							</div>
+							<div class="form-check">
+								<input value="성적인 컨텐츠" class="form-check-input" type="radio"
+									name="reportReason" id="flexRadioDefault2">
+								<label class="form-check-label" for="flexRadioDefault2">
+									성적인 컨텐츠 </label>
+							</div>
+							<div class="form-check">
+								<input value="악의적인 컨텐츠" class="form-check-input" type="radio"
+									name="reportReason" id="flexRadioDefault3"> <label
+									class="form-check-label" for="flexRadioDefault3"> 악의적인
+									컨텐츠 </label>
+							</div>
+							<div class="form-check">
+								<input value="잘못된 정보" class="form-check-input" type="radio"
+									name="reportReason" id="flexRadioDefault4"> <label
+									class="form-check-label" for="flexRadioDefault4"> 잘못된 정보 </label>
+							</div>
+							<div class="form-check">
+								<input value="스팸" class="form-check-input" type="radio"
+									name="reportReason" id="flexRadioDefault5"> <label
+									class="form-check-label" for="flexRadioDefault5"> 스팸 </label>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
