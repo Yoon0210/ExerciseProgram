@@ -14,6 +14,8 @@ public class Exercise implements Serializable{
 	private String trainerId;
 	private String category;
 	
+	private String trainerName;
+	
 	public Exercise(int exerciseId, String name, int price, String strength,Date startTime, Date endTime, String trainerId, String category) {
 		super();
 		this.exerciseId = exerciseId;
@@ -24,6 +26,14 @@ public class Exercise implements Serializable{
 		this.endTime = endTime;
 		this.trainerId = trainerId;
 		this.category = category;
+	}
+
+	public Exercise(int exerciseId, String name, String trainerId, String trainerName) {
+		super();
+		this.exerciseId = exerciseId;
+		this.name = name;
+		this.trainerId = trainerId;
+		this.trainerName = trainerName;
 	}
 
 	public int getExerciseId() {
@@ -90,5 +100,17 @@ public class Exercise implements Serializable{
 		this.category = category;
 	}
 
+	public String getTrainerName() {
+		return trainerName;
+	}
+
+	public void setTrainerName(String trainerName) {
+		this.trainerName = trainerName;
+	}
+
+	@Override
+	public String toString() {
+		return name + " - " + trainerName;
+	}
 	
 }

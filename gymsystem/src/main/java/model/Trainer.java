@@ -21,9 +21,9 @@ public class Trainer implements Serializable {
 		this.name = name;
 	}
 
-	public Trainer(String tel, String name) {
+	public Trainer(String trainerId, String name) {
 		super();
-		this.tel = tel;
+		this.trainerId = trainerId;
 		this.name = name;
 	}
 

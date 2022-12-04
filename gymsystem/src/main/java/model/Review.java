@@ -9,39 +9,52 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Review implements Serializable {
 
-	int reviewId;
-	String userId;
-	int workoutId;
-	int trainerId;
-	String title;
-	String content;
-	int score;
-	int likeCount;
-	String postedDate;
+	private int reviewId;
+	private String userId;
+	private int workoutId;
+	private String title;
+	private String content;
+	private int score;
+	private int likeCount;
+	private String postedDate;
+	
+	private String workoutName;
+	private String trainerName;
 
-	public Review() {
-	}
-
-	public Review(int reviewId, String userId, int workoutId, int trainerId, String reviewTitle,
-			String reviewContent, int score, int likeCount, String postedDate) {
+	public Review(int reviewId, String userId, int workoutId, String title, String content, int score, int likeCount,
+			String postedDate, String workoutName, String trainerName) {
+		super();
 		this.reviewId = reviewId;
 		this.userId = userId;
 		this.workoutId = workoutId;
-		this.trainerId = trainerId;
-		this.title = reviewTitle;
-		this.content = reviewContent;
+		this.title = title;
+		this.content = content;
+		this.score = score;
+		this.likeCount = likeCount;
+		this.postedDate = postedDate;
+		this.workoutName = workoutName;
+		this.trainerName = trainerName;
+	}
+
+	public Review(int reviewId, String userId, int workoutId, String title, String content, int score, int likeCount,
+			String postedDate) {
+		super();
+		this.reviewId = reviewId;
+		this.userId = userId;
+		this.workoutId = workoutId;
+		this.title = title;
+		this.content = content;
 		this.score = score;
 		this.likeCount = likeCount;
 		this.postedDate = postedDate;
 	}
 
-	public Review(String userId, int workoutId, int trainerId, String reviewTitle, String reviewContent, int score,
-			int likeCount) {
+	public Review(String userId, int workoutId, String title, String content, int score, int likeCount) {
+		super();
 		this.userId = userId;
 		this.workoutId = workoutId;
-		this.trainerId = trainerId;
-		this.title = reviewTitle;
-		this.content = reviewContent;
+		this.title = title;
+		this.content = content;
 		this.score = score;
 		this.likeCount = likeCount;
 	}
@@ -68,18 +81,6 @@ public class Review implements Serializable {
 
 	public void setWorkoutId(int workoutId) {
 		this.workoutId = workoutId;
-	}
-	
-	public int getTrainerId() {
-		return trainerId;
-	}
-	
-	public void setTrainerId(int trainerId) {
-		this.trainerId = trainerId;
-	}
-
-	public void setTrainerName(int trainerId) {
-		this.trainerId = trainerId;
 	}
 
 	public String getTitle() {
@@ -122,11 +123,31 @@ public class Review implements Serializable {
 		this.postedDate = postedDate;
 	}
 
+	public String getTrainerName() {
+		return trainerName;
+	}
+
+	public void setTrainerName(String trainerName) {
+		this.trainerName = trainerName;
+	}
+
+	public String getWorkoutName() {
+		return workoutName;
+	}
+
+	public void setWorkoutName(String workoutName) {
+		this.workoutName = workoutName;
+	}
+
 	@Override
 	public String toString() {
-		return "Review [reviewId=" + reviewId + ", userId=" + userId + ", workoutId=" + workoutId + ", trainerId="
-				+ trainerId + ", title=" + title + ", content=" + content + ", score=" + score
-				+ ", likeCount=" + likeCount + "]";
+		return "Review [reviewId=" + reviewId + ", userId=" + userId + ", workoutId=" + workoutId + ", title=" + title
+				+ ", content=" + content + ", score=" + score + ", likeCount=" + likeCount + ", postedDate="
+				+ postedDate + ", trainerName=" + trainerName + ", workoutName=" + workoutName + "]";
 	}
+
+	
+	
+	
 
 }

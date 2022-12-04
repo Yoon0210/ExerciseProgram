@@ -19,7 +19,6 @@ public class CreateReviewController implements Controller {
 		
 		Review review = new Review(null,
 				Integer.parseInt(request.getParameter("workoutId")),
-				Integer.parseInt(request.getParameter("trainerId")),
 				request.getParameter("reviewTitle"),
 				request.getParameter("reviewContent"),
 				Integer.parseInt(request.getParameter("score")), 0
