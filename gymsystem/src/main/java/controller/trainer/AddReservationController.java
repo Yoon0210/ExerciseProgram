@@ -31,9 +31,6 @@ public class AddReservationController implements Controller{
     	String name = request.getParameter("name");
     	System.out.println("운동 이름: " + name);
     	
-    	int price = Integer.valueOf( request.getParameter("price") );
-    	System.out.println("운동 상품 가격: " + price);
-    	
     	String strength = request.getParameter("strength");
     	System.out.println("운동 강도: " + strength);
     	
@@ -52,7 +49,7 @@ public class AddReservationController implements Controller{
     	String category = request.getParameter("category");
     	System.out.println("운동 카테고리: " + category);
     	
-    	Exercise newItem = new Exercise(0, name, price, strength,startTime, endTime, trainerId, category);
+    	Exercise newItem = new Exercise(0, name, strength,startTime, endTime, trainerId, category);
     	
 		try {
 			ExerciseDAO itemDao = new ExerciseDAO();

@@ -23,7 +23,6 @@ public class ExerciseDAO {
 		
 		Object[] param = new Object[] {
 				exercise.getName(), 
-				exercise.getPrice(), 
 				new java.sql.Date(exercise.getStartTime().getTime()), 
 				new java.sql.Date(exercise.getEndTime().getTime()), 
 				exercise.getStrength(),
@@ -79,7 +78,6 @@ public class ExerciseDAO {
 				Exercise Exercise = new Exercise(
 					rs.getInt("exercise_id"),
 					rs.getString("name"),
-					rs.getInt("price"),
 					rs.getString("Strength"),
 					rs.getDate("starttime"),
 					rs.getDate("eddtime"),
@@ -99,7 +97,7 @@ public class ExerciseDAO {
 	
 	//아이템 아이디로 상품정보 검색
 	public Exercise searchexerciseById(int exerciseId)throws SQLException {
-		String query = "SELECT exercise_id, name, price, strength,startTime, endTime, trainer_id, category "
+		String query = "SELECT exercise_id, name, strength,startTime, endTime, trainer_id, category "
 					+ "FROM exercise "
 					+ "WHERE exercise_id = ?";
 		
@@ -110,7 +108,6 @@ public class ExerciseDAO {
 			ResultSet rs = jdbcUtil.executeQuery();
 			if(rs.next()) {
 				System.out.println(rs.getString("name"));
-				System.out.println(rs.getInt("price"));
 				System.out.println(rs.getDate("startTime"));
 				System.out.println(rs.getDate("endTime"));
 				System.out.println(rs.getString("strength"));
@@ -119,7 +116,6 @@ public class ExerciseDAO {
 				Exercise Exercise = new Exercise(
 					exerciseId,
 					rs.getString("name"),
-					rs.getInt("price"),
 					rs.getString("strength"),
 					rs.getDate("endTime"),
 					rs.getDate("startTime"),
