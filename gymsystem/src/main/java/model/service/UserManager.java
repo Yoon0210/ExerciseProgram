@@ -5,11 +5,16 @@ import java.util.List;
 
 import model.Workout;
 import model.Trainer;
+import model.Exercise;
 import model.Likey;
+import model.Report;
 import model.Review;
 import model.User;
 import model.dao.jdbc.WorkoutDAO;
+import oracle.jdbc.driver.Representation;
+import model.dao.jdbc.ExerciseDAO;
 import model.dao.jdbc.LikeyDAO;
+import model.dao.jdbc.ReportDAO;
 import model.dao.jdbc.ReviewDAO;
 import model.dao.jdbc.UserDAO;
 
@@ -24,7 +29,10 @@ public class UserManager {
 	private ReviewDAO reviewDAO;
 	private WorkoutDAO workoutDAO;
 	private LikeyDAO likeyDAO;
+	private ExerciseDAO exerciseDAO;
+	private ReportDAO reportDAO;
 	private UserAnalysis userAanlysis;
+	
 
 	private UserManager() {
 		try {
@@ -32,6 +40,8 @@ public class UserManager {
 			reviewDAO = new ReviewDAO();
 			workoutDAO = new WorkoutDAO();
 			likeyDAO = new LikeyDAO();
+			exerciseDAO = new ExerciseDAO();
+			reportDAO = new ReportDAO();
 			userAanlysis = new UserAnalysis(userDAO);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -109,8 +119,11 @@ public class UserManager {
 			return reviewDAO.findReviewList(orderBy);
 	}
 
-	public int removeReview(int rId) throws SQLException {
-		return reviewDAO.remove(rId);
+	public boolean removeReview(int rId) throws SQLException, FailRemoveException {
+		if(reviewDAO.remove(rId) != 1) {
+			throw new FailRemoveException("정상적으로 삭제되지 않았습니다.다시 시도해주세요.");
+		}
+		return true;
 
 	}
 
@@ -130,5 +143,16 @@ public class UserManager {
 		reviewDAO.updateLikeCount(likey.getReviewId());
 
 		return true;
+	}
+	
+	public List<Exercise> findExerciseName(){
+		return exerciseDAO.findExerciseName();
+	}
+	
+	public int createReport(Report report) throws SQLException {
+		return reportDAO.create(report);
+	}
+	public List<Report> findReportList() throws SQLException{
+		return reportDAO.findReportList();
 	}
 }

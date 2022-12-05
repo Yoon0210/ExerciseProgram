@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.Exercise;
 import model.Schedule;
+import model.Workout;
 
 public class ExerciseDAO {
 	
@@ -18,7 +19,7 @@ public class ExerciseDAO {
 	
 	//item 테이블에 새로운 상품 추가
 	public int createItemByGuide(Exercise exercise) throws SQLException {
-		String sql = "INSERT INTO item "
+		String sql = "INSERT INTO exercise "
 					+ "VALUES (item_id_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		
 		Object[] param = new Object[] {
@@ -232,5 +233,33 @@ public class ExerciseDAO {
 		jdbcUtil.close();
 	}
 	return null;
+	}
+	
+	
+	public List<Exercise> findExerciseName() {
+		String sql = "SELECT e.exerciseId, e.exercisename, t.trainerId, t.name " 
+     		   + "FROM Exercise e, Trainer t "
+			   + "WHERE e.trainerId = t.trainerId "
+     		   + "ORDER BY exerciseId";
+		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
+					
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();			// query 실행			
+			List<Exercise> sList = new ArrayList<Exercise>();	// User들의 리스트 생성
+			while (rs.next()) {
+				Exercise exercise = new Exercise(			// User 객체를 생성하여 현재 행의 정보를 저장
+					rs.getInt("exerciseId"),
+					rs.getString("exercisename"), rs.getString("trainerId"), rs.getString("name")
+					);
+				sList.add(exercise);				// List에 User 객체 저장
+			}		
+			return sList;					
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return null;
 	}
 }

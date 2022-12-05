@@ -2,38 +2,53 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 @SuppressWarnings("serial")
 
-public class Trainer implements Serializable{
+public class Trainer implements Serializable {
 	private String trainerId;
 	private String trainerPwd;
-	private String name;
+	private String email;
 	private String tel;
-	private int peride;
-	
-	public Trainer(String trainerId, String trainerPwd, String name, String tel, int peride) {
+	private String name;
+
+	public Trainer(String trainerId, String trainerPwd, String email, String tel, String name) {
 		super();
 		this.trainerId = trainerId;
 		this.trainerPwd = trainerPwd;
-		this.name = name;
+		this.email = email;
 		this.tel = tel;
-		this.peride = peride;
+		this.name = name;
 	}
 
-	public String gettrainerId() {
+	public Trainer(String trainerId, String name) {
+		super();
+		this.trainerId = trainerId;
+		this.name = name;
+	}
+
+	public String getTrainerId() {
 		return trainerId;
 	}
 
-	public void setGuideId(String trainerId) {
+	public void setTrainerId(String trainerId) {
 		this.trainerId = trainerId;
 	}
 
-	public String gettrainerPwd() {
+	public String getTrainerPwd() {
 		return trainerPwd;
 	}
 
-	public void settrainerPwd(String trainerPwd) {
+	public void setTrainerPwd(String trainerPwd) {
 		this.trainerPwd = trainerPwd;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getName() {
@@ -52,16 +67,8 @@ public class Trainer implements Serializable{
 		this.tel = tel;
 	}
 
-	public int getPeride() {
-		return peride;
-	}
-
-	public void setPeride(int peride) {
-		this.peride = peride;
-	}
-	
 	public boolean matchPassword(String password) {
-		if(password == null)
+		if (password == null)
 			return false;
 		return this.trainerPwd.equals(password);
 	}

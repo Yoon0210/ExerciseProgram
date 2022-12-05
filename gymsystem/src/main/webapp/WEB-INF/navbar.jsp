@@ -13,7 +13,7 @@
 	</button>
 	<div id="navbar" class="collapse navbar-collapse">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link" href="index.jsp">메인</a></li>
+			<li class="nav-item active"><a class="nav-link" href="<c:url value='/'/>">메인</a></li>
 
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" id="navbardrop"
