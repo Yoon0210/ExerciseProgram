@@ -24,7 +24,7 @@ public class CreateReviewController implements Controller {
 				Integer.parseInt(request.getParameter("score")), 0
 				);
 		
-		try {
+		try { //주석추가
 			String userId = UserSessionUtils.getLoginUserId(request.getSession());
 			review.setUserId(userId);
 			
