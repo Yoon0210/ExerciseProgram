@@ -35,17 +35,14 @@ public class AddScheduleController implements Controller{
     	String scheDescription = request.getParameter("scheDescription");
     	System.out.println("scheDescription: " + scheDescription);
     	
-    	int exerciseId = Integer.valueOf( request.getParameter("exerciseId") );
-    	System.out.println("exerciseId: " + exerciseId);
-    	
-		int itemId = Integer.valueOf(request.getParameter("clickId"));
-		System.out.println("이게 여기까지 걸쳐 넘어오는지 모르겠음(클릭한 아이디값): " + itemId);
+		int exerciseId = Integer.valueOf(request.getParameter("clickId"));
+		System.out.println("이게 여기까지 걸쳐 넘어오는지 모르겠음(클릭한 아이디값): " + exerciseId);
 		
 		Schedule newSchedule = new Schedule(scheId, scheName, scheTime, scheDescription, exerciseId);
 		
 		try {
-			ExerciseDAO itemDao = new ExerciseDAO();
-			int r = itemDao.createScheduleByTrainer(newSchedule);
+			ExerciseDAO exerciseDao = new ExerciseDAO();
+			int r = exerciseDao.createScheduleByTrainer(newSchedule);
 			
 			if(r == 1) {
 				System.out.println("트레이너 스케줄 추가 성공, 운동관리창으로 이동");
