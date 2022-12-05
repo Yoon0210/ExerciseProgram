@@ -78,9 +78,7 @@ public class ListReviewController implements Controller {
 			manager.createReport(report);
 		}
 		
-		
 
-		
 
 		List<Review> reviewList = manager.findReviewList(Integer.parseInt(session.getAttribute("workoutType").toString()),
 				session.getAttribute("orderType").toString(),
@@ -94,8 +92,6 @@ public class ListReviewController implements Controller {
 		session.setAttribute("reviewList", reviewList);
 		session.setAttribute("wList", wList);
 
-		
-		
 
 		return "/review/reviewList.jsp";
 	}

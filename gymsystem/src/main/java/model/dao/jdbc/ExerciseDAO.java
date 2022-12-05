@@ -18,7 +18,7 @@ public class ExerciseDAO {
 	}
 	
 	//item 테이블에 새로운 상품 추가
-	public int createItemByGuide(Exercise exercise) throws SQLException {
+	public int createExerciseByGuide(Exercise exercise) throws SQLException {
 		String sql = "INSERT INTO exercise "
 					+ "VALUES (item_id_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		
@@ -66,7 +66,7 @@ public class ExerciseDAO {
 
 	
 	//가이드가 맡은 상품리스트 반환
-	public List<Exercise> findItemByTrainer(String trainerId) throws SQLException {
+	public List<Exercise> findExerciseByTrainer(String trainerId) throws SQLException {
 		String sql = "SELECT exercie_id, name, price, strength,starttime, endtime, category "
 					+ "FROM exercise "
 		    		+ "WHERE trainer_id=? ";              

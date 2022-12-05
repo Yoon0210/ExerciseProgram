@@ -53,7 +53,7 @@ public class AddReservationController implements Controller{
     	
 		try {
 			ExerciseDAO exerciseDao = new ExerciseDAO();
-			int r = exerciseDao.createItemByGuide(newExercise);
+			int r = exerciseDao.createExerciseByGuide(newExercise);
 			System.out.println("트레이너 운동 추가 성공, 메인으로 리다이렉션");
 			if(r == 1)
 				return "redirect:/user/main";
