@@ -41,7 +41,7 @@ public class ClickLikeyController implements Controller {
             request.setAttribute("likeFailed", true);
 			request.setAttribute("exception", e);
 			request.setAttribute("likey", likey);
-
+			request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
 			return "/review/reviewList.jsp";
 		}
 
