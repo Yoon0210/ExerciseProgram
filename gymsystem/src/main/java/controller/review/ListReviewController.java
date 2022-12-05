@@ -36,6 +36,7 @@ public class ListReviewController implements Controller {
 		UserManager manager = UserManager.getInstance();
 		
 		HttpSession session = request.getSession();
+		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(session));
 		
 		if(request.getServletPath().equals("/review/list")) {
 			session.setAttribute("workoutType", -1);
@@ -96,7 +97,7 @@ public class ListReviewController implements Controller {
 		session.setAttribute("wList", wList);
 
 		
-		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
+		
 
 		return "/review/reviewList.jsp";
 	}

@@ -14,17 +14,27 @@
 	<div style="background-color: #3A4BA7; color: #FFFFFF; font-size: 20px">
 		<div class="container p-3">
 			<div class="row">
+				<c:if test="${userId eq 'admin'}">
+					<div class="col">
+						<a style="text-decoration: none; color: inherit;"
+							href='<c:url value="/admin" />'>관리자페이지</a>
+					</div>
+				</c:if>
 				<div class="col">
-					<a style="text-decoration: none;color: inherit;" href='<c:url value="/exercise/search" />'  >시간표 관리</a>
+					<a style="text-decoration: none; color: inherit;"
+						href='<c:url value="/exercise/search" />'>시간표 관리</a>
 				</div>
 				<div class="col">
-					<a style="text-decoration: none;color: inherit;" href='<c:url value="" />' >내 시간표</a>
+					<a style="text-decoration: none; color: inherit;"
+						href='<c:url value="" />'>내 시간표</a>
 				</div>
 				<div class="col">
-					<a style="text-decoration: none;color: inherit;" href='<c:url value="/review/list" />' >리뷰</a>
+					<a style="text-decoration: none; color: inherit;"
+						href='<c:url value="/review/list" />'>리뷰</a>
 				</div>
 				<div class="col">
-					<a style="text-decoration: none;color: inherit;" href='<c:url value="/user/logout" />' >로그아웃</a>
+					<a style="text-decoration: none; color: inherit;"
+						href='<c:url value="/user/logout" />'>로그아웃</a>
 				</div>
 			</div>
 		</div>

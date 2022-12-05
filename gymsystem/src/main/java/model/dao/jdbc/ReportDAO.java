@@ -78,17 +78,17 @@ public class ReportDAO {
 		List<Report> reportList = new ArrayList<Report>();
 		try {
 			ResultSet rs = jdbcUtil.executeQuery(); // query 실행
-			if (rs.next()) { // 학생 정보 발견
+			while (rs.next()) { // 학생 정보 발견
 				Report report = new Report( // User 객체를 생성하여 학생 정보를 저장
 						rs.getString("userId"), rs.getInt("reviewId"), rs.getString("reportReason"));
 				reportList.add(report);
-				return reportList;
+				
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			jdbcUtil.close(); // resource 반환
 		}
-		return null;
+		return reportList;
 	}
 }
