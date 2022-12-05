@@ -16,7 +16,7 @@ public class ExerciseReservationController implements Controller{
     	int exercise_id = Integer.parseInt(request.getParameter("exerciseReservation"));
     	
 		scheDao.itemReservationByUser(exercise_id, user_id);
-		return "redirect:/user/main.jsp";
+		return "redirect:/user/login.jsp";
 	}
 
 }

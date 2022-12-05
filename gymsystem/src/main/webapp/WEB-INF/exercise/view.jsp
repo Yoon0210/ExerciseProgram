@@ -57,7 +57,6 @@ function exerciseReservation() {
 	<table align="center" width="500" height="40" style="border:1px solid" style="border-collapse:collapse" >
 		<tr>
 			<th> <font size="2px">운동명</font></th>
-			<th> <font size="2px">가격</font></th>
 			<th> <font size="2px">강도</font></th>
 			<th> <font size="2px">시작 날짜</font></th>
 			<th> <font size="2px">종료 날짜</font></th>

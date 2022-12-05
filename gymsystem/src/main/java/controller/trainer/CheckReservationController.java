@@ -31,7 +31,7 @@ public class CheckReservationController implements Controller{
 		
 		request.setAttribute("exerciseList", exerciseList);
 		
-		return "/guide/checkReservation.jsp";
+		return "/trainer/checkReservation.jsp";
 	}
 
 }

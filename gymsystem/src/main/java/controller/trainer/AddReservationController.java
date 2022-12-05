@@ -49,22 +49,22 @@ public class AddReservationController implements Controller{
     	String category = request.getParameter("category");
     	System.out.println("운동 카테고리: " + category);
     	
-    	Exercise newItem = new Exercise(0, name, strength,startTime, endTime, trainerId, category);
+    	Exercise newExercise = new Exercise(0, name, strength,startTime, endTime, trainerId, category);
     	
 		try {
-			ExerciseDAO itemDao = new ExerciseDAO();
-			int r = itemDao.createItemByGuide(newItem);
-			System.out.println("가이드 상품 추가 성공, 메인으로 리다이렉션");
+			ExerciseDAO exerciseDao = new ExerciseDAO();
+			int r = exerciseDao.createItemByGuide(newExercise);
+			System.out.println("트레이너 운동 추가 성공, 메인으로 리다이렉션");
 			if(r == 1)
 				return "redirect:/user/main";
 			else
 				return "addReservation.jsp";
 		} catch(Exception e) {
-			System.out.println("가이드 상품 추가 실패, 등록다시");
+			System.out.println("트레이너 운동 추가 실패, 등록다시");
 			request.setAttribute("registerFailed", true);
 			request.setAttribute("exception", e);
 			//request.setAttribute("newItem", newItem);
-			return "/guide/addReservation.jsp";
+			return "/trainer/addReservation.jsp";
 		}
     	
 	}

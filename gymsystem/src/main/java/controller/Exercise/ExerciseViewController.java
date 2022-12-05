@@ -13,7 +13,7 @@ import model.dao.jdbc.ExerciseDAO;
 public class ExerciseViewController implements Controller{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("아이템뷰 컨트롤러 내부");
+		System.out.println("운동뷰 컨트롤러 내부");
 		
 		ExerciseDAO ExerciseDao = new ExerciseDAO();
 		
@@ -27,9 +27,9 @@ public class ExerciseViewController implements Controller{
 			request.setAttribute("scheList", scheList);
 			System.out.println(scheList.size());
 			request.setAttribute("viewExercise", Exercise);
-			return "/item/view.jsp";
+			return "exercise/view.jsp";
 		} catch(Exception e) {
-			return "redirect:/user/main";
+			return "redirect:/user/login.jsp";
 		}
 	}
 

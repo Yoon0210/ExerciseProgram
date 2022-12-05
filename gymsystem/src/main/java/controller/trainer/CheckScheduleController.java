@@ -20,25 +20,25 @@ public class CheckScheduleController implements Controller{
 			return "redirect:/user/login/form";
 		}
 		
-		String itemName = request.getParameter("clickName");
-		itemName = new String(itemName.getBytes("ISO8859_1"), "UTF-8");
+		String exerciseName = request.getParameter("clickName");
+		exerciseName = new String(exerciseName.getBytes("ISO8859_1"), "UTF-8");
 		//itemName = new String(itemName.getBytes("ISO8859_1"), "UTF-8");
-		System.out.println("이름이 이상하게 뜬다: " + itemName);
-		int itemId = Integer.parseInt(request.getParameter("clickId"));
-		System.out.println("아이디 이름: " + itemId);
+		System.out.println("이름이 이상하게 뜬다: " + exerciseName);
+		int exerciseId = Integer.parseInt(request.getParameter("clickId"));
+		System.out.println("아이디 이름: " + exerciseId);
 		try {
-			ExerciseDAO itemDao = new ExerciseDAO();
+			ExerciseDAO ExerciseDao = new ExerciseDAO();
 			List<Schedule> scheList = new ArrayList<Schedule>();
-			scheList = itemDao.searchScheduleByID(itemId);
+			scheList = ExerciseDao.searchScheduleByID(exerciseId);
 			request.setAttribute("checkItemList", scheList);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));	
-		request.setAttribute("clickId", itemId);
-		request.setAttribute("clickName", itemName);
+		request.setAttribute("clickId", exerciseId);
+		request.setAttribute("clickName", exerciseName);
 
-		return "/guide/checkSchedule.jsp";
+		return "/trainer/view.jsp";
 	}
 
 }
