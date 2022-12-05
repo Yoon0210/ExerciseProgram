@@ -48,8 +48,8 @@ public class AddScheduleController implements Controller{
 			int r = itemDao.createScheduleByTrainer(newSchedule);
 			
 			if(r == 1) {
-				System.out.println("가이드 스케줄 추가 성공, 상품관리창으로 이동");
-				return "/guide/addSchedule.jsp";
+				System.out.println("트레이너 스케줄 추가 성공, 운동관리창으로 이동");
+				return "/trainer/addSchedule.jsp";
 			}
 			else
 				return "redirect:/user/main";

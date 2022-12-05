@@ -8,6 +8,7 @@ import java.util.List;
 import model.Exercise;
 import model.Schedule;
 
+//추가해야할 부분이 운동종목으로 검색하거나 강사이름으로 검색하거나 두개로 둘다도 되어야하고 만들어야함.
 public class ExerciseDAO {
 	
 	private JDBCUtil jdbcUtil = null;

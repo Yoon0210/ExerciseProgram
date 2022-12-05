@@ -16,7 +16,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <meta charset="EUC-KR">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>상품 검색</title>
+<title>운동 검색</title>
 </head>
 <body>
 	<nav class="gymsystembar">
@@ -52,7 +52,6 @@
 	<table align="center" width="500" height="40" style="border:1px solid" style="border-collapse:collapse" >
 		<tr>
 			<th> <font size="2px">운동명</font></th>
-			<th> <font size="2px">가격</font></th>
 			<th> <font size="2px">강도</font></th>
 			<th> <font size="2px">시작 날짜</font></th>
 			<th> <font size="2px">종료 날짜</font></th>
@@ -61,7 +60,6 @@
 		<c:forEach var="si" items="${searchList}">
 		<tr>
 			<td align ="center"><font size="2px"> ${si.name}</font></td>
-			<td align ="center"><font size="2px"> ${si.price}</font></td>
 			<td align ="center"><font size="2px"> ${si.strength}</font></td>
 			<td align ="center"><font size="2px"> ${si.startTime}</font></td>
 			<td align ="center"><font size="2px"> ${si.endTime}</font></td>
