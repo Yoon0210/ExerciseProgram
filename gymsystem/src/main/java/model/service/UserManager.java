@@ -3,14 +3,12 @@ package model.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.Workout;
 import model.Trainer;
 import model.Exercise;
 import model.Likey;
 import model.Report;
 import model.Review;
 import model.User;
-import model.dao.jdbc.WorkoutDAO;
 import oracle.jdbc.driver.Representation;
 import model.dao.jdbc.ExerciseDAO;
 import model.dao.jdbc.LikeyDAO;
@@ -27,7 +25,6 @@ public class UserManager {
 	private static UserManager userMan = new UserManager();
 	private UserDAO userDAO;
 	private ReviewDAO reviewDAO;
-	private WorkoutDAO workoutDAO;
 	private LikeyDAO likeyDAO;
 	private ExerciseDAO exerciseDAO;
 	private ReportDAO reportDAO;
@@ -38,7 +35,6 @@ public class UserManager {
 		try {
 			userDAO = new UserDAO();
 			reviewDAO = new ReviewDAO();
-			workoutDAO = new WorkoutDAO();
 			likeyDAO = new LikeyDAO();
 			exerciseDAO = new ExerciseDAO();
 			reportDAO = new ReportDAO();
@@ -125,10 +121,6 @@ public class UserManager {
 		}
 		return true;
 
-	}
-
-	public List<Workout> findWorkoutList() {
-		return workoutDAO.findWorkoutList();
 	}
 
 	public List<Likey> findLikeyList(String userId) throws SQLException {

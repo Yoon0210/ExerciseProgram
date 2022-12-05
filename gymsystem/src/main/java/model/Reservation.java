@@ -8,18 +8,14 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Reservation implements Serializable {
-<<<<<<< HEAD
 	private int resId; //예약id
-=======
-	private int resId;
 	private String userId;
 	private int exerciseId;
->>>>>>> branch 'develop' of https://github.com/Yoon0210/ExerciseProgram.git
-	private int trainerId; //강사번호
+	private String trainerId; //강사번호
 	private String exerciseName; //운동 이름 및 종목
 	private String resStatus; //운동예약 상태
 	
-	public Reservation(int resId,int trainerId, String exerciseName,  String resStatus) {
+	public Reservation(int resId,String trainerId, String exerciseName,  String resStatus) {
 		super();
 		this.resId=resId;
 		this.trainerId = trainerId;
@@ -37,11 +33,11 @@ public class Reservation implements Serializable {
 	}
 
 	
-	public int getTrainerId() {
+	public String getTrainerId() {
 		return trainerId;
 	}
 
-	public void setTrainerId(int trainerId) {
+	public void setTrainerId(String trainerId) {
 		this.trainerId = trainerId;
 	}
 

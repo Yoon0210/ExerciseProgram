@@ -11,8 +11,6 @@ import controller.user.UserSessionUtils;
 import model.Exercise;
 import model.Report;
 import model.Review;
-import model.Workout;
-import model.Trainer;
 import model.service.UserManager;
 
 public class ListReviewController implements Controller {

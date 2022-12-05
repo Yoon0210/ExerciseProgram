@@ -99,11 +99,9 @@ public class ReservationDAO {
 			if(rs.next()) {
 				Reservation reservation = new Reservation(
 						rs.getInt("res_id"),
-						rs.getInt("exerciseprice"),
-						rs.getInt("exerciseId"),
+						rs.getString("trainerId"),
 						rs.getString("exercisename"),
-						rs.getString("pay_status"),
-						rs.getString("res_status"));
+						rs.getString("resStatus"));
 				return reservation;
 			}
 		}catch(SQLException ex) {

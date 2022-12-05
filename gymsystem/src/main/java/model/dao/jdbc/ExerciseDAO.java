@@ -7,7 +7,6 @@ import java.util.List;
 
 import model.Exercise;
 import model.Schedule;
-import model.Workout;
 
 public class ExerciseDAO {
 	
