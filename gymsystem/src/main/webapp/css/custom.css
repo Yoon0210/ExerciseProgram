@@ -6,6 +6,10 @@ input[type=password]{
 	font-family: '굴림';
 }
 
+::placeholder{
+	font-family:'jeu Gothic'
+}
+
 .navar-brand, h1, h2, h3, h4 {
 	font-family: 'jeju Gothic';
 }
