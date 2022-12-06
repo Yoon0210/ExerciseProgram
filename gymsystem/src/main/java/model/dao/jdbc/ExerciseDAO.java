@@ -233,9 +233,9 @@ public class ExerciseDAO {
 	
 	
 	public List<Exercise> findExerciseName() {
-		String sql = "SELECT e.exerciseId, e.exercisename, t.trainerId, t.name " 
-     		   + "FROM Exercise e, Trainer t "
-			   + "WHERE e.trainerId = t.trainerId "
+		String sql = "SELECT e.exerciseId, e.exercisename, t.userId, t.username " 
+     		   + "FROM Exercise e, UserInfo t "
+			   + "WHERE e.trainerId = t.userId "
      		   + "ORDER BY exerciseId";
 		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
 					
@@ -245,7 +245,7 @@ public class ExerciseDAO {
 			while (rs.next()) {
 				Exercise exercise = new Exercise(			// User 객체를 생성하여 현재 행의 정보를 저장
 					rs.getInt("exerciseId"),
-					rs.getString("exercisename"), rs.getString("trainerId"), rs.getString("name")
+					rs.getString("exercisename"), rs.getString("userId"), rs.getString("username")
 					);
 				sList.add(exercise);				// List에 User 객체 저장
 			}		
