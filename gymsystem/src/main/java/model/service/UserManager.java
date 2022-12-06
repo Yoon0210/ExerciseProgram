@@ -3,17 +3,16 @@ package model.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import model.Trainer;
 import model.Exercise;
 import model.Likey;
 import model.Report;
 import model.Review;
 import model.User;
-import oracle.jdbc.driver.Representation;
 import model.dao.jdbc.ExerciseDAO;
 import model.dao.jdbc.LikeyDAO;
 import model.dao.jdbc.ReportDAO;
 import model.dao.jdbc.ReviewDAO;
+import model.dao.jdbc.TrainerDAO;
 import model.dao.jdbc.UserDAO;
 
 /**
@@ -28,6 +27,7 @@ public class UserManager {
 	private LikeyDAO likeyDAO;
 	private ExerciseDAO exerciseDAO;
 	private ReportDAO reportDAO;
+	private TrainerDAO trainerDAO;
 	private UserAnalysis userAanlysis;
 	
 
@@ -38,6 +38,7 @@ public class UserManager {
 			likeyDAO = new LikeyDAO();
 			exerciseDAO = new ExerciseDAO();
 			reportDAO = new ReportDAO();
+			trainerDAO = new TrainerDAO();
 			userAanlysis = new UserAnalysis(userDAO);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,7 +50,7 @@ public class UserManager {
 	}
 
 	public int create(User user) throws SQLException, ExistingUserException {
-		if (userDAO.existingUser(user.getUserId()) == true) {
+		if (userDAO.existingUser(user.getUserId(), user.getUserType()) == true) {
 			throw new ExistingUserException(user.getUserId() + "는 존재하는 아이디입니다.");
 		}
 		return userDAO.create(user);
@@ -62,9 +63,18 @@ public class UserManager {
 	public int remove(String userId) throws SQLException, UserNotFoundException {
 		return userDAO.remove(userId);
 	}
-
+	
 	public User findUser(String userId) throws SQLException, UserNotFoundException {
 		User user = userDAO.findUser(userId);
+
+		if (user == null) {
+			throw new UserNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
+		}
+		return user;
+	}
+
+	public User findUser(String userId, String userType) throws SQLException, UserNotFoundException {
+		User user = userDAO.findUser(userId, userType);
 
 		if (user == null) {
 			throw new UserNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
@@ -80,9 +90,9 @@ public class UserManager {
 		return userDAO.findUserList(currentPage, countPerPage);
 	}
 
-	public boolean login(String userId, String password)
+	public boolean login(String userId, String password, String userType)
 			throws SQLException, UserNotFoundException, PasswordMismatchException {
-		User user = findUser(userId);
+		User user = findUser(userId, userType);
 
 		if (!user.matchPassword(password)) {
 			throw new PasswordMismatchException("비밀번호가 일치하지 않습니다.");
@@ -127,10 +137,13 @@ public class UserManager {
 		return likeyDAO.findLikeyById(userId);
 	}
 
-	public boolean createLikey(Likey likey) throws SQLException, AlreadyLikeException {
+	public boolean createLikey(Likey likey, String userType) throws SQLException, AlreadyLikeException, TrainerLikeyException {
 
+		if(userType.equals("trainer")) {
+			throw new TrainerLikeyException("강사는 추천할 수 없습니다.");
+		}
 		if (likeyDAO.create(likey) != 1) {
-			throw new AlreadyLikeException("이미 추천한 글입니다.");
+			throw new AlreadyLikeException("이미 추천했습니다.");
 		}
 		reviewDAO.updateLikeCount(likey.getReviewId());
 
@@ -147,4 +160,5 @@ public class UserManager {
 	public List<Report> findReportList() throws SQLException{
 		return reportDAO.findReportList();
 	}
+
 }

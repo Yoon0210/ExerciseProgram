@@ -63,6 +63,21 @@
 		<section class="container mt-3" style="max-width: 560px;">
 			<form name="form" method="POST"
 				action="<c:url value='/user/register'/>">
+				<div class="form-group">
+					<label for="registerType" ></label>
+					<div class="form-check form-check-inline">
+						<input value="trainer" class="form-check-input" type="radio"
+							name="registerType" id="flexRadioDefault1" checked> <label
+							class="form-check-label" for="flexRadioDefault1"> 강사
+						</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input value="user" class="form-check-input" type="radio"
+							name="registerType" id="flexRadioDefault2"> <label
+							class="form-check-label" for="flexRadioDefault2"> 회원
+						</label>
+					</div>
+				</div>
 				<div class="form-group row">
 					<label for="userId" class="col-lg-2 col-form-label">아이디</label>
 					<div class="col-lg-10">
