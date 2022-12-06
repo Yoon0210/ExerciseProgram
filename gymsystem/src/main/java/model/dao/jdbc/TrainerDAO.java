@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Trainer;
+import model.User;
 
 public class TrainerDAO {
 private JDBCUtil jdbcUtil = null;
@@ -12,19 +12,48 @@ private JDBCUtil jdbcUtil = null;
 	public TrainerDAO() {			
 		jdbcUtil = new JDBCUtil();	// JDBCUtil 객체 생성
 	}
+	
+	public User findTrainer(String trainerId) {
+		String sql = "SELECT * " 
+	     		   + "FROM User "
+	     		  + "WHERE userId = ? AND userType=?";
+			jdbcUtil.setSqlAndParameters(sql, new Object[] { trainerId, "trainer" });		// JDBCUtil에 query문 설정
+						
+			try {
+				ResultSet rs = jdbcUtil.executeQuery();			// query 실행			
+				if (rs.next()) {
+					User trainer = new User(			// Trainer 객체를 생성하여 현재 행의 정보를 저장
+						rs.getString("trainerId"),
+						rs.getString("trainerPWD"),
+						rs.getString("email"),
+						rs.getString("phone"),
+						rs.getString("name")
+						);
+					return trainer;
+				}					
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				jdbcUtil.close();		// resource 반환
+			}
+			return null;
+	}
 
-	public List<Trainer> findTrainerList() {
-		String sql = "SELECT trainerId, name " 
-     		   + "FROM trainer "
-     		   + "ORDER BY trainerId";
-		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
+	public List<User> findTrainerList() {
+		String sql = "SELECT userId, name " 
+     		   + "FROM User "
+			   + "WHERE userType=? "
+     		   + "ORDER BY userId";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {"trainer"});		// JDBCUtil에 query문 설정
 					
 		try {
 			ResultSet rs = jdbcUtil.executeQuery();			// query 실행			
-			List<Trainer> trList = new ArrayList<Trainer>();	// User들의 리스트 생성
+			List<User> trList = new ArrayList<User>();	// User들의 리스트 생성
 			while (rs.next()) {
-				Trainer trainer = new Trainer(			// User 객체를 생성하여 현재 행의 정보를 저장
+				User trainer = new User(			// User 객체를 생성하여 현재 행의 정보를 저장
 					rs.getString("trainerId"),
+					null,
 					rs.getString("name")
 					);
 				trList.add(trainer);				// List에 User 객체 저장
@@ -38,4 +67,5 @@ private JDBCUtil jdbcUtil = null;
 		}
 		return null;
 	}
+
 }

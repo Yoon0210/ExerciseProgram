@@ -51,6 +51,21 @@
 			<form name="form" method="POST"
 				action="<c:url value='/user/login' />">
 				<div class="form-group">
+					<label for="loginType" ></label>
+					<div class="form-check form-check-inline">
+						<input value="trainer" class="form-check-input" type="radio"
+							name="loginType" id="flexRadioDefault1" checked> <label
+							class="form-check-label" for="flexRadioDefault1"> 강사
+						</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input value="user" class="form-check-input" type="radio"
+							name="loginType" id="flexRadioDefault2"> <label
+							class="form-check-label" for="flexRadioDefault2"> 회원
+						</label>
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="userId">아이디</label> <input type="text" name="userId"
 						class="form-control" placeholder="아이디">
 				</div>
@@ -67,7 +82,7 @@
 			</form>
 		</section>
 	</div>
-	
+
 	<!-- footer -->
 	<%@include file="/WEB-INF/footer.jsp"%>
 </body>

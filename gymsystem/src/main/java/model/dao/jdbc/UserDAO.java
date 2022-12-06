@@ -21,9 +21,9 @@ public class UserDAO {
 	 * 사용자 관리 테이블에 새로운 사용자 생성.
 	 */
 	public int create(User user) throws SQLException {
-		String sql = "INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?)";		
+		String sql = "INSERT INTO UserInfo VALUES (?, ?, ?, ?, ?, ?)";		
 		Object[] param = new Object[] { user.getUserId(), user.getPassword(), 
-						 user.getEmail(), user.getPhone(), user.getName() };				
+						 user.getEmail(), user.getPhone(), user.getName(), user.getUserType() };				
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil 에 insert문과 매개 변수 설정
 						
 		try {				
@@ -44,11 +44,11 @@ public class UserDAO {
 	 */
 	public int update(User user) throws SQLException {
 		String sql = "UPDATE UserInfo "
-					+ "SET password=?, email=?, phone=?, username=?"
+					+ "SET password=?, email=?, phone=?, username=?, usertype=? "
 					+ "WHERE userid=?";
 		Object[] param = new Object[] {user.getPassword(), 
 					user.getEmail(),  
-					user.getUserId(), user.getPhone(), user.getName()};				
+					user.getUserId(), user.getPhone(), user.getName(), user.getUserType()};				
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 			
 		try {				
@@ -91,7 +91,7 @@ public class UserDAO {
 	 * 저장하여 반환.
 	 */
 	public User findUser(String userId) throws SQLException {
-        String sql = "SELECT password, email, phone, username "
+        String sql = "SELECT password, email, phone, username, userType "
         			+ "FROM UserInfo "
         			+ "WHERE userid=? ";              
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userId});	// JDBCUtil에 query문과 매개 변수 설정
@@ -104,7 +104,8 @@ public class UserDAO {
 					rs.getString("password"),
 					rs.getString("email"),
 					rs.getString("phone"),
-					rs.getString("username")
+					rs.getString("username"),
+					rs.getString("userType")
 					);
 				return user;
 			}
@@ -115,12 +116,42 @@ public class UserDAO {
 		}
 		return null;
 	}
+	
+	public List<User> FindTrainerListByType(String userType){
+		String sql = "SELECT password, email, phone, username, userType "
+    			+ "FROM UserInfo "
+    			+ "WHERE userType=? ";              
+	jdbcUtil.setSqlAndParameters(sql, new Object[] {userType});	// JDBCUtil에 query문과 매개 변수 설정
+
+	try {
+		ResultSet rs = jdbcUtil.executeQuery();			// query 실행			
+		List<User> userList = new ArrayList<User>();	// User들의 리스트 생성
+		while (rs.next()) {
+			User user = new User(			// User 객체를 생성하여 현재 행의 정보를 저장
+				rs.getString("userId"),
+				rs.getString("password"),
+				rs.getString("email"),
+				rs.getString("phone"),
+				rs.getString("username"),
+				rs.getString("userType")
+				);
+			userList.add(user);				// List에 User 객체 저장
+		}		
+		return userList;					
+		
+	} catch (Exception ex) {
+		ex.printStackTrace();
+	} finally {
+		jdbcUtil.close();		// resource 반환
+	}
+	return null;
+	}
 
 	/**
 	 * 전체 사용자 정보를 검색하여 List에 저장 및 반환
 	 */
 	public List<User> findUserList() throws SQLException {
-        String sql = "SELECT userId, email " 
+        String sql = "SELECT userId, email, userType " 
         		   + "FROM UserInfo "
         		   + "ORDER BY userId";
 		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
@@ -132,7 +163,9 @@ public class UserDAO {
 				User user = new User(			// User 객체를 생성하여 현재 행의 정보를 저장
 					rs.getString("userId"),
 					null,
-					rs.getString("email")
+					rs.getString("email"),
+					null, null,
+					rs.getString("userType")
 					);
 				userList.add(user);				// List에 User 객체 저장
 			}		
@@ -184,9 +217,9 @@ public class UserDAO {
 	/**
 	 * 주어진 사용자 ID에 해당하는 사용자가 존재하는지 검사 
 	 */
-	public boolean existingUser(String userId) throws SQLException {
-		String sql = "SELECT count(*) FROM UserInfo WHERE userid=?";      
-		jdbcUtil.setSqlAndParameters(sql, new Object[] {userId});	// JDBCUtil에 query문과 매개 변수 설정
+	public boolean existingUser(String userId, String userType) throws SQLException {
+		String sql = "SELECT count(*) FROM UserInfo WHERE userid=? AND userType=?";      
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {userId, userType});	// JDBCUtil에 query문과 매개 변수 설정
 
 		try {
 			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
@@ -200,6 +233,33 @@ public class UserDAO {
 			jdbcUtil.close();		// resource 반환
 		}
 		return false;
+	}
+
+	public User findUser(String userId, String userType) {
+		 String sql = "SELECT password, email, phone, username, userType "
+     			+ "FROM UserInfo "
+     			+ "WHERE userid=? AND userType=?";              
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {userId, userType});	// JDBCUtil에 query문과 매개 변수 설정
+
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+			if (rs.next()) {						// 학생 정보 발견
+				User user = new User(		// User 객체를 생성하여 학생 정보를 저장
+					userId,
+					rs.getString("password"),
+					rs.getString("email"),
+					rs.getString("phone"),
+					rs.getString("username"),
+					rs.getString("userType")
+					);
+				return user;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return null;
 	}
 
 }
