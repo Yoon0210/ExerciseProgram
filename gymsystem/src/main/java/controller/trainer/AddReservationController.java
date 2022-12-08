@@ -35,11 +35,11 @@ public class AddReservationController implements Controller{
     	System.out.println("운동 강도: " + strength);
     	
     	
-    	Date startTime = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("startTime"));
+    	String startTime = request.getParameter("startTime");
     	//String departTime = request.getParameter("departTime");
     	System.out.println("운동 시작 날짜: " + startTime);
     	
-    	Date endTime = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("endTime"));
+    	String endTime = request.getParameter("endTime");
     	//String arrTime = request.getParameter("arrTime");
     	System.out.println("운동 종료 날짜: " + endTime);
     	
