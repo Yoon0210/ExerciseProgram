@@ -6,31 +6,46 @@ import java.util.Date;
 //운동종목, 운동 카테고리, 운동 트레이너id, 운동 번호, 운동 시작, 끝날짜, 운동 강도
 public class Exercise implements Serializable{
 	private int exerciseId;
-	private String name;
-	private String strength;
-	private Date startTime;
-	private Date endTime;
 	private String trainerId;
-	private String category;
-	
+	private String exerciseName;
+	private String exerciseDay;
+	private String exerciseTime;
+	private String difficulty;
+	private String exerciseType;
 	private String trainerName;
 	
-	public Exercise(int exerciseId, String name, String strength,Date startTime, Date endTime, String trainerId, String category) {
+	//리뷰할 때 가져갈 데이터 
+	public Exercise(int exerciseId, String exerciseName, String trainerId, String trainerName) {
 		super();
 		this.exerciseId = exerciseId;
-		this.name = name;
-		this.strength=strength;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.exerciseName = exerciseName;
 		this.trainerId = trainerId;
-		this.category = category;
+		this.trainerName = trainerName;
 	}
 
-	public Exercise(int exerciseId, String name, String trainerId, String trainerName) {
+	public Exercise(int exerciseId, String trainerId, String exerciseName, String exerciseDay, String exerciseTime,
+			String difficulty, String exerciseType, String trainerName) {
 		super();
 		this.exerciseId = exerciseId;
-		this.name = name;
 		this.trainerId = trainerId;
+		this.exerciseName = exerciseName;
+		this.exerciseDay = exerciseDay;
+		this.exerciseTime = exerciseTime;
+		this.difficulty = difficulty;
+		this.exerciseType = exerciseType;
+		this.trainerName = trainerName;
+	}
+
+
+	public Exercise(String trainerId, String exerciseName, String exerciseDay, String exerciseTime, String difficulty,
+			String exerciseType, String trainerName) {
+		super();
+		this.trainerId = trainerId;
+		this.exerciseName = exerciseName;
+		this.exerciseDay = exerciseDay;
+		this.exerciseTime = exerciseTime;
+		this.difficulty = difficulty;
+		this.exerciseType = exerciseType;
 		this.trainerName = trainerName;
 	}
 
@@ -38,70 +53,117 @@ public class Exercise implements Serializable{
 		return exerciseId;
 	}
 
+
+
+
 	public void setExerciseId(int exerciseId) {
 		this.exerciseId = exerciseId;
 	}
-	
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public String getStrength() {
-		return strength;
-	}
-
-	public void setStrength(String strength) {
-		this.strength = strength;
-	}
-
-	public Date getStartTime() {
-		return startTime;
-	}
-
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
 
 	public String getTrainerId() {
 		return trainerId;
 	}
 
+
+
+
 	public void setTrainerId(String trainerId) {
 		this.trainerId = trainerId;
 	}
 
-	public String getCategory() {
-		return category;
+
+
+
+	public String getExerciseName() {
+		return exerciseName;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+
+
+
+	public void setExerciseName(String exerciseName) {
+		this.exerciseName = exerciseName;
 	}
+
+
+
+
+	public String getExerciseDay() {
+		return exerciseDay;
+	}
+
+
+
+
+	public void setExerciseDay(String exerciseDay) {
+		this.exerciseDay = exerciseDay;
+	}
+
+
+
+
+	public String getExerciseTime() {
+		return exerciseTime;
+	}
+
+
+
+
+	public void setExerciseTime(String exerciseTime) {
+		this.exerciseTime = exerciseTime;
+	}
+
+
+
+
+	public String getDifficulty() {
+		return difficulty;
+	}
+
+
+
+
+	public void setDifficulty(String difficulty) {
+		this.difficulty = difficulty;
+	}
+
+
+
+
+	public String getExerciseType() {
+		return exerciseType;
+	}
+
+
+
+
+	public void setExerciseType(String exerciseType) {
+		this.exerciseType = exerciseType;
+	}
+
+
+
 
 	public String getTrainerName() {
 		return trainerName;
 	}
 
+
+
+
 	public void setTrainerName(String trainerName) {
 		this.trainerName = trainerName;
 	}
 
+
+
+
 	@Override
 	public String toString() {
-		return name + " - " + trainerName;
+		return exerciseName + " - " + trainerName;
 	}
 	
 }
