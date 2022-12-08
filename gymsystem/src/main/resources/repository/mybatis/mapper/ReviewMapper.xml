@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="repository.mybatis.mapper.ReviewMapper">
+	<cache />
+
+	<sql id="BaseColumns">
+		reviewId AS reviewId,
+		userId AS userId,
+		workoutId AS exerciseId,
+		title,
+		content,
+		score,
+		likeCount,
+		postedDate
+	</sql>
+
+	<select id="selectReviewByPrimaryKey" parameterType="long" resultType="Review">
+		SELECT <include refid="BaseColumns"/>
+		FROM REVIEW
+		WHERE reviewId = #{reviewId}
+	</select>
+ 
+	<select id="selectReviewByCondition" parameterType="hashmap" resultType="Review">
+		SELECT <include refid="BaseColumns"/>
+		FROM REVIEW
+		<where>
+			<if test="commentNo != null">
+				reviewId = #{commentNo}
+			</if>
+			<if test="userId != null">
+				AND userId = #{userId}
+			</if>
+		</where>
+	</select>
+
+	<insert id="insertReview" parameterType="Review">
+		INSERT INTO REVIEW (reviewId, userId, comment_content, reg_date)
+		VALUES (#{commentNo}, #{userId}, #{commentContent}, #{regDate})
+	</insert>
+
+	<update id="updateReview" parameterType="Review">
+		UPDATE REVIEW 
+		SET comment_content = #{commentContent}
+		WHERE reviewId = #{commentNo}
+	</update>
+ 
+	<delete id="deleteReview" parameterType="long">
+		DELETE FROM REVIEW
+		WHERE reviewId = #{commentNo}
+	</delete>
+	
+	<delete id="deleteAllReviews">
+		DELETE FROM REVIEW
+	</delete>
+	
+	
+	<resultMap id="associationResultMap" type="Review">
+		<id column="reviewId" jdbcType="NUMERIC" property="commentNo" />
+		<result column="userId" jdbcType="VARCHAR" property="userId" />
+		<result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+		<result column="reg_date" jdbcType="TIMESTAMP" property="regDate" />
+		<association column="userId" property="user" javaType="User">
+			<id column="userId" property="userId" />
+			<result column="user_name" property="userName" />
+			<result column="phone" property="phone" />
+			<result column="address" property="address" />
+		</association>
+	</resultMap>
+	
+	<select id="selectAllReview" parameterType="long" 		
+		resultMap="associationResultMap"> 
+		SELECT r.reviewId,
+				r.userid,
+				r.workoutId, 
+				r.title, 
+				r.content, 
+				r.score, 
+				r.likecount, 
+				r.posteddate, 
+				e.exerciseName, 
+				t.username 
+		FROM Review r, Exercise e, UserInfo t 
+		WHERE r.workoutId = e.exerciseId
+			AND e.trainerId = t.userId  
+		
+		SELECT r.reviewId, 
+				r.userId, 
+				r.comment_content, 
+				r.reg_date, 
+				u.user_name, 
+				u.phone, 
+				u.address
+		FROM REVIEW c, USERS u			
+		WHERE r.userId = u.userId  
+		  AND r.reviewId = #{commentNo} 
+	</select>
+
+	<select id="selectReviewByPrimaryKeyAssociation" parameterType="long" 		
+		resultMap="associationResultMap"> 
+		SELECT r.reviewId, 
+				r.userId, 
+				r.comment_content, 
+				r.reg_date, 
+				u.user_name, 
+				u.phone, 
+				u.address
+		FROM REVIEW c, USERS u			
+		WHERE r.userId = u.userId  
+		  AND r.reviewId = #{commentNo} 
+	</select>
+	
+	<select id="selectReviewByPrimaryKeyAssociation2" parameterType="long" 		
+		resultType="Review"> 
+		SELECT r.reviewId AS commentNo,
+			   r.userId AS userId,
+			   r.comment_content AS commentContent,
+			   r.reg_date AS regDate,
+			   u.userId AS "user.userId",	
+			   u.user_name AS "user.userName", 			   
+			   u.phone AS "user.phone",	
+			   u.address AS "user.address"	
+		FROM REVIEW c, USERS u			
+		WHERE r.userId = u.userId  
+		  AND r.reviewId = #{commentNo} 
+	</select>
+	
+	
+	<resultMap id="collectionResultMap" type="Review">
+		<id column="reviewId" jdbcType="BIGINT" property="commentNo" />
+		<result column="userId" jdbcType="VARCHAR" property="userId" />
+		<result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
+		<result column="reg_date" jdbcType="TIMESTAMP" property="regDate" />
+		<collection property="replies" ofType="Reply">
+			<id column="reply_id" property="replyId" />
+			<result column="reply_userId" property="userId" />
+			<result column="reply_content" property="replyContent" />
+			<result column="reply_date" property="regDate" />
+		</collection>
+	</resultMap>
+	
+	<select id="selectReviewByPrimaryKeyCollection" parameterType="long" 			
+		resultMap="collectionResultMap"> 
+		SELECT r.reviewId, 
+				r.userId, 
+				r.comment_content, 
+				r.reg_date, 
+				r.reply_id, 
+				r.userId AS reply_userId, 
+				r.reply_content, 
+				r.reg_date AS reply_date
+		FROM REVIEW r, REPLY r
+		WHERE r.reviewId = r.reviewId 
+		  AND r.reviewId = #{commentNo} 
+	</select>
+	
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO REPLY (reply_id, reviewId, userId, reply_content, reg_date)
+		VALUES (#{replyId}, #{commentNo}, #{userId}, #{replyContent}, #{regDate})
+	</insert>
+
+	<delete id="deleteAllReplies">
+		DELETE FROM REPLY
+	</delete>
+
+</mapper>
