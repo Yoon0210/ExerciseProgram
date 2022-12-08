@@ -30,6 +30,7 @@ public class AddReservationController implements Controller{
     	
     	String name = request.getParameter("name");
     	System.out.println("운동 이름: " + name);
+		
     	
     	String strength = request.getParameter("strength");
     	System.out.println("운동 강도: " + strength);
