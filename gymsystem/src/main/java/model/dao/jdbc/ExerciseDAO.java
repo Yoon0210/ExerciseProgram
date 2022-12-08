@@ -17,18 +17,20 @@ public class ExerciseDAO {
 		jdbcUtil = new JDBCUtil();
 	}
 	
-	//item 테이블에 새로운 상품 추가
-	public int createExerciseByGuide(Exercise exercise) throws SQLException {
+	//exercise 테이블에 새로운 운동 추가 //ok
+	public int createExerciseByTrainer(Exercise exercise) throws SQLException {
 		String sql = "INSERT INTO exercise "
-					+ "VALUES (item_id_seq.nextval, ?, ?, ?, ?, ?, ?)";
+					+ "VALUES (exerciseId_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		
 		Object[] param = new Object[] {
-				exercise.getName(), 
-				new java.sql.Date(exercise.getStartTime().getTime()), 
-				new java.sql.Date(exercise.getEndTime().getTime()), 
-				exercise.getStrength(),
-				exercise.getTrainerId(), 
-				exercise.getCategory()};				
+				exercise.getTrainerId(),
+				exercise.getExerciseName(), 
+				exercise.getExerciseDay(),
+				exercise.getExerciseTime(),
+				exercise.getDifficulty(),
+				exercise.getExerciseType()
+				};	
+		
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil 에 insert문과 매개 변수 설정
 						
 		try {				
@@ -44,11 +46,13 @@ public class ExerciseDAO {
 		return 0;			
 	}
 	
-	//item 삭제
+	//exercise 삭제 //ok
 	public int deleteExerciseByTrainer(int exerciseId) throws SQLException{
 		String sql = "DELETE FROM exercise "
-					+ "WHERE item_id = ?";
+					+ "WHERE exerciseId = ?";
+		
 		Object[] param = new Object[] {exerciseId};
+		
 		jdbcUtil.setSqlAndParameters(sql, param);
 
 			try {
@@ -65,11 +69,13 @@ public class ExerciseDAO {
 	}
 
 	
-	//가이드가 맡은 상품리스트 반환
+	//트레이너가 등록한(맡은) 운동정보 반환 //ok
 	public List<Exercise> findExerciseByTrainer(String trainerId) throws SQLException {
-		String sql = "SELECT exercie_id, name, price, strength,starttime, endtime, category "
-					+ "FROM exercise "
-		    		+ "WHERE trainer_id=? ";              
+		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
+				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
+					+ "FROM exercise e, userinfo u "
+					+ "WHERE e.trainerid = u.userid "
+		    		+ "AND e.trainerid=? ";              
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {trainerId});	// JDBCUtil에 query문과 매개 변수 설정
 
 		try {
@@ -77,13 +83,15 @@ public class ExerciseDAO {
 			List<Exercise> exerciseList = new ArrayList<Exercise>();
 			while (rs.next()) {
 				Exercise Exercise = new Exercise(
-					rs.getInt("exercise_id"),
-					rs.getString("name"),
-					rs.getString("Strength"),
-					rs.getDate("starttime"),
-					rs.getDate("eddtime"),
-					trainerId,
-					rs.getString("category"));
+					rs.getInt("exerciseId"),
+					rs.getString("trainerId"),
+					rs.getString("exerciseName"),
+					rs.getString("exerciseDay"),
+					rs.getString("exerciseTime"),
+					rs.getString("difficulty"),
+					rs.getString("exerciseType"),
+					rs.getString("trainerName")
+			);
 				exerciseList.add(Exercise);	
 			}		
 			return exerciseList;
@@ -96,33 +104,30 @@ public class ExerciseDAO {
 		return null;
 	}
 	
-	//아이템 아이디로 상품정보 검색
-	public Exercise searchexerciseById(int exerciseId)throws SQLException {
-		String query = "SELECT exercise_id, name, strength,startTime, endTime, trainer_id, category "
-					+ "FROM exercise "
-					+ "WHERE exercise_id = ?";
+	//exerciseId로 운동정보 검색 //ok
+	public Exercise searchExerciseByexerciseId(int exerciseId) throws SQLException {
+		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
+				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
+					+ "FROM exercise e, userinfo u "
+					+ "WHERE e.trainerid = u.userid "
+		    		+ "AND e.exerciseId=? ";         
 		
 		Object[] param = new Object[] {exerciseId};
-		jdbcUtil.setSqlAndParameters(query, param);
+		jdbcUtil.setSqlAndParameters(sql, param);
 		
 		try {
 			ResultSet rs = jdbcUtil.executeQuery();
 			if(rs.next()) {
-				System.out.println(rs.getString("exerciseType"));
-				System.out.println(rs.getString("name"));
-				System.out.println(rs.getDate("startTime"));
-				System.out.println(rs.getDate("endTime"));
-				System.out.println(rs.getString("strength"));
-				System.out.println(rs.getString("trainer_id"));
-				System.out.println(rs.getString("category"));
 				Exercise Exercise = new Exercise(
-					exerciseId,
-					rs.getString("name"),
-					rs.getString("strength"),
-					rs.getDate("endTime"),
-					rs.getDate("startTime"),
-					rs.getString("tainer_id"),
-					rs.getString("category"));
+						exerciseId,
+						rs.getString("trainerId"),
+						rs.getString("exerciseName"),
+						rs.getString("exerciseDay"),
+						rs.getString("exerciseTime"),
+						rs.getString("difficulty"),
+						rs.getString("exerciseType"),
+						rs.getString("trainerName")
+						);
 				return Exercise;
 			}
 			
@@ -133,96 +138,37 @@ public class ExerciseDAO {
 		}
 		return null;
 	}
-
-	//아이템 아이디로 세부일정 검색
-	public List<Schedule> searchScheduleByID(int exerciseId) throws SQLException{
-		String query = "SELECT sche_id, sche_name, sche_time, SCHE_DESCRIPTION, sche_exerciseId "
-				+ "FROM schedule "
-				+ "WHERE exercise_id = ?";
 	
-	Object[] param = new Object[] {exerciseId};
-	jdbcUtil.setSqlAndParameters(query, param);
-	ArrayList<Schedule> scheduleList = new ArrayList<Schedule>();
 	
-	try {
-		ResultSet rs = jdbcUtil.executeQuery();
-		while(rs.next()) {
-			System.out.println(rs.getInt("sche_id"));
-			System.out.println(rs.getString("sche_name"));
-			System.out.println(rs.getDate("sche_time"));
-			System.out.println(rs.getString("SCHE_DESCRIPTION"));
-			System.out.println(rs.getInt("sche_exerciseId"));
-	
-			Schedule sche = new Schedule(
-				rs.getInt("sche_id"),
-				rs.getString("sche_name"),
-				rs.getDate("sche_time"),
-				rs.getString("SCHE_DESCRIPTION"),
-				rs.getInt("sche_exerciseId")	);
-			scheduleList.add(sche);
-		}
-		return scheduleList;
-		
-	} catch(Exception e) {
-		e.printStackTrace();
-	}finally {
-		jdbcUtil.close();
-	}
-	return null;
-	}
-
-	//아이템에 스케줄 추가
-	public int createScheduleByTrainer(Schedule sche)throws SQLException{
-		String query = "INSERT INTO schedule "
-				+ "VALUES (?, ?, ?, ?, ?, ?)";
-	
-		Object[] param = new Object[] {
-				sche.getScheId(),
-				sche.getName(), 
-				new java.sql.Date(sche.getTime().getTime()),
-				sche.getDescription(), 
-				sche.getexerciseId()};
-		
-		System.out.println(sche.getScheId()+","+ sche.getName()+ "," + sche.getTime() + ","
-								 + ","+ sche.getDescription()+","+ sche.getexerciseId());
-		jdbcUtil.setSqlAndParameters(query, param);
-	
-		try {
-			int r = jdbcUtil.executeUpdate();
-			return r;
-		} catch(Exception e) {
-			jdbcUtil.rollback();
-			e.printStackTrace();
-		} finally {
-			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 반환
-		}
-		return 0;
-	}
-	
-	//문자열이 들어간 상품 반환
-	public List<Integer> searchStringexercise(String search) throws SQLException{
-		String query = "SELECT exercise_id "
-					+"FROM exercise "
-					//+"WHERE name= ?";
-					+ "WHERE name LIKE ?";
-	
-	String temp = "%"+search+"%";
+	//운동이름으로 운동 정보 검색
+	public List<Exercise> searchStringExercisename(String exerciseName) throws SQLException{
+		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
+				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
+					+ "FROM exercise e, userinfo u "
+					+ "WHERE e.trainerid = u.userid "
+		    		+ "AND e.exerciseName LIKE ? ";         
+					
+	String temp = "%"+exerciseName+"%";
 	Object[] param = new Object[] {temp};
-	jdbcUtil.setSqlAndParameters(query, param);
+	jdbcUtil.setSqlAndParameters(sql, param);
 	
 	try {
 		ResultSet rs = jdbcUtil.executeQuery();
-		System.out.println("111111111111");
-		ArrayList<Integer> idList = new ArrayList<Integer>();
-		System.out.println("2222");
-		while(rs.next()) {
-			System.out.println("33333333" );
-			System.out.println(rs.getInt("exercise_id"));
-			idList.add((Integer)rs.getInt("exercise_id"));
+		List<Exercise> exerciseList = new ArrayList<Exercise>();
+		if(rs.next()) {
+			Exercise Exercise = new Exercise(
+					rs.getInt("exerciseId"),
+					rs.getString("trainerId"),
+					exerciseName,
+					rs.getString("exerciseDay"),
+					rs.getString("exerciseTime"),
+					rs.getString("difficulty"),
+					rs.getString("exerciseType"),
+					rs.getString("trainerName")
+					);
+			exerciseList.add(Exercise);	
 		}
-		System.out.println("받은 String으로 아이템 아이디 반환완료");
-		return idList;
+		return exerciseList;
 		
 	} catch(Exception e) {
 		e.printStackTrace();
@@ -232,11 +178,47 @@ public class ExerciseDAO {
 	return null;
 	}
 	
+	 //유저id로 운동 스케쥴 찾는거
+	public List<Exercise> findExerciseScheduleByUserId(String userid){
+		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
+				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
+					+ "FROM exercise e, schedule s, userinfo u "
+					+ "WHERE e.exerciseid = s.exerciseid AND e.userid = u.userid"
+		    		+ "AND s.userid= ? ";              
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});	// JDBCUtil에 query문과 매개 변수 설정
+
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+			List<Exercise> exerciseList = new ArrayList<Exercise>();
+			while (rs.next()) {
+				Exercise Exercise = new Exercise(
+					rs.getInt("exerciseId"),
+					rs.getString("trainerId"),
+					rs.getString("exerciseName"),
+					rs.getString("exerciseDay"),
+					rs.getString("exerciseTime"),
+					rs.getString("difficulty"),
+					rs.getString("exerciseType"),
+					rs.getString("trainerName")
+			);
+			exerciseList.add(Exercise);	
+			}		
+			return exerciseList;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return null;
+	}
+
 	
+	//미경 make
 	public List<Exercise> findExerciseName() {
-		String sql = "SELECT e.exerciseId, e.exercisename, t.trainerId, t.name " 
-     		   + "FROM Exercise e, Trainer t "
-			   + "WHERE e.trainerId = t.trainerId "
+		String sql = "SELECT e.exerciseId, e.exercisename, t.userId, t.username " 
+     		   + "FROM Exercise e, UserInfo t "
+			   + "WHERE e.trainerId = t.userId "
      		   + "ORDER BY exerciseId";
 		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
 					
@@ -246,7 +228,7 @@ public class ExerciseDAO {
 			while (rs.next()) {
 				Exercise exercise = new Exercise(			// User 객체를 생성하여 현재 행의 정보를 저장
 					rs.getInt("exerciseId"),
-					rs.getString("exercisename"), rs.getString("trainerId"), rs.getString("name")
+					rs.getString("exercisename"), rs.getString("userId"), rs.getString("username")
 					);
 				sList.add(exercise);				// List에 User 객체 저장
 			}		
