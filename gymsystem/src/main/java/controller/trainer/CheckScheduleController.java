@@ -29,7 +29,7 @@ public class CheckScheduleController implements Controller{
 		try {
 			ExerciseDAO ExerciseDao = new ExerciseDAO();
 			List<Schedule> scheList = new ArrayList<Schedule>();
-			scheList = ExerciseDao.searchScheduleByID(exerciseId);
+//			scheList = ExerciseDao.searchScheduleByID(exerciseId);
 			request.setAttribute("checkItemList", scheList);
 		} catch(Exception e) {
 			e.printStackTrace();

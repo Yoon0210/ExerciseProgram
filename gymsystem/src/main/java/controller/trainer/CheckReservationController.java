@@ -27,7 +27,7 @@ public class CheckReservationController implements Controller{
 		
 		ExerciseDAO ExerciseDao = new ExerciseDAO();
 		List<Exercise> exerciseList = new ArrayList<Exercise>();
-		exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
+//		exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
 		
 		request.setAttribute("exerciseList", exerciseList);
 		
