@@ -49,11 +49,11 @@ public class AddReservationController implements Controller{
     	String category = request.getParameter("category");
     	System.out.println("운동 카테고리: " + category);
     	
-    	Exercise newExercise = new Exercise(0,name, strength,startTime, endTime, trainerId, category);
+    	Exercise newExercise = new Exercise(trainerId, name, startTime, endTime, strength, category);
     	
 		try {
 			ExerciseDAO exerciseDao = new ExerciseDAO();
-			int r = exerciseDao.createExerciseByGuide(newExercise);
+			int r = exerciseDao.createExerciseByTrainer(newExercise);
 			System.out.println("트레이너 운동 추가 성공, 메인으로 리다이렉션");
 			if(r == 1)
 				return "redirect:/user/main";
