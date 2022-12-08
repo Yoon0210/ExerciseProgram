@@ -35,11 +35,11 @@ public class AddReservationController implements Controller{
     	System.out.println("운동 강도: " + strength);
     	
     	
-    	Date startTime = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("startTime"));
+    	String startTime = request.getParameter("startTime");
     	//String departTime = request.getParameter("departTime");
     	System.out.println("운동 시작 날짜: " + startTime);
     	
-    	Date endTime = new java.text.SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("endTime"));
+    	String endTime = request.getParameter("endTime");
     	//String arrTime = request.getParameter("arrTime");
     	System.out.println("운동 종료 날짜: " + endTime);
     	
@@ -49,16 +49,16 @@ public class AddReservationController implements Controller{
     	String category = request.getParameter("category");
     	System.out.println("운동 카테고리: " + category);
     	
-//    	Exercise newExercise = new Exercise(0, name, strength,startTime, endTime, trainerId, category);
+    	Exercise newExercise = new Exercise(trainerId, name, startTime, endTime, strength, category);
     	
 		try {
 			ExerciseDAO exerciseDao = new ExerciseDAO();
-//			int r = exerciseDao.createExerciseByGuide(newExercise);
+			int r = exerciseDao.createExerciseByTrainer(newExercise);
 			System.out.println("트레이너 운동 추가 성공, 메인으로 리다이렉션");
-//			if(r == 1)
+			if(r == 1)
 				return "redirect:/user/main";
-//			else
-//				return "addReservation.jsp";
+			else
+				return "addReservation.jsp";
 		} catch(Exception e) {
 			System.out.println("트레이너 운동 추가 실패, 등록다시");
 			request.setAttribute("registerFailed", true);
