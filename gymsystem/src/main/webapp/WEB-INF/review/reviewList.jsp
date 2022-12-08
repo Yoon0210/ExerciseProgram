@@ -42,7 +42,7 @@ function report(a, b){
 				<option value="-1">전체</option>
 				<c:forEach var="workout" items="${wList}">
 					<option value="${workout.getExerciseId()}"
-						<c:if test='${workout.getExerciseId() eq workoutType}'> selected="selected" </c:if>>${workout.getName()}</option>
+						<c:if test='${workout.getExerciseId() eq workoutType}'> selected="selected" </c:if>>${workout.getExerciseName()}</option>
 				</c:forEach>
 			</select> <select name="orderType" class="form-control mx-1 mt-2">
 				<option value="reviewId DESC">최신순</option>
