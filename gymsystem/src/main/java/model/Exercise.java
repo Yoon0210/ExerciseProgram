@@ -22,6 +22,15 @@ public class Exercise implements Serializable{
 		this.trainerId = trainerId;
 		this.trainerName = trainerName;
 	}
+	
+	public Exercise(String trainerId, String exerciseName, String exerciseDay, String exerciseTime, String difficulty, String exerciseType){
+		this.trainerId = trainerId;
+		this.exerciseName = exerciseName;
+		this.exerciseDay = exerciseDay;
+		this.exerciseTime = exerciseTime;
+		this.difficulty = difficulty;
+		this.exerciseType = exerciseType;
+	}
 
 	public Exercise(int exerciseId, String trainerId, String exerciseName, String exerciseDay, String exerciseTime,
 			String difficulty, String exerciseType, String trainerName) {
