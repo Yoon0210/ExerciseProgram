@@ -5,59 +5,25 @@ import java.io.Serializable;
 import java.util.Date;
 @SuppressWarnings("serial")
 public class Schedule implements Serializable{
-	private int scheId;
-	private String name;
-	private Date time;
-	private String description;
+	private String userId;
 	private int exerciseId;
 	
-	public Schedule(int scheId, String name, Date time, String description, int exerciseId) {
+	public Schedule(String userId, int exerciseId) {
 		super();
-		this.scheId = scheId;
-		this.name = name;
-		this.time = time;
-		this.description = description;
+		this.userId = userId;
 		this.exerciseId = exerciseId;
 	}
-
-	public int getScheId() {
-		return scheId;
-	}
-
-	public void setScheId(int scheId) {
-		this.scheId = scheId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Date getTime() {
-		return time;
-	}
-
-	public void setTime(Date time) {
-		this.time = time;
-	}
-
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	
-	public int getexerciseId() {
+	public String getUserId() {
+		return userId;
+	}
+	public int getExerciseId() {
 		return exerciseId;
 	}
-
-	public void setexerciseId(int exerciseId) {
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public void setExerciseId(int exerciseId) {
 		this.exerciseId = exerciseId;
 	}
 	

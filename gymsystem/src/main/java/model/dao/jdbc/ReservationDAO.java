@@ -11,189 +11,86 @@ import java.util.List;
 import model.Reservation;
 
 public class ReservationDAO {
+	private JDBCUtil jdbcUtil = null;
 	
-	public ReservationDAO() {	//생성자
-		// JDBC 드라이버 로딩 및 등록
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");	
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		}	
+	public ReservationDAO() {	
+		jdbcUtil = new JDBCUtil();
 	}
 	
-	private static Connection getConnection() {
-		//string url 새로 정의 필요
-		String url =  "jdbc:oracle:thin:@202.20.119.117:1521:orcl";	
-		String user = "dbpro0345";
-		String passwd = "dbpro0345";
-
-		// DBMS와의 연결 획득
-		Connection conn = null;
-		try {
-			conn = DriverManager.getConnection(url, user, passwd);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}	 
-		return conn;
-	}
-	
-	//멤버id로  전체 res_id 받아오기
-	public List<Integer> searchResIdByUser(String user_id){
-		Connection conn = null;
-		PreparedStatement pStmt = null;
-		ResultSet rs = null;
+	//resid로 필요한  reservation요소 받아오기
+	public Reservation searchReservationByResId(int resid){
+		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
+				+ "r.status, u.userName, e.exerciseName "
+				+"FROM reservation r, Userinfo u, Exercise e "
+				+"WHERE r.exerciseId = e.exerciseId and e.trainerId = u.userId AND resid = ?";
 		
-		String query = "SELECT res_id "
-					+ "FROM Reservation "
-					+ "WHERE user_id =?";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {resid});
 		
 		try {
-			conn = getConnection();
-			pStmt = conn.prepareStatement(query);
-			pStmt.setString(1, user_id);
-			rs = pStmt.executeQuery();
-
-			List<Integer> resIdList = new ArrayList<Integer>();
-			while(rs.next()) {
-				resIdList.add(rs.getInt("res_id"));
-			}
-			return resIdList;
-			
-		} catch(SQLException ex) {
-			ex.printStackTrace();
-		} finally {
-			if (rs != null) 
-				try { 
-					rs.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-			if (pStmt != null) 
-				try { 
-					pStmt.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-			if (conn != null) 
-				try { 
-					conn.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-		}
-		return null;
-	}
-	
-	//res_id로 필요한  reservation요소 받아오기
-	public Reservation searchReservationByUser(int res_id){
-		Connection conn = null;
-		PreparedStatement pStmt = null;
-		ResultSet rs = null;
-		//int resId, exercisePrice;
-		//String exerciseName, payStatus, resStatus;
-		
-		String query = "SELECT res_id, exercisename, res_status, pay_status, price "
-				+ "FROM reservation r, item i "
-				+ "WHERE r.item_id = i.item_id and res_id = ?";
-		
-		try {
-			conn = getConnection();
-			pStmt = conn.prepareStatement(query);
-			pStmt.setInt(1, res_id);
-			rs = pStmt.executeQuery();
-			
+			ResultSet rs = jdbcUtil.executeQuery();
 			if(rs.next()) {
 				Reservation reservation = new Reservation(
-						rs.getInt("res_id"),
-						rs.getString("trainerId"),
-						rs.getString("exercisename"),
-						rs.getString("resStatus"));
+						rs.getInt("resId"),
+						rs.getString("userId"),
+						rs.getInt("exerciseId"),
+						rs.getString("reservationDate"),
+						rs.getString("status"),
+						rs.getString("userName"),
+						rs.getString("exerciseName")
+						);
 				return reservation;
+				
 			}
 		}catch(SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			if (rs != null) 
-				try { 
-					rs.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-			if (pStmt != null) 
-				try { 
-					pStmt.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-			if (conn != null) 
-				try { 
-					conn.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
+			jdbcUtil.close();
 		}
 		return null;
 	}
 
-	//member_id받아서 상품예약하기
-	public int itemReservationByUser(int exercise_id, String user_id) {
-		Connection conn = null;
-		PreparedStatement pStmt = null;
-		int r = 0;
+	//exerciseId랑 userId받아서 운동 예약하기
+	public int create(int exerciseid, String userid) {
+		String sql = "INSERT INTO reservation "
+					+"VALUES (reservationId_seq.nextval, ?, ?, SYSDATE, ?)";
 		
-		String query = "INSERT INTO reservation "
-					+"VALUES (seq_res_id.nextval, '대기', '대기', ?, ?)";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid, exerciseid,"대기"});
 		
 		try {
-			conn = getConnection();
-			pStmt = conn.prepareStatement(query);
-			pStmt.setString(1, user_id);
-			pStmt.setInt(2, exercise_id);
-			r = pStmt.executeUpdate();
-			return r;
+			int result = jdbcUtil.executeUpdate(); // insert 문 실행
+			return result;
 			
-		}catch(SQLException ex) {
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
 			ex.printStackTrace();
 		} finally {
-			if (pStmt != null) 
-				try { 
-					pStmt.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-			if (conn != null) 
-				try { 
-					conn.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
+			jdbcUtil.commit();
+			jdbcUtil.close(); // resource 반환
 		}
-		return r;
+		return 0;
 	}
-
-	//item_id에 해당하는 모든 res_id 받아오기
-	public List<Integer> searchResIdByGuide(int exercise_id){
-		Connection conn = null;
-		PreparedStatement pStmt = null;
-		ResultSet rs = null;
-		ArrayList<Integer> resIdList = new ArrayList<Integer>();
-		
-		String query = "SELECT res_id "
-				+ "FROM Reservation "
-				+ "WHERE exercise_id = ?";
-		
-		try {
-			conn = getConnection();
-			pStmt = conn.prepareStatement(query);
-			pStmt.setInt(1, exercise_id);
-			rs = pStmt.executeQuery();
+	
+	//예약정보 업데이트
+	public int updateStatus(int resid, String status) {
+		String sql = "UPDATE reservation "
+				+ "SET status= ? "
+				+ "WHERE resid=?";
+		Object[] param = new Object[] {status,resid};				
+		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 			
-			while(rs.next()) {
-				resIdList.add(rs.getInt("res_id"));
-			}
-			return resIdList;
-		}catch(SQLException ex) {
+		try {				
+			int result = jdbcUtil.executeUpdate();	// update 문 실행
+			return result;
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
 			ex.printStackTrace();
-		} finally {
-			if (rs != null) 
-				try { 
-					rs.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-			if (pStmt != null) 
-				try { 
-					pStmt.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
-			if (conn != null) 
-				try { 
-					conn.close(); 
-				} catch (SQLException ex) { ex.printStackTrace(); }
 		}
-		return null;
-	}
+		finally {
+			jdbcUtil.commit();
+			jdbcUtil.close();	// resource 반환
+		}		
+		return 0;
+}
 }
 
 	
