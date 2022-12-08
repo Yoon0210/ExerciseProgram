@@ -21,12 +21,12 @@ public class ExerciseViewController implements Controller{
 		System.out.println("선택한 운동 아이디: " + viewId);
 		
 		try {
-			Exercise Exercise = ExerciseDao.searchexerciseById(viewId);
+//			Exercise Exercise = ExerciseDao.searchexerciseById(viewId);
 //			ArrayList<Schedule> scheList = (ArrayList<Schedule>) ExerciseDao.searchScheduleByID(viewId);
 			
 //			request.setAttribute("scheList", scheList);
 //			System.out.println(scheList.size());
-			request.setAttribute("viewExercise", Exercise);
+//			request.setAttribute("viewExercise", Exercise);
 			return "exercise/view.jsp";
 		} catch(Exception e) {
 			return "redirect:/user/login.jsp";
