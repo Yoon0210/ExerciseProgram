@@ -14,6 +14,7 @@
 
 </head>
 <body>
+<%@include file="/WEB-INF/header.jsp"%>
 <%@include file="/WEB-INF/navbar.jsp" %>
 <div class="container">   
 	<br>

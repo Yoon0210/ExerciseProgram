@@ -41,6 +41,7 @@ public class Exercise implements Serializable{
 	public void setExerciseId(int exerciseId) {
 		this.exerciseId = exerciseId;
 	}
+	
 
 	public String getName() {
 		return name;

@@ -108,6 +108,7 @@ public class ExerciseDAO {
 		try {
 			ResultSet rs = jdbcUtil.executeQuery();
 			if(rs.next()) {
+				System.out.println(rs.getString("exerciseType"));
 				System.out.println(rs.getString("name"));
 				System.out.println(rs.getDate("startTime"));
 				System.out.println(rs.getDate("endTime"));

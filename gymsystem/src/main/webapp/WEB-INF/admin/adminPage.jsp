@@ -14,6 +14,7 @@
 <title>관리자 페이지</title>
 </head>
 <body>
+<%@include file="/WEB-INF/header.jsp"%>
 	<%@include file="/WEB-INF/navbar.jsp"%>
 	<section style="text-align:center">
 	<a href='<c:url value="/admin/user" />'> 사용자 목록 </a> <br>
