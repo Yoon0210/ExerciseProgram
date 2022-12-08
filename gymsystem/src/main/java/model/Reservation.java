@@ -8,55 +8,85 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Reservation implements Serializable {
-	private int resId; //예약id
+	private int resId;
 	private String userId;
 	private int exerciseId;
-	private String trainerId; //강사번호
+	private String reservationDate;
+	private String status; //운동예약 상태
+	private String trainerName; //강사이름
 	private String exerciseName; //운동 이름 및 종목
-	private String resStatus; //운동예약 상태
 	
-	public Reservation(int resId,String trainerId, String exerciseName,  String resStatus) {
+	
+	public Reservation(int resId, String userId, int exerciseId, String reservationDate, String status,
+			String trainerName, String exerciseName) {
 		super();
-		this.resId=resId;
-		this.trainerId = trainerId;
+		this.resId = resId;
+		this.userId = userId;
+		this.exerciseId = exerciseId;
+		this.reservationDate = reservationDate;
+		this.status = status;
+		this.trainerName = trainerName;
 		this.exerciseName = exerciseName;
-		this.resStatus = resStatus;
 	}
 
-
-	public int getresId() {
+	public Reservation(String userId, int exerciseId, String reservationDate, String status, String trainerName,
+			String exerciseName) {
+		super();
+		this.userId = userId;
+		this.exerciseId = exerciseId;
+		this.reservationDate = reservationDate;
+		this.status = status;
+		this.trainerName = trainerName;
+		this.exerciseName = exerciseName;
+	}
+	
+	
+	public int getResId() {
 		return resId;
 	}
 
-	public void setresId(int resId) {
+	public void setResId(int resId) {
 		this.resId = resId;
 	}
 
-	
-	public String getTrainerId() {
-		return trainerId;
+	public String getUserId() {
+		return userId;
 	}
-
-	public void setTrainerId(String trainerId) {
-		this.trainerId = trainerId;
+	public int getExerciseId() {
+		return exerciseId;
 	}
-
+	public String getReservationDate() {
+		return reservationDate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public String getTrainerName() {
+		return trainerName;
+	}
 	public String getExerciseName() {
 		return exerciseName;
 	}
-
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public void setExerciseId(int exerciseId) {
+		this.exerciseId = exerciseId;
+	}
+	public void setReservationDate(String reservationDate) {
+		this.reservationDate = reservationDate;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setTrainerName(String trainerName) {
+		this.trainerName = trainerName;
+	}
 	public void setExerciseName(String exerciseName) {
 		this.exerciseName = exerciseName;
 	}
 
-	public String getResStatus() {
-		return resStatus;
-	}
-
-	public void setResStatus(String resStatus) {
-		this.resStatus = resStatus;
-	}
-
 	
-	
+
+
 }
