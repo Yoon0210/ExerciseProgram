@@ -54,7 +54,8 @@ public class RequestMapping {
         mappings.put("/exercise/search", new ExerciseReservationController());
         
         mappings.put("/trainer/add", new AddReservationController());
-        mappings.put("/trainer/trainerPage", new ForwardController("/trainer/addReservation.jsp"));
+        mappings.put("/trainer/exercise/form", new ForwardController("/trainer/addReservation.jsp"));
+        mappings.put("/trainer/exercise/search", new ExerciseReservationController());
         
         logger.info("Initialized Request Mapping!");
     }

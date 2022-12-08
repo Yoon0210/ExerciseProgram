@@ -27,7 +27,6 @@ public class UserManager {
 	private LikeyDAO likeyDAO;
 	private ExerciseDAO exerciseDAO;
 	private ReportDAO reportDAO;
-	private TrainerDAO trainerDAO;
 	private UserAnalysis userAanlysis;
 	
 
@@ -38,7 +37,6 @@ public class UserManager {
 			likeyDAO = new LikeyDAO();
 			exerciseDAO = new ExerciseDAO();
 			reportDAO = new ReportDAO();
-			trainerDAO = new TrainerDAO();
 			userAanlysis = new UserAnalysis(userDAO);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,6 +157,15 @@ public class UserManager {
 	}
 	public List<Report> findReportList() throws SQLException{
 		return reportDAO.findReportList();
+	}
+	
+	public int createExercise(Exercise exercise) throws SQLException, AlreadyScheduledException, RegisterExerciseFailedException { 
+		if(exerciseDAO.existingTrainerSchedule(exercise.getTrainerId(), exercise.getExerciseDay(), exercise.getExerciseTime())==true) {
+			System.out.println("스케줄 중복");
+			throw new AlreadyScheduledException("이미 개설된 강좌가 있습니다. 다른 시간을 선택해주세요.");
+		}
+		
+		return exerciseDAO.createExerciseByTrainer(exercise);
 	}
 
 }

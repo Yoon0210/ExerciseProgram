@@ -42,7 +42,7 @@ function report(a, b){
 				<option value="-1">전체</option>
 				<c:forEach var="workout" items="${wList}">
 					<option value="${workout.getExerciseId()}"
-						<c:if test='${workout.getExerciseId() eq workoutType}'> selected="selected" </c:if>>${workout.getExerciseName()}</option>
+						<c:if test='${workout.getExerciseId() eq workoutType}'> selected="selected" </c:if>>${workout.toString()}</option>
 				</c:forEach>
 			</select> <select name="orderType" class="form-control mx-1 mt-2">
 				<option value="reviewId DESC">최신순</option>
@@ -58,6 +58,7 @@ function report(a, b){
 		</form>
 		<div class="col-lg-12 text-center text-danger">
 			<c:if test="${reviewList.size() eq 0 }">
+			<br>
 				검색 결과가 없습니다.
 			</c:if>
 		</div>

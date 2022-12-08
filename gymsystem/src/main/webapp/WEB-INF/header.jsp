@@ -23,7 +23,7 @@
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
 						href= <c:if test="${userType eq 'trainer' }">
-							'<c:url value="/trainer/trainerPage" />'
+							'<c:url value="/trainer/exercise/form" />'
 							</c:if>
 						<c:if test="${userType eq 'user' }">
 						'<c:url value="/exercise/search" />'

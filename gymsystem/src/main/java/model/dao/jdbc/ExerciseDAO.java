@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Exercise;
-import model.Schedule;
 
 //추가해야할 부분이 운동종목으로 검색하거나 강사이름으로 검색하거나 두개로 둘다도 되어야하고 만들어야함.
 public class ExerciseDAO {
@@ -17,8 +16,29 @@ public class ExerciseDAO {
 		jdbcUtil = new JDBCUtil();
 	}
 	
+	public boolean existingTrainerSchedule(String id, String day, String time) {
+		String sql = "SELECT count(*) AS \"count\" FROM exercise WHERE trainerid=? AND exerciseDay=? AND exerciseTime=?";              
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { id, day, time } );	// JDBCUtil에 query문과 매개 변수 설정
+		
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+			if (rs.next()) {
+				int count = rs.getInt("count");
+				System.out.println(count);
+				return (count >= 1 ? true : false);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return true;
+		
+	}
+	
 	//exercise 테이블에 새로운 운동 추가 //ok
 	public int createExerciseByTrainer(Exercise exercise) throws SQLException {
+		
 		String sql = "INSERT INTO exercise "
 					+ "VALUES (exerciseId_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		
