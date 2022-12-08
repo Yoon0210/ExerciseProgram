@@ -38,7 +38,7 @@ public class AddScheduleController implements Controller{
 		int exerciseId = Integer.valueOf(request.getParameter("clickId"));
 		System.out.println("이게 여기까지 걸쳐 넘어오는지 모르겠음(클릭한 아이디값): " + exerciseId);
 		
-		Schedule newSchedule = new Schedule(scheId, scheName, scheTime, scheDescription, exerciseId);
+//		Schedule newSchedule = new Schedule(scheId, scheName, scheTime, scheDescription, exerciseId);
 		
 		try {
 			ExerciseDAO exerciseDao = new ExerciseDAO();
