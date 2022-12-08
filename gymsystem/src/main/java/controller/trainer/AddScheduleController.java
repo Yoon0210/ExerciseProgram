@@ -42,13 +42,13 @@ public class AddScheduleController implements Controller{
 		
 		try {
 			ExerciseDAO exerciseDao = new ExerciseDAO();
-			int r = exerciseDao.createScheduleByTrainer(newSchedule);
+//			int r = exerciseDao.createScheduleByTrainer(newSchedule);
 			
-			if(r == 1) {
-				System.out.println("트레이너 스케줄 추가 성공, 운동관리창으로 이동");
-				return "/trainer/addSchedule.jsp";
-			}
-			else
+//			if(r == 1) {
+//				System.out.println("트레이너 스케줄 추가 성공, 운동관리창으로 이동");
+//				return "/trainer/addSchedule.jsp";
+//			}
+//			else
 				return "redirect:/user/main";
 		} catch(Exception e) {
 			System.out.println("스케줄 추가 실패");

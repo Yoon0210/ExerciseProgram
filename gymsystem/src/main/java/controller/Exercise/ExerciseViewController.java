@@ -22,10 +22,10 @@ public class ExerciseViewController implements Controller{
 		
 		try {
 			Exercise Exercise = ExerciseDao.searchexerciseById(viewId);
-			ArrayList<Schedule> scheList = (ArrayList<Schedule>) ExerciseDao.searchScheduleByID(viewId);
+//			ArrayList<Schedule> scheList = (ArrayList<Schedule>) ExerciseDao.searchScheduleByID(viewId);
 			
-			request.setAttribute("scheList", scheList);
-			System.out.println(scheList.size());
+//			request.setAttribute("scheList", scheList);
+//			System.out.println(scheList.size());
 			request.setAttribute("viewExercise", Exercise);
 			return "exercise/view.jsp";
 		} catch(Exception e) {
