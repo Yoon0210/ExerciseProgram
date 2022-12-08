@@ -23,7 +23,7 @@ public class Exercise implements Serializable{
 		this.trainerName = trainerName;
 	}
 	
-	public Exercise(String trainerId, String exerciseName, String day, String time, String difficulty, String type){
+	public Exercise(String trainerId, String exerciseName, String exerciseDay, String exerciseTime, String difficulty, String exerciseType){
 		this.trainerId = trainerId;
 		this.exerciseName = exerciseName;
 		this.exerciseDay = exerciseDay;
