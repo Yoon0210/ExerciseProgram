@@ -85,9 +85,7 @@ public class ListReviewController implements Controller {
 				session.getAttribute("searchContent").toString());
 //		List<Review> reviewList = manager.findReviewList(currentPage, countPerPage, request.getParameter("orderType"));
 
-//		List<Trainer> trList = (manager).findTrainerList();
 		List<Exercise> wList = manager.findExerciseName();
-
 
 		session.setAttribute("reviewList", reviewList);
 		session.setAttribute("wList", wList);
