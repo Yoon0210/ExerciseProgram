@@ -22,7 +22,7 @@
 				</c:if>
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
-						href='<c:url value="/exercise/search" />'>시간표 관리</a>
+						href='<c:url value="/exercise/search" />'>운동 예약</a>
 				</div>
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
