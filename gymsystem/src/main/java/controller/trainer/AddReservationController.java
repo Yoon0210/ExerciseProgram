@@ -49,7 +49,7 @@ public class AddReservationController implements Controller{
     	String category = request.getParameter("category");
     	System.out.println("운동 카테고리: " + category);
     	
-    	Exercise newExercise = new Exercise(trainerId, name, startTime, endTime, strength, category);
+    	//Exercise newExercise = new Exercise(trainerId, name, startTime, endTime, strength, category);
     	
 		try {
 			ExerciseDAO exerciseDao = new ExerciseDAO();
