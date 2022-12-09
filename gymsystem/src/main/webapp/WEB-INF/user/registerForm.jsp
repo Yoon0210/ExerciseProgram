@@ -64,16 +64,16 @@
 			<form name="form" method="POST"
 				action="<c:url value='/user/register'/>">
 				<div class="form-group">
-					<label for="registerType" ></label>
+					<label for="userType" ></label>
 					<div class="form-check form-check-inline">
 						<input value="trainer" class="form-check-input" type="radio"
-							name="registerType" id="flexRadioDefault1" checked> <label
+							name="userType" id="flexRadioDefault1" checked> <label
 							class="form-check-label" for="flexRadioDefault1"> 강사
 						</label>
 					</div>
 					<div class="form-check form-check-inline">
 						<input value="user" class="form-check-input" type="radio"
-							name="registerType" id="flexRadioDefault2"> <label
+							name="userType" id="flexRadioDefault2"> <label
 							class="form-check-label" for="flexRadioDefault2"> 회원
 						</label>
 					</div>
