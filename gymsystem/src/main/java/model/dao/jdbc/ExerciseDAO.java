@@ -110,7 +110,7 @@ public class ExerciseDAO {
 					rs.getString("exerciseTime"),
 					rs.getString("difficulty"),
 					rs.getString("exerciseType"),
-					rs.getString("trainerName")
+					rs.getString("userName")
 			);
 				exerciseList.add(Exercise);	
 			}		
@@ -146,7 +146,7 @@ public class ExerciseDAO {
 						rs.getString("exerciseTime"),
 						rs.getString("difficulty"),
 						rs.getString("exerciseType"),
-						rs.getString("trainerName")
+						rs.getString("userName")
 						);
 				return Exercise;
 			}
@@ -219,7 +219,7 @@ public class ExerciseDAO {
 					rs.getString("exerciseTime"),
 					rs.getString("difficulty"),
 					rs.getString("exerciseType"),
-					rs.getString("trainerName")
+					rs.getString("userName")
 			);
 			exerciseList.add(Exercise);	
 			}		
@@ -254,7 +254,7 @@ public class ExerciseDAO {
 							rs.getString("exerciseTime"),
 							rs.getString("difficulty"),
 							rs.getString("exerciseType"),
-							rs.getString("trainerName")
+							rs.getString("userName")
 					);
 					exerciseList.add(Exercise);	
 					}		
