@@ -203,7 +203,7 @@ public class ExerciseDAO {
 		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay, "
 				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
 					+ "FROM exercise e, schedule s, userinfo u "
-					+ "WHERE e.exerciseid = s.exerciseid AND e.userid = u.userid "
+					+ "WHERE e.exerciseid = s.exerciseid AND e.trainerid = u.userid "
 		    		+ "AND s.userid= ? ";              
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});	// JDBCUtil에 query문과 매개 변수 설정
 
