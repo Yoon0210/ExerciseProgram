@@ -238,7 +238,7 @@ public class ExerciseDAO {
 		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
 				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
 					+ "FROM exercise e, userinfo u "
-					+ "WHERE e.trainerid = u.userid "
+					+ "WHERE e.trainerid = u.userid";
 		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
 					
 		try {
