@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Exercise;
-import model.Schedule;
 
 //추가해야할 부분이 운동종목으로 검색하거나 강사이름으로 검색하거나 두개로 둘다도 되어야하고 만들어야함.
 public class ExerciseDAO {
@@ -17,8 +16,29 @@ public class ExerciseDAO {
 		jdbcUtil = new JDBCUtil();
 	}
 	
+	public boolean existingTrainerSchedule(String id, String day, String time) {
+		String sql = "SELECT count(*) AS \"count\" FROM exercise WHERE trainerid=? AND exerciseDay=? AND exerciseTime=?";              
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { id, day, time } );	// JDBCUtil에 query문과 매개 변수 설정
+		
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+			if (rs.next()) {
+				int count = rs.getInt("count");
+				System.out.println(count);
+				return (count >= 1 ? true : false);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return true;
+		
+	}
+	
 	//exercise 테이블에 새로운 운동 추가 //ok
 	public int createExerciseByTrainer(Exercise exercise) throws SQLException {
+		
 		String sql = "INSERT INTO exercise "
 					+ "VALUES (exerciseId_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		
@@ -75,7 +95,8 @@ public class ExerciseDAO {
 				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
 					+ "FROM exercise e, userinfo u "
 					+ "WHERE e.trainerid = u.userid "
-		    		+ "AND e.trainerid=? ";              
+		    		+ "AND e.trainerid=? ";  
+		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {trainerId});	// JDBCUtil에 query문과 매개 변수 설정
 
 		try {
@@ -178,7 +199,7 @@ public class ExerciseDAO {
 	return null;
 	}
 	
-	 //유저id로 운동 스케쥴 찾는거
+	//유저id로 운동 스케쥴 찾는거
 	public List<Exercise> findExerciseScheduleByUserId(String userid){
 		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
 				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
@@ -213,6 +234,40 @@ public class ExerciseDAO {
 		return null;
 	}
 
+	//tainer id로 운동 스케쥴 찾는거
+		public List<Exercise> findExerciseScheduleByTrainerId(String trainerId){
+			String sql = "SELECT e.exerciseId, e.exerciseName, e.exerciseDay,"
+					+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
+						+ "FROM exercise e, schedule s, userinfo u "
+						+ "WHERE e.exerciseid = s.exerciseid AND e.trainerId = u.userId"
+			    		+ "AND s.userId= ? ";              
+			jdbcUtil.setSqlAndParameters(sql, new Object[] {trainerId});	// JDBCUtil에 query문과 매개 변수 설정
+
+			try {
+				ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+				List<Exercise> exerciseList = new ArrayList<Exercise>();
+				while (rs.next()) {
+					Exercise Exercise = new Exercise(
+						rs.getInt("exerciseId"),
+						trainerId,
+						rs.getString("exerciseName"),
+						rs.getString("exerciseDay"),
+						rs.getString("exerciseTime"),
+						rs.getString("difficulty"),
+						rs.getString("exerciseType"),
+						rs.getString("trainerName")
+				);
+				exerciseList.add(Exercise);	
+				}		
+				return exerciseList;
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			} finally {
+				jdbcUtil.close();		// resource 반환
+			}
+			return null;
+		}
 	
 	//미경 make
 	public List<Exercise> findExerciseName() {
