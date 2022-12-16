@@ -179,7 +179,7 @@ public class ExerciseDAO {
 			Exercise Exercise = new Exercise(
 					rs.getInt("exerciseId"),
 					rs.getString("trainerId"),
-					exerciseName,
+					rs.getString("exerciseName"),
 					rs.getString("exerciseDay"),
 					rs.getString("exerciseTime"),
 					rs.getString("difficulty"),
@@ -232,7 +232,40 @@ public class ExerciseDAO {
 		}
 		return null;
 	}
-
+	
+	//모든 운동리스트 반환
+	public List<Exercise> allExerciseList() throws SQLException {
+		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
+				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
+					+ "FROM exercise e, userinfo u "
+					+ "WHERE e.trainerid = u.userid "
+		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
+					
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();		// query 실행
+			List<Exercise> exerciseList = new ArrayList<Exercise>();
+			while (rs.next()) {
+				Exercise Exercise = new Exercise(
+					rs.getInt("exerciseId"),
+					rs.getString("trainerId"),
+					rs.getString("exerciseName"),
+					rs.getString("exerciseDay"),
+					rs.getString("exerciseTime"),
+					rs.getString("difficulty"),
+					rs.getString("exerciseType"),
+					rs.getString("trainerName")
+			);
+				exerciseList.add(Exercise);	
+			}		
+			return exerciseList;
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return null;
+	}
 	
 	//미경 make
 	public List<Exercise> findExerciseName() {
