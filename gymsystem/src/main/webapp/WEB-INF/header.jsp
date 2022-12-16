@@ -32,7 +32,7 @@
 				</div>
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
-						href='<c:url value="" />'>내 시간표</a>
+						href='<c:url value="/exercise/timetable" />'>내 시간표</a>
 				</div>
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
