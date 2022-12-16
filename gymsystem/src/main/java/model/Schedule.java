@@ -11,7 +11,7 @@ public class Schedule implements Serializable{
 	public Schedule(String userId, int exerciseId) {
 		super();
 		this.userId = userId;
-		this.exercis eId = exerciseId;
+		this.exerciseId = exerciseId;
 	}
 	
 	public String getUserId() {

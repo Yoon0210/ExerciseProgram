@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import controller.Controller;
 import controller.user.UserSessionUtils;
 import model.Exercise;
+import model.dao.jdbc.ExerciseDAO;
 import model.service.UserManager;
 
 public class ListExerciseController implements Controller {
@@ -51,8 +52,10 @@ public class ListExerciseController implements Controller {
 //					session.getAttribute("orderType").toString(),
 //					session.getAttribute("searchContent").toString());
 			
-			ArrayList<Exercise> exerciseList = exerciseDao.searchStringExercisename(request.getParameter("searchContent");
-			ArrayList<Exercise> allList = exerciseDao.allExerciseList();
+			ExerciseDAO exerciseDao = new ExerciseDAO();
+			
+			List<Exercise> exerciseList = exerciseDao.searchStringExercisename(request.getParameter("searchContent"));
+			List<Exercise> allList = exerciseDao.allExerciseList();
 		
 			session.setAttribute("exerciseList", exerciseList);
 			session.setAttribute("allList", allList);
