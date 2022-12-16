@@ -39,19 +39,19 @@ function report(a, b){
 		<form method="get" action="<c:url value="/review/search" />"
 			class="form-inline mt-3">
 			<select name="workoutType" class="form-control mx-1 mt-2">
-				<option value="-1">전체</option>
+				<option value="전체">전체</option>
 				<c:forEach var="workout" items="${wList}">
 					<option value="${workout.getExerciseId()}"
 						<c:if test='${workout.getExerciseId() eq workoutType}'> selected="selected" </c:if>>${workout.toString()}</option>
 				</c:forEach>
 			</select> <select name="orderType" class="form-control mx-1 mt-2">
-				<option value="reviewId DESC">최신순</option>
-				<option value="likeCount DESC"
-					<c:if test='${orderType eq "likeCount DESC"}'>selected="selected"</c:if>>추천순</option>
+				<option value="r.reviewId">최신순</option>
+				<option value="r.likeCount"
+					<c:if test='${orderType eq "likeCount"}'>selected="selected"</c:if>>추천순</option>
 
 			</select> <input type="text" name="searchContent"
 				class="form-control mx-1 mt-2" placeholder="내용을 입력하세요"
-				<c:if test='${searchContent ne "-"}'>value='${searchContent }'</c:if>>
+				<c:if test='${searchContent ne null}'>value='${searchContent }'</c:if>>
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
 			<a class="btn btn-primary mx-1 mt-2" data-toggle="modal"
 				href="#registerModal">등록하기</a>

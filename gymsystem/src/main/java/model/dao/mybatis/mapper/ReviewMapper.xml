@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="model.dao.mybatis.mapper.ReviewMapper">
+	<cache />
+
+	<sql id="BaseColumns">
+		r.reviewId,
+		r.userId,
+		r.workoutId,
+		r.title,
+		r.content,
+		r.score,
+		r.likeCount,
+		r.postedDate,
+		e.exerciseName AS workoutName,
+		u.userName AS trainerName
+	</sql>
+ 
+	<select id="selectReviewByCondition" parameterType="hashmap" resultType="Review">
+		SELECT <include refid="BaseColumns"/>
+		FROM REVIEW r, EXERCISE e, USERINFO u
+		<where>
+			r.workoutId = e.exerciseId AND e.trainerId = u.userId
+			<if test="workoutType != null">
+				AND e.exerciseId = #{workoutType}
+			</if>
+			<if test="searchContent != null">
+				AND ( (r.title Like '%'||#{searchContent}||'%') OR (r.content Like '%'||#{searchContent}||'%' ) )  
+			</if>
+		</where>
+		ORDER BY ${orderType} DESC
+	</select>
+	
+</mapper>

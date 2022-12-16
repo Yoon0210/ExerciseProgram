@@ -32,13 +32,13 @@
 		<c:forEach var="lesson" items="${lessonList}">  			  	
 	  	    <tr>
 			  <td>
-			  	${user.workout}     
+			  	${lesson.workout}     
 			  </td>
 			  <td>
-			    ${user.trainer} 
+			    ${lesson.trainer} 
 			  </td>
 			  <td>
-			    ${user.time} 
+			    ${lesson.time} 
 			  </td>
 			</tr>
 		 </c:forEach> 

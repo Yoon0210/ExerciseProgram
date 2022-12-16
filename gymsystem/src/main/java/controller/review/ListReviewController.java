@@ -1,6 +1,8 @@
 package controller.review;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import controller.user.UserSessionUtils;
 import model.Exercise;
 import model.Report;
 import model.Review;
+import model.dao.mybatis.ReviewSessionRepository;
 import model.service.UserManager;
 
 public class ListReviewController implements Controller {
@@ -29,32 +32,50 @@ public class ListReviewController implements Controller {
 //		int currentPage = 1;
 //		if (currentPageStr != null && !currentPageStr.equals("")) {
 //			currentPage = Integer.parseInt(currentPageStr);
-//		}		
+//		}	
 		
 		UserManager manager = UserManager.getInstance();
+		ReviewSessionRepository reviewRepository = new ReviewSessionRepository();
 		
 		HttpSession session = request.getSession();
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(session));
 		
+		Map<String, Object> condition = new HashMap<String, Object>();
+		
+		condition.put("workoutType", null);
+		condition.put("orderType", "r.reviewId");
+		condition.put("searchContent", null);
+		
 		if(request.getServletPath().equals("/review/list")) {
-			session.setAttribute("workoutType", -1);
-			session.setAttribute("orderType", "reviewId DESC");
-			session.setAttribute("searchContent", "-");
+			session.setAttribute("orderType", "r.reviewId");
+			session.setAttribute("workoutType", null);
+			session.setAttribute("searchContent", null);
+			condition.put("orderType", session.getAttribute("orderType"));
 		}
 		
 		if(request.getServletPath().equals("/review/search")) {
-			if (request.getParameter("workoutType") != null) {
+			if (request.getParameter("workoutType") != null && !request.getParameter("workoutType").equals("전체")) {
 				session.setAttribute("workoutType", Integer.parseInt(request.getParameter("workoutType")));
+				condition.put("workoutType", Integer.parseInt(request.getParameter("workoutType")));
+			} else {
+				session.setAttribute("workoutType", null);
+				condition.put("workoutType", null);
 			}
 
 			if(request.getParameter("orderType") != null && !request.getParameter("orderType").equals("")) {
 				session.setAttribute("orderType", request.getParameter("orderType"));
+				condition.put("orderType", request.getParameter("orderType"));
+			} else {
+				session.setAttribute("orderType", "r.reviewId");
+				condition.put("orderType", "r.reviewId");
 			}
 			
 			if (request.getParameter("searchContent") != null && !request.getParameter("searchContent").equals("")) {
 				session.setAttribute("searchContent", request.getParameter("searchContent"));
+				condition.put("searchContent", request.getParameter("searchContent"));
 			} else {
-				session.setAttribute("searchContent", "-");
+				session.setAttribute("searchContent", null);
+				condition.put("searchContent", null);
 			}
 		}
 		
@@ -78,19 +99,16 @@ public class ListReviewController implements Controller {
 			manager.createReport(report);
 		}
 		
-
-
-		List<Review> reviewList = manager.findReviewList(Integer.parseInt(session.getAttribute("workoutType").toString()),
-				session.getAttribute("orderType").toString(),
-				session.getAttribute("searchContent").toString());
+		try {
+			List<Review> reviewList = reviewRepository.findReviewByCondition(condition);
+			List<Exercise> wList = manager.findExerciseName();
+			session.setAttribute("reviewList", reviewList);
+			session.setAttribute("wList", wList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 //		List<Review> reviewList = manager.findReviewList(currentPage, countPerPage, request.getParameter("orderType"));
-
-		List<Exercise> wList = manager.findExerciseName();
-
-		session.setAttribute("reviewList", reviewList);
-		session.setAttribute("wList", wList);
-
-
 		return "/review/reviewList.jsp";
 	}
 
