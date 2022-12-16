@@ -39,7 +39,7 @@ public class ReviewDAO {
 		return null;
 	}
 
-	public Review findReview(String reviewId) throws SQLException {
+	public Review findReview(int reviewId) throws SQLException {
 		String sql = "SELECT r.reviewId, r.userid, r.workoutId, r.title, r.content, r.score, r.likecount, r.posteddate, e.exerciseName, t.username "
 				+ "FROM Review r, Exercise e, UserInfo t " 
 				+ "WHERE r.workoutId = e.exerciseId AND e.trainerId = t.userId AND reviewId=? ";
