@@ -17,7 +17,7 @@
 	<%@include file="/WEB-INF/navbar.jsp"%>
 	<section style="text-align:center">
 	<a href='<c:url value="/admin/user" />'> 사용자 목록 </a> <br>
-	<a href='<c:url value="/admin/lesson" />'> 운동 관리 </a> <br>
+	<a href='<c:url value="/admin/lesson" />'> 운동 목록 </a> <br>
 	<a href='<c:url value="/admin/report" />'> 신고 처리 </a> <br>
 	</section>
 

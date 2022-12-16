@@ -39,7 +39,7 @@ public class ClickLikeyController implements Controller {
 			manager.createLikey(likey, (String) request.getSession().getAttribute("userType"));
 			
 	    	log.debug("Create Likey : {}", likey);
-	        return "redirect:/review/search";	// 성공 시 커뮤니티 리스트 화면으로 redirect
+	        return "redirect:/review/search";	// 성공 시 리뷰 리스트 화면으로 redirect
 	        
 		} catch (Exception e) {		// 예외 발생 시 입력 reviewList로 forwarding
             request.setAttribute("likeFailed", true);

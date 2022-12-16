@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="repository.mybatis.mapper.ReviewMapper">
+<mapper namespace="model.dao.mybatis.mapper.ReviewMapper">
 	<cache />
 
 	<sql id="BaseColumns">
@@ -29,7 +29,7 @@
 		<where>
 			r.workoutId = e.exerciseId AND e.trainerId = u.userId
 			<if test="workoutType != null">
-				e.exerciseId = #{workoutType}
+				AND e.exerciseId = #{workoutType}
 			</if>
 			<if test="searchContent != null">
 				AND(r.title Like "%#{searchContent}%" OR r.content Like "%#{searchContent}%")  
@@ -61,93 +61,4 @@
 		DELETE FROM REVIEW
 	</delete>
 	
-	
-	<resultMap id="associationResultMap" type="Review">
-	<id column="reviewId" jdbcType="NUMERIC" property="reviewId" />
-		<result column="userId" jdbcType="VARCHAR" property="userId" />
-		<result column="workoutId" jdbcType="VARCHAR" property="workoutId" />
-		<result column="title" jdbcType="VARCHAR" property="title" />
-		<result column="content" jdbcType="VARCHAR" property="userName" />
-		<result column="score" jdbcType="NUMERIC" property="phone" />
-		<result column="likeCount" jdbcType="NUMERIC" property="address" />
-		<result column="postedDate" jdbcType="DATE" property="address" />
-		<result column="exerciseName" jdbcType="VARCHAR" property="workoutName" />
-		<result column="userName" jdbcType="VARCHAR" property="trainerName" />
-	</resultMap>
-	
-	<select id="selectAllReview" parameterType="long" 		
-		resultMap="associationResultMap"> 
-		SELECT r.reviewId,
-				r.userid,
-				r.workoutId, 
-				r.title, 
-				r.content, 
-				r.score, 
-				r.likecount, 
-				r.posteddate, 
-				e.exerciseName, 
-				t.username 
-		FROM Review r, Exercise e, UserInfo t 
-		WHERE r.workoutId = e.exerciseId
-			AND e.trainerId = t.userId 
-	</select>
-
-	<select id="selectReviewByPrimaryKeyAssociation" parameterType="long" 		
-		resultMap="associationResultMap"> 
-		SELECT r.reviewId, 
-				r.userId, 
-				r.comment_content, 
-				r.reg_date, 
-				u.user_name, 
-				u.phone, 
-				u.address
-		FROM REVIEW c, USERS u			
-		WHERE r.userId = u.userId  
-		  AND r.reviewId = #{commentNo} 
-	</select>
-	
-	<select id="selectReviewByPrimaryKeyAssociation2" parameterType="long" 		
-		resultType="Review"> 
-		SELECT r.reviewId AS commentNo,
-			   r.userId AS userId,
-			   r.comment_content AS commentContent,
-			   r.reg_date AS regDate,
-			   u.userId AS "user.userId",	
-			   u.user_name AS "user.userName", 			   
-			   u.phone AS "user.phone",	
-			   u.address AS "user.address"	
-		FROM REVIEW c, USERS u			
-		WHERE r.userId = u.userId  
-		  AND r.reviewId = #{commentNo} 
-	</select>
-	
-	
-	<resultMap id="collectionResultMap" type="Review">
-		<id column="reviewId" jdbcType="BIGINT" property="commentNo" />
-		<result column="userId" jdbcType="VARCHAR" property="userId" />
-		<result column="comment_content" jdbcType="VARCHAR" property="commentContent" />
-		<result column="reg_date" jdbcType="TIMESTAMP" property="regDate" />
-		<collection property="replies" ofType="Reply">
-			<id column="reply_id" property="replyId" />
-			<result column="reply_userId" property="userId" />
-			<result column="reply_content" property="replyContent" />
-			<result column="reply_date" property="regDate" />
-		</collection>
-	</resultMap>
-	
-	<select id="selectReviewByPrimaryKeyCollection" parameterType="long" 			
-		resultMap="collectionResultMap"> 
-		SELECT r.reviewId, 
-				r.userId, 
-				r.comment_content, 
-				r.reg_date, 
-				r.reply_id, 
-				r.userId AS reply_userId, 
-				r.reply_content, 
-				r.reg_date AS reply_date
-		FROM REVIEW r, REPLY r
-		WHERE r.reviewId = r.reviewId 
-		  AND r.reviewId = #{commentNo} 
-	</select>
-
 </mapper>
