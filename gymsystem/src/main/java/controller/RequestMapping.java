@@ -10,6 +10,8 @@ import controller.admin.ReportPageController;
 import controller.likey.ClickLikeyController;
 import controller.review.CreateReviewController;
 import controller.review.ListReviewController;
+import controller.timeTable.sendExerciseInfoController;
+import controller.trainer.AddReservationController;
 import controller.user.*;
 
 public class RequestMapping {
@@ -51,6 +53,11 @@ public class RequestMapping {
         mappings.put("/admin/user", new ListUserController());
         
         mappings.put("/exercise/search", new ExerciseReservationController());
+        mappings.put("/exercise/timetable", new sendExerciseInfoController());
+        
+        mappings.put("/trainer/add", new AddReservationController());
+        mappings.put("/trainer/exercise/form", new ForwardController("/trainer/addReservation.jsp"));
+        mappings.put("/trainer/exercise/search", new ExerciseReservationController());
         
         logger.info("Initialized Request Mapping!");
     }

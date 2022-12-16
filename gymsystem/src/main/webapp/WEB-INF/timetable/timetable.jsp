@@ -41,16 +41,21 @@
 <body>
 	<%@include file="/WEB-INF/header.jsp"%>
 	<div>
+	<br><br>
 	<h1 align="center">내 시간표 확인</h1>
+	<br><br>
     <table align="center"; style="width:50%";>
     <tr>
         <th>&nbsp;</th>
+        <th>일</th>
         <th>월</th>
         <th>화</th>
         <th>수</th>
         <th>목</th>
         <th>금</th>
+        <th>토</th>
     </tr>
+    <!-- 
     <tr>
         <th>09:00 - 09:50</th>
         <td></td>
@@ -156,27 +161,20 @@
         <td></td>
     </tr>
 </table>
+ -->
 </div>
 <%	
-	for (int i = 0; i < 7; i++){ //times 열
+	String[][] sche = (String[][])request.getAttribute("sche");
+
+	for (int i = 0; i < 13; i++){ //times 열
 		  out.println("<tr>");
-		  if(0 < 3){ //i = 0,1,2
-			  out.println("<td>"+(i+9)+"</td>"); //운동 시간 표시 부분 
-			  for(int j = 0; j < 5; j++){ //days 행 
-				  if*
-			  }
+		  out.println("<td>"+(i+9)+"<td>");
+		  for(int j=0; j<7; j++){
+			  out.println(sche[i][j]);
 		  }
-		  
-		  else{ //i = 3,4,5,6 
-			  out.println("<td>"+(i+16)+"</td>"); //운동 시간 표시 부분 
-			  for (int j = 0; j < 5; j++){ //days 행 
-				  out.println("<td>");
-			  }
-		  }
-		  
-		  
-		  out.println("</tr>");
 	}
+	 out.println("</tr>");
+	
 %>
 </body>
 </html>

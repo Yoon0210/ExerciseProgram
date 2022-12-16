@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.manager.util.SessionUtils;
+
 import controller.Controller;
 import controller.user.UserSessionUtils;
 import model.Exercise;
@@ -42,29 +44,30 @@ public class sendExerciseInfoController  implements Controller{
 	    		exercise =  exercisedao.findExerciseScheduleByUserId(userId);
 	    	}
 	    	
-	    	int times = 7;
-	    	int days = 5;
+	    	int times = 13;
+	    	int days = 7;
 	    	
-	    	String exerDay = null;
-	    	String exerTime = null;
-	    	for(Exercise e : exercise) {
-	    		exerDay = e.getExerciseDay(); //금
-		    	exerTime = e.getExerciseTime();	//16시 
-	    	}
+	    	String exerDay = null; //user가 추가한 운동정보의 요일 담는 배열
+	    	String exerTime = null; //user가 추가한 운동정보의 시간 담는 배열 
 	    	
-	    	int dayIndex = exercisedto.getTime(exerDay);
-	    	int timeIndex = exercisedto.getWeekday(exerTime);
-	    	
+	    	int dayIndex = 0;
+	    	int timeIndex = 0;
 	    	String[][] sche = new String[times][days];
 	    	
-	    	//2차원 배열에 해당 값 넣기 
-	    	for(int i=0; i<times; i++) {
-	    		for(int j=0; j<days; j++) {
-	    			sche[timeIndex][dayIndex] = exercise.get(i).getExerciseName()+"\n"
-	    								+exercise.get(i).getDifficulty()+"\n"+exercise.get(i).getTrainerName();
-	    		}
+	    	for(int i=0; i<exercise.size(); i++){
+	    		exerDay = ((Exercise) exercise).getExerciseDay();  // ex)금
+		    	exerTime = ((Exercise) exercise).getExerciseTime(); // ex)16시 
+		    	
+		    	System.out.println(exerDay);
+		    	System.out.println(exerTime);
+		    	
+	    		dayIndex = exercisedto.getTime(exerDay);
+	    		timeIndex = exercisedto.getWeekday(exerTime);
+	    		sche[timeIndex][dayIndex] = exercise.get(i).getExerciseName()+"\n"
+						+exercise.get(i).getDifficulty()+"\n"+exercise.get(i).getTrainerName();
 	    	}
 	    	
+	    	request.setAttribute("sche",sche);
 	    	return "/timetable/timetable.jsp";
 	    	
 		} catch (Exception e) {		

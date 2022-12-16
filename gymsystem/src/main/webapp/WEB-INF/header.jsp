@@ -22,11 +22,17 @@
 				</c:if>
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
-						href='<c:url value="/exercise/search" />'>운동 예약</a>
+						href= <c:if test="${userType eq 'trainer' }">
+							'<c:url value="/trainer/exercise/form" />'
+							</c:if>
+						<c:if test="${userType eq 'user' }">
+						'<c:url value="/exercise/search" />'
+						</c:if>
+						>  운동 예약</a>
 				</div>
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
-						href='<c:url value="" />'>내 시간표</a>
+						href='<c:url value="/exercise/timetable" />'>내 시간표</a>
 				</div>
 				<div class="col">
 					<a style="text-decoration: none; color: inherit;"
