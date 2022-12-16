@@ -26,6 +26,9 @@ public class ListExerciseController implements Controller {
 //			currentPage = Integer.parseInt(currentPageStr);
 //		}
 		
+		ExerciseDAO exerciseDao = new ExerciseDAO();
+		List<Exercise> exerciseList = null;
+		
 		try {
 			UserManager manager = UserManager.getInstance();
 			
@@ -33,32 +36,34 @@ public class ListExerciseController implements Controller {
 			request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(session));
 			
 			if(request.getServletPath().equals("/exercise/list")) {
-				session.setAttribute("allContent", -1);
-				session.setAttribute("searchContent", "-");
+//				session.setAttribute("allContent", -1);
+//				session.setAttribute("searchContent", "-");
+				exerciseList = exerciseDao.allExerciseList();
 			}
 			
-			if(request.getServletPath().equals("/exercise/search")) {
-				if (request.getParameter("allContent") != null) {
-					session.setAttribute("allContent", Integer.parseInt(request.getParameter("allContent")));
-				}
-				if (request.getParameter("searchContent") != null && !request.getParameter("searchContent").equals("")) {
-					session.setAttribute("searchContent", request.getParameter("searchContent"));
-				} else {
-					session.setAttribute("searchContent", "-");
-				}
+			if(request.getServletPath().equals("exercise/reservation")) {
+				
 			}
+			
+//			if(request.getServletPath().equals("/exercise/search")) {
+//				if (request.getParameter("allContent") != null) {
+//					session.setAttribute("allContent", Integer.parseInt(request.getParameter("allContent")));
+//				}
+//				if (request.getParameter("searchContent") != null && !request.getParameter("searchContent").equals("")) {
+//					session.setAttribute("searchContent", request.getParameter("searchContent"));
+//				} else {
+//					session.setAttribute("searchContent", "-");
+//				}
+//				exerciseList = exerciseDao.searchStringExercisename(request.getParameter("searchContent"));
+//				
+//			}
 			
 //			List<Exercise> exerciseList = manager.findReviewList(Integer.parseInt(session.getAttribute("workoutType").toString()),
 //					session.getAttribute("orderType").toString(),
 //					session.getAttribute("searchContent").toString());
 			
-			ExerciseDAO exerciseDao = new ExerciseDAO();
-			
-			List<Exercise> exerciseList = exerciseDao.searchStringExercisename(request.getParameter("searchContent"));
-			List<Exercise> allList = exerciseDao.allExerciseList();
 		
 			session.setAttribute("exerciseList", exerciseList);
-			session.setAttribute("allList", allList);
 			
 			return "/exercise/exerciseList.jsp";
 		} catch(Exception e) {

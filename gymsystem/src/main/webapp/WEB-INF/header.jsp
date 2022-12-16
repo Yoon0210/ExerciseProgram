@@ -26,7 +26,7 @@
 							'<c:url value="/trainer/exercise/form" />'
 							</c:if>
 						<c:if test="${userType eq 'user' }">
-						'<c:url value="/exercise/search" />'
+						'<c:url value="/exercise/list" />'
 						</c:if>
 						>  운동 예약</a>
 				</div>

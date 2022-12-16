@@ -200,10 +200,10 @@ public class ExerciseDAO {
 	
 	 //유저id로 운동 스케쥴 찾는거
 	public List<Exercise> findExerciseScheduleByUserId(String userid){
-		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
+		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay, "
 				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
 					+ "FROM exercise e, schedule s, userinfo u "
-					+ "WHERE e.exerciseid = s.exerciseid AND e.userid = u.userid"
+					+ "WHERE e.exerciseid = s.exerciseid AND e.userid = u.userid "
 		    		+ "AND s.userid= ? ";              
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});	// JDBCUtil에 query문과 매개 변수 설정
 
@@ -235,7 +235,7 @@ public class ExerciseDAO {
 	
 	//모든 운동리스트 반환
 	public List<Exercise> allExerciseList() throws SQLException {
-		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
+		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay, "
 				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
 					+ "FROM exercise e, userinfo u "
 					+ "WHERE e.trainerid = u.userid";
@@ -253,7 +253,7 @@ public class ExerciseDAO {
 					rs.getString("exerciseTime"),
 					rs.getString("difficulty"),
 					rs.getString("exerciseType"),
-					rs.getString("trainerName")
+					rs.getString("username")
 			);
 				exerciseList.add(Exercise);	
 			}		

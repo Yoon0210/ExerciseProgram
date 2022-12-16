@@ -28,7 +28,7 @@
 	<section class="container">
 
 		<!-- 운동 검색 폼 -->
-		<form method="get" action="<c:url value="/exercise/search" />"
+		<!--  <form method="get" action="<c:url value="/exercise/search" />"
 			class="form-inline mt-3">
 			<select name="allContent" class="form-control mx-1 mt-2">
 				<option value="-1">전체</option>
@@ -40,7 +40,7 @@
 				class="form-control mx-1 mt-2" placeholder="내용을 입력하세요"
 				<c:if test='${searchContent ne "-"}'>value='${searchContent }'</c:if>>
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
-		</form>
+		</form>-->
 		<div class="col-lg-12 text-center text-danger">
 			<c:if test="${exerciseList.size() eq 0 }">
 			<br>
@@ -71,7 +71,7 @@
 							<span style="color: green;">( 난이도 : ${exercise.getDifficulty() }
 								) &nbsp; 
 							<a href="<c:url value='/exercise/reservation'>
-							<c:param name='exerciseReservation' value='${exercise.getExerciseId}'/></c:url>"
+							<c:param name='exerciseReservation' value='${exercise.getExerciseId()}'/></c:url>"
 	 						onclick="return confirm('등록하시겠습니까?')"><font size="2">등록하기</font></a> &nbsp;
 							</span>
 						</div>
