@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 //운동id, 트레이너id, 강좌명, 요일, 시간, 난이도, 운동타입, 트레이너이름
@@ -14,6 +16,10 @@ public class Exercise implements Serializable {
 	private String exerciseType;
 	private String trainerName;
 
+	public Exercise() {
+		super();
+	}
+	
 	// 리뷰할 때 가져갈 데이터
 	public Exercise(int exerciseId, String exerciseName, String trainerId, String trainerName) {
 		super();
@@ -125,6 +131,27 @@ public class Exercise implements Serializable {
 	@Override
 	public String toString() {
 		return exerciseName + " - " + trainerName;
+	}
+
+	//요일 시간 매핑 메소드!
+	public int getWeekday(String week) {
+		//요일 매핑(map1)
+    	String[] weekday = {"일","월","화","수","목","금","토"};
+    	int[] weekdayIndex = {0,1,2,3,4,5,6};
+
+    	//key, value
+    	Map<String,Integer> map1 = new HashMap<>();
+
+    	for(int i = 0; i < weekday.length; i++) {
+    		map1.put(weekday[i],weekdayIndex[i]);
+    	}
+    	return map1.get(week);
+	}
+
+	//시간 매핑 메소드 
+	public int getTime(String time) {
+    	//시간 매핑(map2)
+		return Integer.parseInt(time)-9;
 	}
 
 }

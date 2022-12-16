@@ -12,6 +12,7 @@ import controller.likey.ClickLikeyController;
 import controller.review.CreateReviewController;
 import controller.review.ListReviewController;
 import controller.trainer.AddReservationController;
+import controller.timetable.SendExerciseInfoController;
 import controller.user.*;
 
 public class RequestMapping {
@@ -58,6 +59,7 @@ public class RequestMapping {
         mappings.put("/exercise/search", new ListExerciseController());
         mappings.put("/exercise/list", new ListExerciseController());
         mappings.put("/exercise/reservation", new ListExerciseController());
+        mappings.put("/exercise/timetable", new SendExerciseInfoController());
         
         mappings.put("/trainer/add", new AddReservationController());
         mappings.put("/trainer/exercise/form", new ForwardController("/trainer/addReservation.jsp"));
