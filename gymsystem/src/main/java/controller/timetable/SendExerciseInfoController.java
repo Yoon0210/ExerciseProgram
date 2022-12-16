@@ -1,20 +1,15 @@
 package controller.timetable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.catalina.manager.util.SessionUtils;
 
 import controller.Controller;
 import controller.user.UserSessionUtils;
 import model.Exercise;
 import model.dao.jdbc.ExerciseDAO;
-import model.Exercise;
 
 public class SendExerciseInfoController  implements Controller{
 
