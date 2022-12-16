@@ -57,18 +57,37 @@ public class ReportDAO {
 		List<Report> reportList = new ArrayList<Report>();
 		try {
 			ResultSet rs = jdbcUtil.executeQuery(); // query 실행
-			if (rs.next()) { // 학생 정보 발견
+			while (rs.next()) { // 학생 정보 발견
 				Report report = new Report( // User 객체를 생성하여 학생 정보를 저장
 						userId, rs.getInt("reviewId"), rs.getString("reportReason"));
 				reportList.add(report);
-				return reportList;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			jdbcUtil.close(); // resource 반환
 		}
-		return null;
+		return reportList;
+	}
+	
+	public Report findReport(String userId, int reviewId) throws SQLException {
+		String sql = "SELECT * " + "FROM Report " + "WHERE userId=? AND reviewId=? ";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { userId, reviewId }); // JDBCUtil에 query문과 매개 변수 설정
+
+		Report report = new Report();
+		try {
+			ResultSet rs = jdbcUtil.executeQuery(); // query 실행
+			if (rs.next()) { 
+				report.setUserId(userId);
+				report.setReviewId(reviewId);
+				report.setReportReason(rs.getString("reportReason"));
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close(); // resource 반환
+		}
+		return report;
 	}
 	
 	public List<Report> findReportList() throws SQLException {

@@ -34,7 +34,7 @@
 			  	${report.getUserId()}     
 			  </td>
 			  <td>
-			    ${report.getReviewId()} 
+			    <a href="<c:url value='/admin/report/view' > <c:param name='reviewId' value='${report.getReviewId()}'/><c:param name='reportUserId' value='${report.getUserId()}'/> </c:url>" >${report.getReviewId()}</a> 
 			  </td>
 			  <td>
 			    ${report.getReportReason()} 

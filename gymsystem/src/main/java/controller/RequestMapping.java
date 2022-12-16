@@ -49,6 +49,9 @@ public class RequestMapping {
         
         mappings.put("/admin", new ForwardController("/admin/adminPage.jsp"));
         mappings.put("/admin/report", new ReportPageController());
+        mappings.put("/admin/report/view", new ReportPageController());
+        mappings.put("/admin/report/delete", new ReportPageController());
+        mappings.put("/admin/report/return", new ReportPageController());
         mappings.put("/admin/user", new ListUserController());
         
         mappings.put("/exercise/search", new ExerciseReservationController());

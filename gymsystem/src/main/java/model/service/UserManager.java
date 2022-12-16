@@ -12,7 +12,6 @@ import model.dao.jdbc.ExerciseDAO;
 import model.dao.jdbc.LikeyDAO;
 import model.dao.jdbc.ReportDAO;
 import model.dao.jdbc.ReviewDAO;
-import model.dao.jdbc.TrainerDAO;
 import model.dao.jdbc.UserDAO;
 
 /**
