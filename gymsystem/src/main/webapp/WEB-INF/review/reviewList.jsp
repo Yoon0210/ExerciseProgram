@@ -18,7 +18,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- 글씨체 적용 -->
-<link rel="stylesheet" href="./css/custom.css">
+<link rel="stylesheet" href="/css/custom.css">
 
 <script>
 function report(a, b){
