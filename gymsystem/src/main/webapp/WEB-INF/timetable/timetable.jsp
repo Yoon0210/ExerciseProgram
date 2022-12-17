@@ -44,7 +44,7 @@
 	<br><br>
 	<h1 align="center">내 시간표 확인</h1>
 	<br><br>
-    <table align="center"; style="width:50%";>
+    <table align="center"; style="width:80%";>
     <tr>
         <th>&nbsp;</th>
         <th>일</th>
@@ -165,14 +165,20 @@
 </div>
 <%	
 	String[][] sche = (String[][])request.getAttribute("sche");
-	for (int i = 0; i < 13; i++){ //times 열
+
+	for (int i = 0; i < 13; i++){ //times 행
 		  out.println("<tr>");
-		  out.println("<td>"+(i+9)+"<td>");
-		  for(int j=0; j<7; j++){
-			  out.println(sche[i][j]);
+		  out.println("<td>"+(i+9)+"시 <td>");
+		  for(int j=0; j<7; j++){ //days 열 
+			  if(sche[i][j] == null){
+				  out.println("&nbsp;");
+			  }
+			  else{
+			  	out.println(sche[i][j]);
+			  }
 		  }
+		  out.println("</tr>");
 	}
-	 out.println("</tr>");
 	
 %>
 </body>
