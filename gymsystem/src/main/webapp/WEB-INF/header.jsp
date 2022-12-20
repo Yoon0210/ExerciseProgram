@@ -10,7 +10,7 @@
 	style="background-color: #3F51B5; color: #FFFFFF;">
 	<div class="p-5 container">
 		<!-- <h1>로고 넣을 자리</h1>-->
-		<img src="../images/logo.png" style="width:190px; height:150px;">
+		<img src="/gymsystem/images/logo.png" style="width:190px; height:150px;">
 	</div>
 	<div style="background-color: #3A4BA7; color: #FFFFFF; font-size: 20px">
 		<div class="container p-3">

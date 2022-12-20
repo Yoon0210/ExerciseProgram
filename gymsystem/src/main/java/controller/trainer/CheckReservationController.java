@@ -43,7 +43,7 @@ public class CheckReservationController implements Controller {
 		int resId;
 		String resUserId;
 		int resExerId;
-		
+
 		if (request.getServletPath().equals("/reservation/reject")) {
 			resId = Integer.parseInt(request.getParameter("reservationId"));
 			resUserId = request.getParameter("resUserId");
@@ -57,18 +57,22 @@ public class CheckReservationController implements Controller {
 			resExerId = Integer.parseInt(request.getParameter("resExerId"));
 			reservationDAO.updateStatus(resId, resUserId, resExerId, "승인");
 			return "redirect:/trainer/check";
-			
+
 		}
 
 		if (request.getServletPath().equals("/trainer/check")) {
-			List<Exercise> exerciseList = exerciseDao.findExerciseByTrainer(trainerId);
-//		exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
+			try {
+				List<Exercise> exerciseList = exerciseDao.findExerciseByTrainer(trainerId);
+//				exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
 
-			List<Reservation> reservations = reservationDAO.searchReservationByTrainer(trainerId);
-
-			request.setAttribute("exerciseList", exerciseList);
-			request.setAttribute("resList", reservations);
-
+				List<Reservation> reservations = reservationDAO.searchReservationByTrainer(trainerId);
+				System.out.println("69");
+				request.setAttribute("exerciseList", exerciseList);
+				request.setAttribute("resList", reservations);
+				System.out.println("72");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		return "/trainer/checkReservation.jsp";
