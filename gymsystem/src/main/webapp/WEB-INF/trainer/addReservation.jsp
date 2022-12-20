@@ -78,7 +78,7 @@
 	<form name="form" method="POST" action="<c:url value='/trainer/add' />">
 		<h1 align="center">새로운 운동 등록</h1>
 
-		<table align="center">
+		<table align="center" style="height: 35%;">
 			<!--<tr>
 			<td align = "center"> <font size="2px">운동 ID</td>
 			<td> <input type="text" style="width: 300" name="id"> </td>
@@ -102,12 +102,37 @@
 			</tr>
 			<tr>
 				<td align="center">요일</td>
-				<td width="250"><input type="text" name="exerciseDay"></td>
+				<td width="250">
+				<select name="exerciseDay">
+					<option value="일">일</option>
+					<option value="월">월</option>
+					<option value="화">화</option>
+					<option value="수">수</option>
+					<option value="목">목</option>
+					<option value="금">금</option>
+					<option value="토">토</option>
+				</select>
 			</tr>
 
 			<tr>
 				<td align="center">시간</td>
-				<td><input type="text" name="exerciseTime"></td>
+				<td>  
+				<select name="exerciseTime">
+					<option value="9">9</option>
+					<option value="10">10</option>
+					<option value="11">11</option>
+					<option value="12">12</option>
+					<option value="13">13</option>
+					<option value="14">14</option>
+					<option value="15">15</option>
+					<option value="16">16</option>
+					<option value="17">17</option>
+					<option value="18">18</option>
+					<option value="19">19</option>
+					<option value="20">20</option>
+					<option value="21">21</option>
+				</select>
+				</td>
 			</tr>
 			<tr>
 				<td><input type="button" value="운동등록"
