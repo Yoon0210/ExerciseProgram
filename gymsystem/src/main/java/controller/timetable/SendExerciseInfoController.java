@@ -68,7 +68,11 @@ public class SendExerciseInfoController implements Controller {
 				dayIndex = Exercise.getWeekday(exerDay);
 				timeIndex = Exercise.getTime(exerTime);
 				
-				sche[timeIndex][dayIndex] = "<td>" + ex.getExerciseName() + "<br>"
+				String r = Integer.toHexString((ex.getExerciseDay() + ex.getExerciseId()).hashCode()%128+128);
+				String g = Integer.toHexString((ex.getExerciseId() + ex.getDifficulty()).hashCode()%128+128);
+				String b = Integer.toHexString((ex.getDifficulty() + ex.getExerciseTime()).hashCode()%128+128);
+				
+				sche[timeIndex][dayIndex] = "<td bgcolor='#"+r+g+b+"'>" + ex.getExerciseName() + "<br>"
 						+ ex.getDifficulty() + "<br>" + ex.getTrainerName() + "</td>";
 			}
 
