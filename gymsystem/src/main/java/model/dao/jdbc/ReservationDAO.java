@@ -49,8 +49,8 @@ public class ReservationDAO {
 	public List<Reservation> searchReservationByTrainer(String trainerId){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
-				+"FROM reservation r, Userinfo u, Exercise e "
-				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = u.userId AND r.status='대기' AND e.trainerId = ?";
+				+"FROM reservation r, Userinfo t, Exercise e, UserInfo u "
+				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND r.status='대기' AND r.userId = u.userId AND e.trainerId = ?";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {trainerId});
 		
@@ -79,9 +79,9 @@ public class ReservationDAO {
 	}
 	public List<Reservation> searchReservationByUser(String userid){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
-				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
-				+"FROM reservation r, Userinfo u, Exercise e "
-				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = u.userId AND r.userId = u.userId AND r.userId = ?";
+				+ "r.status, t.userName, e.exerciseName, e.exerciseType "
+				+"FROM reservation r, Userinfo t, Exercise e, UserInfo u "
+				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND  r.userId = u.userId AND r.userId = ?";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});
 		List<Reservation> reservations = new ArrayList<Reservation>();
