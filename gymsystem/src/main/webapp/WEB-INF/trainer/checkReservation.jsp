@@ -66,7 +66,7 @@
 			<td align ="center"><font size="2px"> ${reservation.getExerciseName()}
 			</td>
 			<td align ="center"><font size="2px"> ${reservation.getName()}</td>
-			<td align ="center"><font size="2px"> ${exercise.getStatus()}</td>
+			<td align ="center"><font size="2px"> ${reservation.getStatus()}</td>
 			<td align ="center"><font size="2px"> 수락버튼 </td>
 			<td align="center"><a onclick="return confirm('삭제하시겠습니까?')"  href="<c:url value='/trainer/delete'>
 							<c:param name='exerciseReservation' value='${exercise.getExerciseId()}'/></c:url>"

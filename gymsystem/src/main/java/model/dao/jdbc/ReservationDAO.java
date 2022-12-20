@@ -16,10 +16,10 @@ public class ReservationDAO {
 	
 	//resid로 필요한  reservation요소 받아오기
 	public Reservation searchReservationByResId(int resid){
-		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
+		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName "
 				+"FROM reservation r, Userinfo u, Exercise e "
-				+"WHERE r.exerciseId = e.exerciseId and e.trainerId = u.userId AND resid = ?";
+				+"WHERE r.exerciseId = e.exerciseId and e.trainerId = u.userId AND reservationId = ?";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {resid});
 		
@@ -27,7 +27,7 @@ public class ReservationDAO {
 			ResultSet rs = jdbcUtil.executeQuery();
 			if(rs.next()) {
 				Reservation reservation = new Reservation(
-						rs.getInt("resId"),
+						rs.getInt("reservationId"),
 						rs.getString("userId"),
 						rs.getInt("exerciseId"),
 						rs.getString("reservationDate"),
@@ -47,10 +47,10 @@ public class ReservationDAO {
 	}
 	
 	public List<Reservation> searchReservationByTrainer(String trainerId){
-		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
+		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
 				+"FROM reservation r, Userinfo u, Exercise e "
-				+"WHERE r.exerciseId = e.exerciseId and e.userId = u.userId AND resid = ?";
+				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = u.userId AND r.status='대기' AND e.trainerId = ?";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {trainerId});
 		
@@ -59,7 +59,7 @@ public class ReservationDAO {
 			ResultSet rs = jdbcUtil.executeQuery();
 			while(rs.next()) {
 				Reservation reservation = new Reservation(
-						rs.getInt("resId"),
+						rs.getInt("reservationId"),
 						rs.getString("userId"),
 						rs.getInt("exerciseId"),
 						rs.getString("reservationDate"),
@@ -78,10 +78,10 @@ public class ReservationDAO {
 		return reservations;
 	}
 	public List<Reservation> searchReservationByUser(String userid){
-		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
+		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
 				+"FROM reservation r, Userinfo u, Exercise e "
-				+"WHERE r.exerciseId = e.exerciseId and e.trainerId = u.userId AND resid = ?";
+				+"WHERE r.exerciseId = e.trainerId and e.trainerId = u.userId AND r.userId = u.userId AND r.userId = ?";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});
 		List<Reservation> reservations = new ArrayList<Reservation>();
@@ -89,7 +89,7 @@ public class ReservationDAO {
 			ResultSet rs = jdbcUtil.executeQuery();
 			while(rs.next()) {
 				Reservation reservation = new Reservation(
-						rs.getInt("resId"),
+						rs.getInt("reservationId"),
 						rs.getString("userId"),
 						rs.getInt("exerciseId"),
 						rs.getString("reservationDate"),
