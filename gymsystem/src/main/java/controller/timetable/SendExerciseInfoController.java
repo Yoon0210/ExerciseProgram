@@ -42,7 +42,7 @@ public class SendExerciseInfoController  implements Controller{
 	    		//System.out.println(exercise.get(0).getExerciseTime()); 
 	    	}
 	    	else { //트레이너면 
-	    		exercise =  exercisedao.findExerciseScheduleByUserId(userId);
+	    		exercise =  exercisedao.findExerciseByTrainer(userId);
 	    		System.out.println(exercise);
 	    	}
 	    	
@@ -56,17 +56,21 @@ public class SendExerciseInfoController  implements Controller{
 	    	int timeIndex = 0;
 	    	String[][] sche = new String[times][days]; //운동 정보 담는 배열 
 	    	
+	    	for (int i = 0; i < 13; i++){ //times 행
+
+	  		  for(int j=0; j<7; j++){ //days 열 
+	  			sche[i][j] = "<td></td>";
+	  		  }
+	  	}
+	    	
 	    	for(int i=0; i<exercise.size(); i++){
 	    		exerDay = exercise.get(i).getExerciseDay();  // ex)금
 		    	exerTime = exercise.get(i).getExerciseTime(); // ex)21 
 		    	
-		    	//System.out.println(exerDay);
-		    	//System.out.println(exerTime);
-		    	
-	    		dayIndex = exercisedto.getWeekday(exerDay);
-	    		timeIndex = exercisedto.getTime(exerTime);
-	    		sche[timeIndex][dayIndex] = exercise.get(i).getExerciseName()+"\n"
-						+exercise.get(i).getDifficulty()+"\n"+exercise.get(i).getTrainerName();
+	    		dayIndex = Exercise.getWeekday(exerDay);
+	    		timeIndex = Exercise.getTime(exerTime);
+	    		sche[timeIndex][dayIndex] = "<td>"+exercise.get(i).getExerciseName()+"<br>"
+						+exercise.get(i).getDifficulty()+"<br>"+exercise.get(i).getTrainerName()+"</td>";
 	    	}
 	    	
 	    	request.setAttribute("sche",sche);
