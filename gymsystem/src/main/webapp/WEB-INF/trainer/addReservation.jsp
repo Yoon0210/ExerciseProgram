@@ -57,7 +57,6 @@
 	<ul class="mod_menu">
 		<!-- 회원용 상단바 -->
 		<c:if test="${userType eq 'user' }">
-
 			<li><a href="<c:url value='/user/mypage'></c:url>">마이페이지</a></li>
 			<li><a href="<c:url value='/user/myreservation'></c:url>">예약확인</a></li>
 			<li>커뮤니티</li>
