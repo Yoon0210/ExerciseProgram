@@ -1,6 +1,5 @@
 package controller.trainer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,9 @@ import javax.servlet.http.HttpSession;
 import controller.Controller;
 import controller.user.UserSessionUtils;
 import model.Exercise;
+import model.Reservation;
 import model.dao.jdbc.ExerciseDAO;
+import model.dao.jdbc.ReservationDAO;
 
 public class CheckReservationController implements Controller {
 	@Override
@@ -25,6 +26,7 @@ public class CheckReservationController implements Controller {
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
 		String trainerId = (String) session.getAttribute("userId");
 		ExerciseDAO exerciseDao = new ExerciseDAO();
+		ReservationDAO reservationDAO = new ReservationDAO();
 
 		if (request.getServletPath().equals("/trainer/delete")) {
 			int exerciseId = Integer.parseInt(request.getParameter("exerciseReservation"));
@@ -41,8 +43,12 @@ public class CheckReservationController implements Controller {
 		if (request.getServletPath().equals("/trainer/check")) {
 			List<Exercise> exerciseList = exerciseDao.findExerciseByTrainer(trainerId);
 //		exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
-
+			
+			List<Reservation> reservations = reservationDAO.searchReservationByTrainer(trainerId);
+			
 			request.setAttribute("exerciseList", exerciseList);
+			request.setAttribute("resList", reservations);
+			
 		}
 
 		return "/trainer/checkReservation.jsp";
