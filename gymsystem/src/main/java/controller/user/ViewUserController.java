@@ -17,7 +17,14 @@ public class ViewUserController implements Controller {
         }
     	
 		UserManager manager = UserManager.getInstance();
-		String userId = request.getParameter("userId");
+		String userId;// = request.getParameter("userId");
+		
+		if(request.getServletPath().equals("/user/mypage")) {
+			userId = UserSessionUtils.getLoginUserId(request.getSession());
+		}
+		else {
+			userId = request.getParameter("userId");
+		}
 		
     	User user = null;
 		try {

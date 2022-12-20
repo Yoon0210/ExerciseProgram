@@ -37,7 +37,9 @@ public class RequestMapping {
 
         // 사용자 정보 수정 폼 요청과 수정 요청 처리 병합
 //      mappings.put("/user/update/form", new UpdateUserFormController());
-//      mappings.put("/user/update", new UpdateUserController());        
+//      mappings.put("/user/update", new UpdateUserController());
+        mappings.put("/user/view", new ViewUserController());
+        mappings.put("/user/mypage", new ViewUserController());
         mappings.put("/user/update", new UpdateUserController());
         
         mappings.put("/user/delete", new DeleteUserController());
