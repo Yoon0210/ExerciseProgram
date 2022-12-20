@@ -26,9 +26,7 @@ public class UserManager {
 	private LikeyDAO likeyDAO;
 	private ExerciseDAO exerciseDAO;
 	private ReportDAO reportDAO;
-	private UserAnalysis userAanlysis;
 	
-
 	private UserManager() {
 		try {
 			userDAO = new UserDAO();
@@ -36,7 +34,6 @@ public class UserManager {
 			likeyDAO = new LikeyDAO();
 			exerciseDAO = new ExerciseDAO();
 			reportDAO = new ReportDAO();
-			userAanlysis = new UserAnalysis(userDAO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,10 +92,6 @@ public class UserManager {
 			throw new PasswordMismatchException("비밀번호가 일치하지 않습니다.");
 		}
 		return true;
-	}
-
-	public List<User> makeFriends(String userId) throws Exception {
-		return userAanlysis.recommendFriends(userId);
 	}
 
 	public UserDAO getUserDAO() {
