@@ -46,7 +46,7 @@ public class ReservationDAO {
 		return null;
 	}
 	
-	public List<Reservation> searchReservationByTrainer(int trainerId){
+	public List<Reservation> searchReservationByTrainer(String trainerId){
 		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
 				+"FROM reservation r, Userinfo u, Exercise e "
@@ -77,7 +77,7 @@ public class ReservationDAO {
 		}
 		return reservations;
 	}
-	public List<Reservation> searchReservationByUser(int userid){
+	public List<Reservation> searchReservationByUser(String userid){
 		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
 				+"FROM reservation r, Userinfo u, Exercise e "
