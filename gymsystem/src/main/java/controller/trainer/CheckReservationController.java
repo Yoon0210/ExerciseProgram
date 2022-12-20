@@ -12,25 +12,39 @@ import controller.user.UserSessionUtils;
 import model.Exercise;
 import model.dao.jdbc.ExerciseDAO;
 
-public class CheckReservationController implements Controller{
+public class CheckReservationController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("여기는 예약추가 눌렀을 시 나오는 checkReservation컨트롤러임");
-		//로그인 여부
-		if(!UserSessionUtils.hasLogined(request.getSession())) {
+		// 로그인 여부
+		if (!UserSessionUtils.hasLogined(request.getSession())) {
 			return "redirect:/user/login/form";
 		}
-		
+
 		HttpSession session = request.getSession();
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
-		String TrainerId = (String)session.getAttribute("userId");
-		
-		ExerciseDAO ExerciseDao = new ExerciseDAO();
-		List<Exercise> exerciseList = new ArrayList<Exercise>();
+		String trainerId = (String) session.getAttribute("userId");
+		ExerciseDAO exerciseDao = new ExerciseDAO();
+
+		if (request.getServletPath().equals("/trainer/delete")) {
+			int exerciseId = Integer.parseInt(request.getParameter("exerciseReservation"));
+			try {
+				exerciseDao.deleteExerciseByTrainer(exerciseId);
+			} catch (Exception e) {
+				request.setAttribute("deleteFailed", true);
+				request.setAttribute("exception", e);
+				return "/trainer/checkReservation.jsp";
+			}
+			return "redirect:/trainer/check";
+		}
+
+		if (request.getServletPath().equals("/trainer/check")) {
+			List<Exercise> exerciseList = exerciseDao.findExerciseByTrainer(trainerId);
 //		exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
-		
-		request.setAttribute("exerciseList", exerciseList);
-		
+
+			request.setAttribute("exerciseList", exerciseList);
+		}
+
 		return "/trainer/checkReservation.jsp";
 	}
 

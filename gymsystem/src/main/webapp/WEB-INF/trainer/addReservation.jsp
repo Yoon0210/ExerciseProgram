@@ -19,7 +19,7 @@
 	function exerciseCreate() {
 		if (form.exerciseType.value == "") {
 			alert("운동종목을 입력하십시오.");
-			form.category.focus();
+			form.exerciseType.focus();
 			return false;
 		}
 		if (form.exerciseName.value == "") {
@@ -52,6 +52,7 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/header.jsp"%>
+	<%@include file="/WEB-INF/navbar.jsp" %>
 
 	<ul class="mod_menu">
 		<!-- 회원용 상단바 -->

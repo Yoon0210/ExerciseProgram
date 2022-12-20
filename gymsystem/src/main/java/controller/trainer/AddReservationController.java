@@ -50,12 +50,14 @@ public class AddReservationController implements Controller{
     	
     	Exercise newExercise = new Exercise(trainerId, exerciseName, exerciseDay, exerciseTime, difficulty, exerciseType);
     	
+    	if(request.getServletPath().equals("/trainer/add")) {
 		try {
 			UserManager userManager = UserManager.getInstance();
 			int r = userManager.createExercise(newExercise);
 			if (r == 1) {
 				System.out.println("트레이너 운동 추가 성공");
 			}
+			
 			
 		} catch(Exception e) {
 			System.out.println("트레이너 운동 추가 실패, 등록다시");
@@ -64,7 +66,8 @@ public class AddReservationController implements Controller{
 			//request.setAttribute("newItem", newItem);
 			return "/trainer/addReservation.jsp";
 		}
-		return "redirect:/trainer/exercise/search";
+    	}
+		return "redirect:/trainer/check";
 	}
 
 }
