@@ -71,6 +71,11 @@ public class RequestMapping {
         mappings.put("/trainer/check", new CheckReservationController());
         mappings.put("/trainer/delete", new CheckReservationController());
         
+        mappings.put("/reservation/accept", new CheckReservationController());
+        mappings.put("/reservation/reject", new CheckReservationController());
+        
+        
+        
         logger.info("Initialized Request Mapping!");
     }
 
