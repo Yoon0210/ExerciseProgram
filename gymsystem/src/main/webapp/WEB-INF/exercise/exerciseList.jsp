@@ -51,31 +51,19 @@
 			<div class="card bg-light mt-3">
 
 				<div class="card-header bg-light">
-					<div class="row">
-						<div class="col-8 text-left">${exercise.getExerciseName() }
-						</div>
-					</div>
+					<div class="col-10 text-left" ><h5>${exercise.getExerciseName() }</h5>
+					</div>	
 				</div>
-				<div class="card-body">
-					<div class="card-title">
-						<div
-							style="vertical-align: middle; display: flex; align-items: center;">
-							<h5 style="color: grey">${exercise.getTrainerName() }</h5> &nbsp;
-							<h5 style="color: grey">${exercise.getExerciseTime() }</h5> &nbsp;
-							<h5 style="color: grey">${exercise.getExerciseType() }</h5>
-						</div>
-					</div>
-					<div class="row" style="margin: 0; width: 100%; float: right;">
-
-						<div class="col-9 text-left">
-							<span style="color: green;">( 난이도 : ${exercise.getDifficulty() }
-								) &nbsp; 
-							<a href="<c:url value='/exercise/reservation'>
-							<c:param name='exerciseReservation' value='${exercise.getExerciseId()}'/></c:url>"
-	 						onclick="return confirm('등록하시겠습니까?')"><font size="2">등록하기</font></a> &nbsp;
-							</span>
-						</div>
-					</div>
+				<div class="card-body">		
+					<span class="col-10 text-left">담당 강사 : ${exercise.getTrainerName() } </span>
+					<span class="col-10 text-left">${exercise.getExerciseDay() }요일</span>
+					<span class="col-10 text-left">시작 시간 : ${exercise.getExerciseTime() } 시  </span>
+					<span class="col-10 text-left">운동 종류 : ${exercise.getExerciseType() } </span>
+					<span class="col-10 text-left" style="color: green;">( 난이도 : ${exercise.getDifficulty() } )</span>
+					<span class="text-right">
+						<a onclick="return confirm('등록하시겠습니까?')" href="<c:url value='/exercise/reservation' >
+						<c:param name='exerciseId' value='${exercise.getExerciseId()}'/> </c:url>">등록하기</a>
+					</span> 
 				</div>
 			</div>
 		</c:forEach>
