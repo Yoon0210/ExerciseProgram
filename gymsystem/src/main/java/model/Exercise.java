@@ -132,24 +132,23 @@ public class Exercise implements Serializable {
 	public String toString() {
 		return exerciseName + " - " + trainerName;
 	}
+	
+	static String[] weekday = {"일","월","화","수","목","금","토"};
 
 	//요일 시간 매핑 메소드!
-	public int getWeekday(String week) {
-		//요일 매핑(map1)
-    	String[] weekday = {"일","월","화","수","목","금","토"};
-    	int[] weekdayIndex = {0,1,2,3,4,5,6};
-
+	public static int getWeekday(String week) {
+		
     	//key, value
     	Map<String,Integer> map1 = new HashMap<>();
 
     	for(int i = 0; i < weekday.length; i++) {
-    		map1.put(weekday[i],weekdayIndex[i]);
+    		map1.put(weekday[i],i);
     	}
     	return map1.get(week);
 	}
 
 	//시간 매핑 메소드 
-	public int getTime(String time) {
+	public static int getTime(String time) {
     	//시간 매핑(map2)
 		return Integer.parseInt(time)-9;
 	}
