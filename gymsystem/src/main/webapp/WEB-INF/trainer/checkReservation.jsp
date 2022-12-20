@@ -22,9 +22,6 @@
 <%@include file="/WEB-INF/header.jsp"%>
 <%@include file="/WEB-INF/navbar.jsp" %>
 
-
-	
-	<!-- 고객의 여행상품 조회 -->
 	<br>
 	<h1 align="center">내가 맡은 운동 조회</h1>
 	<table align="center" width="600" height="70" style="border:1px solid" style="border-collapse:collapse" >
@@ -48,6 +45,32 @@
 			<td align="center"><a onclick="return confirm('삭제하시겠습니까?')"  href="<c:url value='/trainer/delete'>
 							<c:param name='exerciseReservation' value='${exercise.getExerciseId()}'/></c:url>"
 	 						> 삭제 </a></td>
+		</tr>
+		</c:forEach>
+	</table>	
+	<br>
+	<h1 align="center">고객 신청 목록</h1>
+	<table align="center" width="600" height="70" style="border:1px solid" style="border-collapse:collapse" >
+		<tr>
+			<th> <font size="2px">운동종목명</th>
+			<th> <font size="2px">운동이름</th>
+			<th> <font size="2px">신청자 이름</th>
+			<th> <font size="2px">상태</th>
+			<th> <font size="2px">수락</th>
+			<th> <font size="2px">거절</th>
+		</tr> 
+		  
+		<c:forEach var="reservation" items="${resList}">
+		<tr>
+			<td align ="center"><font size="2px"> ${reservation.getExerciseType()} </td>
+			<td align ="center"><font size="2px"> ${reservation.getExerciseName()}
+			</td>
+			<td align ="center"><font size="2px"> ${reservation.getName()}</td>
+			<td align ="center"><font size="2px"> ${reservation.getStatus()}</td>
+			<td align ="center"><font size="2px"> 수락버튼 </td>
+			<td align="center"><a onclick="return confirm('삭제하시겠습니까?')"  href="<c:url value='/trainer/delete'>
+							<c:param name='exerciseReservation' value='${exercise.getExerciseId()}'/></c:url>"
+	 						> 거절버튼 </a></td>
 		</tr>
 		</c:forEach>
 	</table>	

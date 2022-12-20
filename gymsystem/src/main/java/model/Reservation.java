@@ -103,10 +103,14 @@ public class Reservation implements Serializable {
 		this.status = status;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public void setExerciseName(String exerciseName) {
 		this.exerciseName = exerciseName;
 	}
