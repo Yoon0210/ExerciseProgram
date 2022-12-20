@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="model.dao.mybatis.mapper.ExerciseMapper">
+<cache />
+
+	<sql id="BaseColumns">
+		e.exerciseId,
+		e.trainerId,
+		e.exerciseName,
+		e.exerciseDay,
+		e.exerciseTime,
+		e.difficulty,
+		e.exerciseType,
+		u.username AS trainerName
+	</sql>
+ 
+	<select id="selectExerciseByCondition" parameterType="hashmap" resultType="Exercise">
+		SELECT <include refid="BaseColumns"/>
+		FROM EXERCISE e, USERINFO u
+		<where>
+			e.trainerId = u.userId
+			<if test="searchType != null">
+				AND e.exerciseType = #{searchType}
+			</if>
+			<if test="searchContent != null">
+				AND e.exerciseName Like '%'||#{searchContent}||'%'  
+			</if>
+		</where>
+		ORDER BY ${orderType} DESC
+	</select>
+	
+</mapper>

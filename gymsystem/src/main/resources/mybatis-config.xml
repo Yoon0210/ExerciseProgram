@@ -10,6 +10,7 @@
 	<typeAliases>
 		<typeAlias type="model.Review" alias="Review" />
 		<typeAlias type="model.User" alias="User" />
+		<typeAlias type="model.Exercise" alias="Exercise"/>
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
