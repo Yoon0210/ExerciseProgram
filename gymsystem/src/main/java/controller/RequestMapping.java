@@ -12,6 +12,7 @@ import controller.likey.ClickLikeyController;
 import controller.review.CreateReviewController;
 import controller.review.ListReviewController;
 import controller.trainer.AddReservationController;
+import controller.trainer.CheckReservationController;
 import controller.timetable.SendExerciseInfoController;
 import controller.user.*;
 
@@ -64,6 +65,9 @@ public class RequestMapping {
         mappings.put("/trainer/add", new AddReservationController());
         mappings.put("/trainer/exercise/form", new ForwardController("/trainer/addReservation.jsp"));
         mappings.put("/trainer/exercise/search", new ExerciseReservationController());
+        
+        mappings.put("/trainer/check", new CheckReservationController());
+        mappings.put("/trainer/delete", new CheckReservationController());
         
         logger.info("Initialized Request Mapping!");
     }
