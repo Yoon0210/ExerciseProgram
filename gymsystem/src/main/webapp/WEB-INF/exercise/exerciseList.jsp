@@ -28,7 +28,7 @@
 	<section class="container">
 
 		<!-- 운동 검색 폼 -->
-		<!--  <form method="get" action="<c:url value="/exercise/search" />"
+		<form method="get" action="<c:url value="/exercise/search" />"
 			class="form-inline mt-3">
 			<select name="allContent" class="form-control mx-1 mt-2">
 				<option value="-1">전체</option>
@@ -36,11 +36,33 @@
 					<option value="${all.getExerciseId()}"
 						<c:if test='${all.getExerciseId() eq allContent}'> selected="selected" </c:if>>${all.toString()}</option>
 				</c:forEach>
-			</select> <input type="text" name="searchContent"
+			</select>
+			<select name="trainerType" class="form-control mx-1 mt-2">
+				<option value="-1">강사</option>
+				<c:forEach var="trainer" items="${trainerList}">
+					<option value="${trainer.getTrainerId()}"
+						<c:if test='${trainer.getExerciseId() eq trainerType}'> selected="selected" </c:if>>${trainer.toString()}</option>
+					</c:forEach>
+			</select>
+			<select name="difficultyType" class="form-control mx-1 mt-2">
+				<option value="-1">난이도</option>
+				<c:forEach var="difficulty" items="${difficultyList}">
+					<option value="${difficulty.getDifficulty()}"
+						<c:if test='${difficulty.getExerciseId() eq difficultyType}'> selected="selected" </c:if>>${difficulty.toString()}</option>
+					</c:forEach>
+			</select>
+			<select name="exerciseType" class="form-control mx-1 mt-2">
+				<option value="-1">종목</option>
+				<c:forEach var="exercise" items="${exerciseTypeList}">
+					<option value="${exercise.getExerciseType()}"
+						<c:if test='${exercise.getExerciseId() eq exerciseType}'> selected="selected" </c:if>>${exercise.toString()}</option>
+					</c:forEach>
+			</select>	
+				<input type="text" name="searchContent"
 				class="form-control mx-1 mt-2" placeholder="내용을 입력하세요"
 				<c:if test='${searchContent ne "-"}'>value='${searchContent }'</c:if>>
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
-		</form>-->
+		</form>
 		<div class="col-lg-12 text-center text-danger">
 			<c:if test="${exerciseList.size() eq 0 }">
 			<br>
@@ -61,7 +83,7 @@
 					<span class="col-10 text-left">운동 종류 : ${exercise.getExerciseType() } </span>
 					<span class="col-10 text-left" style="color: green;">( 난이도 : ${exercise.getDifficulty() } )</span>
 					<span class="text-right">
-						<a onclick="return confirm('등록하시겠습니까?')" href="<c:url value='/exercise/reservation' >
+						<a onclick="return confirm('등록하시겠습니까?')" class="btn btn-primary mx-1 mt-2" href="<c:url value='/exercise/reservation' >
 						<c:param name='exerciseId' value='${exercise.getExerciseId()}'/> </c:url>">등록하기</a>
 					</span> 
 				</div>

@@ -67,7 +67,7 @@ public class ListExerciseController implements Controller {
 			
 			return "/exercise/exerciseList.jsp";
 		} catch(Exception e) {
-			return "redirect:/user/main";
+			return "redirect:/user/login.jsp";
 		}
 		
 		
