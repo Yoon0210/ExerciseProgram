@@ -81,7 +81,7 @@ public class ReservationDAO {
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
 				+"FROM reservation r, Userinfo u, Exercise e "
-				+"WHERE r.exerciseId = e.trainerId and e.trainerId = u.userId AND r.userId = u.userId AND r.userId = ?";
+				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = u.userId AND r.userId = u.userId AND r.userId = ?";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});
 		List<Reservation> reservations = new ArrayList<Reservation>();
@@ -130,24 +130,46 @@ public class ReservationDAO {
 	}
 	
 	//예약정보 업데이트
-	public int updateStatus(int resid, String status) {
+	public int updateStatus(int resid, String userId, int exerciseId, String status) {
 		String sql = "UPDATE reservation "
 				+ "SET status= ? "
-				+ "WHERE resid=?";
+				+ "WHERE reservationId=?";
 		Object[] param = new Object[] {status,resid};				
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 			
-		try {				
-			int result = jdbcUtil.executeUpdate();	// update 문 실행
-			return result;
-		} catch (Exception ex) {
-			jdbcUtil.rollback();
-			ex.printStackTrace();
+		int result = 0;
+		if (status.equals("거절")) {
+			try {
+				result = jdbcUtil.executeUpdate(); // update 문 실행
+				return result;
+			} catch (Exception ex) {
+				jdbcUtil.rollback();
+				ex.printStackTrace();
+			} finally {
+				jdbcUtil.commit();
+				jdbcUtil.close(); // resource 반환
+			}
 		}
-		finally {
-			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 반환
-		}		
+		else if(status.equals("승인")) {
+			try {
+				result = jdbcUtil.executeUpdate(); // update 문 실행
+				
+				if(result==1) {
+					sql = "INSERT INTO SCHEDULE VALUES (?, ?)";
+					jdbcUtil.setSqlAndParameters(sql, new Object[] {userId, exerciseId});
+					result = jdbcUtil.executeUpdate();
+				}
+				
+				
+			} catch (Exception ex) {
+				jdbcUtil.rollback();
+				ex.printStackTrace();
+			} finally {
+				jdbcUtil.commit();
+				jdbcUtil.close(); // resource 반환
+				return result;
+			}
+		}
 		return 0;
 }
 }

@@ -40,15 +40,35 @@ public class CheckReservationController implements Controller {
 			return "redirect:/trainer/check";
 		}
 
+		int resId;
+		String resUserId;
+		int resExerId;
+		
+		if (request.getServletPath().equals("/reservation/reject")) {
+			resId = Integer.parseInt(request.getParameter("reservationId"));
+			resUserId = request.getParameter("resUserId");
+			resExerId = Integer.parseInt(request.getParameter("resExerId"));
+			reservationDAO.updateStatus(resId, resUserId, resExerId, "거절");
+			return "redirect:/trainer/check";
+		}
+		if (request.getServletPath().equals("/reservation/accept")) {
+			resId = Integer.parseInt(request.getParameter("reservationId"));
+			resUserId = request.getParameter("resUserId");
+			resExerId = Integer.parseInt(request.getParameter("resExerId"));
+			reservationDAO.updateStatus(resId, resUserId, resExerId, "승인");
+			return "redirect:/trainer/check";
+			
+		}
+
 		if (request.getServletPath().equals("/trainer/check")) {
 			List<Exercise> exerciseList = exerciseDao.findExerciseByTrainer(trainerId);
 //		exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
-			
+
 			List<Reservation> reservations = reservationDAO.searchReservationByTrainer(trainerId);
-			
+
 			request.setAttribute("exerciseList", exerciseList);
 			request.setAttribute("resList", reservations);
-			
+
 		}
 
 		return "/trainer/checkReservation.jsp";
