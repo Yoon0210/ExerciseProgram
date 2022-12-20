@@ -1,8 +1,5 @@
 package model.dao.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,6 +44,68 @@ public class ReservationDAO {
 			jdbcUtil.close();
 		}
 		return null;
+	}
+	
+	public List<Reservation> searchReservationByTrainer(int trainerId){
+		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
+				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
+				+"FROM reservation r, Userinfo u, Exercise e "
+				+"WHERE r.exerciseId = e.exerciseId and e.userId = u.userId AND resid = ?";
+		
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {trainerId});
+		
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();
+			while(rs.next()) {
+				Reservation reservation = new Reservation(
+						rs.getInt("resId"),
+						rs.getString("userId"),
+						rs.getInt("exerciseId"),
+						rs.getString("reservationDate"),
+						rs.getString("status"),
+						rs.getString("userName"),
+						rs.getString("exerciseName")
+						);
+				reservations.add(reservation);
+				
+			}
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();
+		}
+		return reservations;
+	}
+	public List<Reservation> searchReservationByUser(int userid){
+		String sql = "SELECT r.resId, r.userId, r.exerciseId, r.reservationDate, "
+				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
+				+"FROM reservation r, Userinfo u, Exercise e "
+				+"WHERE r.exerciseId = e.exerciseId and e.trainerId = u.userId AND resid = ?";
+		
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();
+			while(rs.next()) {
+				Reservation reservation = new Reservation(
+						rs.getInt("resId"),
+						rs.getString("userId"),
+						rs.getInt("exerciseId"),
+						rs.getString("reservationDate"),
+						rs.getString("status"),
+						rs.getString("userName"),
+						rs.getString("exerciseName"),
+						rs.getString("exerciseType")
+						);
+				reservations.add(reservation);
+			}
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();
+		}
+		return reservations;
 	}
 
 	//exerciseId랑 userId받아서 운동 예약하기
