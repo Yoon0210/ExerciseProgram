@@ -159,45 +159,6 @@ public class ExerciseDAO {
 		return null;
 	}
 	
-	
-	//운동이름으로 운동 정보 검색
-	public List<Exercise> searchStringExercisename(String exerciseName) throws SQLException{
-		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay,"
-				+ " e.exerciseTime, e.difficulty, e.exerciseType, u.username "
-					+ "FROM exercise e, userinfo u "
-					+ "WHERE e.trainerid = u.userid "
-		    		+ "AND e.exerciseName LIKE ? ";         
-					
-	String temp = "%"+exerciseName+"%";
-	Object[] param = new Object[] {temp};
-	jdbcUtil.setSqlAndParameters(sql, param);
-	
-	try {
-		ResultSet rs = jdbcUtil.executeQuery();
-		List<Exercise> exerciseList = new ArrayList<Exercise>();
-		if(rs.next()) {
-			Exercise Exercise = new Exercise(
-					rs.getInt("exerciseId"),
-					rs.getString("trainerId"),
-					rs.getString("exerciseName"),
-					rs.getString("exerciseDay"),
-					rs.getString("exerciseTime"),
-					rs.getString("difficulty"),
-					rs.getString("exerciseType"),
-					rs.getString("userName")
-					);
-			exerciseList.add(Exercise);	
-		}
-		return exerciseList;
-		
-	} catch(Exception e) {
-		e.printStackTrace();
-	}finally {
-		jdbcUtil.close();
-	}
-	return null;
-	}
-	
 	 //유저id로 운동 스케쥴 찾는거
 	public List<Exercise> findExerciseScheduleByUserId(String userid){
 		String sql = "SELECT e.exerciseId, e.trainerId, e.exerciseName, e.exerciseDay, "
