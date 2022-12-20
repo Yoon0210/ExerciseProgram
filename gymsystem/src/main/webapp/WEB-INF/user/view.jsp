@@ -21,9 +21,9 @@ function userRemove() {
 
 <div class="container">  
 	<br>
-	<h4>사용자 정보 조회</h4>
+	<h4 align="center">사용자 정보 조회</h4>
 	<br>
-	<table class="table table-sm table-striped">
+	<table class="table table-sm table-striped" style="text-align: center;">
     	<tbody> 
 	  	  <tr>
 			<th>사용자 ID</th>
@@ -36,6 +36,28 @@ function userRemove() {
 		</tbody>
 	</table>
 	<br> 		     
+		<!-- 예약확인 테이블 -->
+	<hr color="black" size="10px"><br>
+	<h4 align="center"> 나의 운동 예약확인</h4><br><br>
+	<table class="table table-sm table-striped" style="text-align: center;">
+		<tr>
+			<th> <font size="4px">강사</font></th>
+			<th> <font size="4px">운동</font></th>
+			<th> <font size="4px">예약날짜</font></th>
+			<th> <font size="4px">예약상태</font></th>
+		</tr> 
+
+		<c:forEach var="res" items="${reservationList}">
+		<tr>
+			<td align ="center"><font size="4px"> ${res.trainerName} </font></td>
+			<td align ="center"><font size="4px"> ${res.exerciseName}</font></td>
+			<td align ="center"><font size="4px"> ${res.reservationDate}</font></td>
+			<td align ="center"><font size="4px"> ${res.status}</font></td>
+		</tr>
+		</c:forEach>
+	</table>
+	
+	
     <a class="btn btn-primary" 
     	href="<c:url value='/user/update' >
      		     <c:param name='userId' value='${user.userId}'/>
