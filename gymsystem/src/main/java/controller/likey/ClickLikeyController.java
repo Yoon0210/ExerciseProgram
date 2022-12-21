@@ -10,7 +10,6 @@ import controller.Controller;
 import controller.review.CreateReviewController;
 import controller.user.UserSessionUtils;
 import model.Likey;
-import model.service.TrainerLikeyException;
 import model.service.UserManager;
 
 public class ClickLikeyController implements Controller {
@@ -31,9 +30,11 @@ public class ClickLikeyController implements Controller {
             return "redirect:/user/login/form";		// login form 요청으로 redirect
         }
 		
+		//trainer는 추천 불가
 		if(UserSessionUtils.getLoginUserType(request.getSession()).equals("trainer")) {
 			request.setAttribute("trainerLikeException", response);
 		}
+		
 		try {
 			UserManager manager = UserManager.getInstance();
 			manager.createLikey(likey, (String) request.getSession().getAttribute("userType"));

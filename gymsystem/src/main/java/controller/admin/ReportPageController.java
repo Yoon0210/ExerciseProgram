@@ -19,16 +19,6 @@ public class ReportPageController implements Controller {
 		if (!UserSessionUtils.hasLogined(request.getSession())) {
 			return "redirect:/user/login/form"; // login form 요청으로 redirect
 		}
-//		if(!UserSessionUtils.getLoginUserId(request.getSession()).equals("admin")) {
-//			request.setAttribute("adminException", "관리자가 아닙니다.");
-//			return "redirect:/user/login/form";
-//		}
-
-		/*
-		 * String currentPageStr = request.getParameter("currentPage"); int currentPage
-		 * = 1; if (currentPageStr != null && !currentPageStr.equals("")) { currentPage
-		 * = Integer.parseInt(currentPageStr); }
-		 */
 
 		ReportDAO reportDAO = new ReportDAO();
 		UserManager userManager = UserManager.getInstance();
@@ -36,27 +26,31 @@ public class ReportPageController implements Controller {
 		request.getSession().setAttribute("reportList", reportDAO.findReportList());
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
 		
+		//신고된 리뷰 내용 보기
 		if (request.getServletPath().equals("/admin/report/view")) {
 			int reviewId = Integer.parseInt(request.getParameter("reviewId"));
 			request.setAttribute("report", reportDAO.findReport(request.getParameter("reportUserId"), reviewId));
 			request.setAttribute("review", new ReviewDAO().findReview(reviewId));
-			return "/admin/reportView.jsp";
+			return "/admin/reportView.jsp"; //신고 리뷰 창으로 연결
 			
 		}
 
+		//신고된 리뷰 삭제 처리
 		if(request.getServletPath().equals("/admin/report/delete")) {
 			int reviewId = Integer.parseInt(request.getParameter("reviewId"));
 			userManager.removeReview(reviewId);
 			reportDAO.remove(request.getParameter("reportUserId"), reviewId);
 			
-			return "redirect:/admin/report";
+			return "redirect:/admin/report"; //신고 리스트로 리다이렉트
 		}
+		
+		//신고 취소
 		if(request.getServletPath().equals("/admin/report/return")) {
 			reportDAO.remove(request.getParameter("reportUserId"), Integer.parseInt(request.getParameter("reviewId")));
 			return "redirect:/admin/report";
 		}
 
-		return "/admin/report.jsp";
+		return "/admin/report.jsp";//신고 리스트 페이지로 이동
 	}
 
 }

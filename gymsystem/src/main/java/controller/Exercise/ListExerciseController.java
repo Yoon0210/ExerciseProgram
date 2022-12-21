@@ -13,11 +13,9 @@ import controller.user.UserSessionUtils;
 import model.Exercise;
 
 import model.User;
-import model.dao.jdbc.ExerciseDAO;
 import model.dao.jdbc.ReservationDAO;
 import model.dao.jdbc.UserDAO;
 import model.dao.mybatis.ExerciseSessionRepository;
-import model.service.UserManager;
 
 public class ListExerciseController implements Controller {
 
@@ -44,11 +42,14 @@ public class ListExerciseController implements Controller {
 		condition.put("difficultyType", null);
 		condition.put("exerciseType", null);
 
+		//운동 강좌 리스트(전체)
 		if (request.getServletPath().equals("/exercise/list")) {
 			session.setAttribute("trainerId", null);
 			session.setAttribute("difficultyType", null);
 			session.setAttribute("exerciseType", null);
 		}
+		
+		//조건 검색시
 		if (request.getServletPath().equals("/exercise/search")) {
 			if (request.getParameter("trainerId") != null && !request.getParameter("trainerId").equals("")) {
 				session.setAttribute("trainerId", request.getParameter("trainerId"));
@@ -74,6 +75,8 @@ public class ListExerciseController implements Controller {
 				condition.put("exerciseType", null);
 			}
 		}
+		
+		//운동 등록 신청
 		if(request.getServletPath().equals("/exercise/reservation")) {
 			ReservationDAO reservationDAO = new ReservationDAO();
 			int insert = reservationDAO.create(Integer.parseInt(request.getParameter("exerciseId")), UserSessionUtils.getLoginUserId(session));
@@ -82,6 +85,8 @@ public class ListExerciseController implements Controller {
 				request.setAttribute("exception", "이미 신청했습니다.");
 			}
 		}
+		
+		
 		try {
 			List<Exercise> exerciseList = exerciseSessionRepository.findExerciseByCondition(condition);
 			session.setAttribute("exerciseList", exerciseList);
@@ -93,7 +98,7 @@ public class ListExerciseController implements Controller {
 			e.printStackTrace();
 		}
 
-		return "/exercise/exerciseList.jsp";
+		return "/exercise/exerciseList.jsp"; //운동 리스트 페이지로 이동
 
 	}
 

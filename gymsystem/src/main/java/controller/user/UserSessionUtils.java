@@ -12,6 +12,7 @@ public class UserSessionUtils {
         return userId;
     }
     
+    /* 현재 로그인한 사용자 type을 구함 */
     public static String getLoginUserType(HttpSession session) {
     	String userType = (String)session.getAttribute(USER_TYPE);
     	return userType;

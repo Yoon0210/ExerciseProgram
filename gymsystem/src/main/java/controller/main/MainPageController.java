@@ -30,10 +30,12 @@ public class MainPageController implements Controller {
 		
 		System.out.println(eList);
 		
+		
+		//메인페이지에 top 3 운동강좌/강사 표시
 		request.setAttribute("topEList", eList);
 		request.setAttribute("topTrList", trList);
 
-		return "/main.jsp";
+		return "/main.jsp"; //메인페이지로 연결
 	}
 
 }

@@ -2,10 +2,6 @@ package model;
 
 import java.io.Serializable;
 
-/**
- * REVIEW 테이블과 대응됨
- */
-
 @SuppressWarnings("serial")
 public class Reservation implements Serializable {
 	private int resId;

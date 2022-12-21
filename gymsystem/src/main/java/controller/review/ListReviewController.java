@@ -46,6 +46,7 @@ public class ListReviewController implements Controller {
 		condition.put("orderType", "r.reviewId");
 		condition.put("searchContent", null);
 		
+		//전체 리뷰 검색
 		if(request.getServletPath().equals("/review/list")) {
 			session.setAttribute("orderType", "r.reviewId");
 			session.setAttribute("workoutType", null);
@@ -53,6 +54,7 @@ public class ListReviewController implements Controller {
 			condition.put("orderType", session.getAttribute("orderType"));
 		}
 		
+		//조건 검색
 		if(request.getServletPath().equals("/review/search")) {
 			if (request.getParameter("workoutType") != null && !request.getParameter("workoutType").equals("전체")) {
 				session.setAttribute("workoutType", Integer.parseInt(request.getParameter("workoutType")));
@@ -79,6 +81,7 @@ public class ListReviewController implements Controller {
 			}
 		}
 		
+		//리뷰 삭제
 		if(request.getServletPath().equals("/review/delete")) {
 			int reviewId = Integer.parseInt(request.getParameter("reviewId"));
 			try {
@@ -86,11 +89,12 @@ public class ListReviewController implements Controller {
 			} catch (Exception e) {		
 	            request.setAttribute("removeFailed", true);
 	            request.setAttribute("exception", e);
-				return "/review/reviewList.jsp";
+				return "/review/reviewList.jsp"; // 삭제 실패시 리뷰 페이지로 오류메세지 전달
 			}
-			return "redirect:/review/list";
+			return "redirect:/review/list"; //삭제 후 리뷰 페이지로 리다이렉트
 		}
 		
+		//리뷰 신고
 		if(request.getServletPath().equals("/review/report")) {
 			Report report = new Report(
 					UserSessionUtils.getLoginUserId(request.getSession()), Integer.parseInt(request.getParameter("reportReviewId")), request.getParameter("reportReason")
@@ -109,7 +113,7 @@ public class ListReviewController implements Controller {
 		}
 		
 //		List<Review> reviewList = manager.findReviewList(currentPage, countPerPage, request.getParameter("orderType"));
-		return "/review/reviewList.jsp";
+		return "/review/reviewList.jsp"; //리뷰 페이지로 이동
 	}
 
 }
