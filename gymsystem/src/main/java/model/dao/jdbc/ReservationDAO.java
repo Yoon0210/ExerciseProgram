@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Exercise;
 import model.Reservation;
 
 public class ReservationDAO {
@@ -48,7 +49,7 @@ public class ReservationDAO {
 	
 	public List<Reservation> searchReservationByTrainer(String trainerId){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
-				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
+				+ "r.status, u.userName, e.exerciseName "
 				+"FROM reservation r, Userinfo t, Exercise e, UserInfo u "
 				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND r.status='대기' AND r.userId = u.userId AND e.trainerId = ?";
 		
@@ -79,7 +80,7 @@ public class ReservationDAO {
 	}
 	public List<Reservation> searchReservationByUser(String userid){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
-				+ "r.status, t.userName, e.exerciseName, e.exerciseType "
+				+ "r.status, t.userName, e.exerciseName, e.exerciseType, e.exerciseDay, e.exerciseTime "
 				+"FROM reservation r, Userinfo t, Exercise e, UserInfo u "
 				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND  r.userId = u.userId AND r.userId = ?";
 		
@@ -95,7 +96,7 @@ public class ReservationDAO {
 						rs.getString("reservationDate"),
 						rs.getString("status"),
 						rs.getString("userName"),
-						rs.getString("exerciseName"),
+						rs.getString("exerciseName")+" - "+rs.getString("exerciseDay")+"/"+rs.getString("exerciseTime"),
 						rs.getString("exerciseType")
 						);
 				reservations.add(reservation);
