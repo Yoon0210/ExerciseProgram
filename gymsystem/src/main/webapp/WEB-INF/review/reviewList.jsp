@@ -91,21 +91,21 @@ function report(a, b){
 					<div class="row" style="margin: 0; width: 100%; float: right;">
 
 						<div class="col-9 text-left">
-							<span style="color: green;">( 추천 : ${review.getLikeCount() }
+							<span style="color: green;">( 추천수 : ${review.getLikeCount() }
 								) &nbsp; <a
 								href="<c:url value='/review/like' > <c:param name='reviewId' value='${review.getReviewId()}'/> </c:url>">추천&nbsp;</a>
 							</span>
 						</div>
 
 						<div class="col-3 text-right">
-							<a style="color: red;" data-toggle="modal"
+							<a  data-toggle="modal" class="btn btn-warning"
 								data-target="#reportModal"
 								onclick="report('<c:out value='${review.getTitle()} (작성자: ${review.getUserId() })'/>', '<c:out value='${review.getReviewId() }'/>');">신고</a>
 
 							<!-- 작성자==현재로그인유저 일 경우 삭제버튼 표시 -->
 							<c:if
 								test="${curUserId eq review.getUserId() || curUserId eq 'admin'}">
-								<a onclick="return confirm('삭제하시겠습니까?')"
+								<a class="btn btn-danger" onclick="return confirm('삭제하시겠습니까?')"
 									href="<c:url value='/review/delete' > <c:param name='reviewId' value='${review.getReviewId()}'/> </c:url>">삭제</a>
 							</c:if>
 						</div>

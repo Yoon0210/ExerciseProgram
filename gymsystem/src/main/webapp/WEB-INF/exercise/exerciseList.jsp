@@ -78,8 +78,8 @@
 					<span class="col-10 text-left">시작 시간 : ${exercise.getExerciseTime() } 시  </span>
 					<span class="col-10 text-left">운동 종류 : ${exercise.getExerciseType() } </span>
 					<span class="col-10 text-left" style="color: green;">( 난이도 : ${exercise.getDifficulty() } )</span>
-					<span class="text-right">
-						<a onclick="return confirm('등록하시겠습니까?')" class="btn btn-primary mx-1 mt-2" href="<c:url value='/exercise/reservation' >
+					<span class="col-10">
+						<a onclick="return confirm('등록하시겠습니까?')" class="btn btn-primary"  href="<c:url value='/exercise/reservation' >
 						<c:param name='exerciseId' value='${exercise.getExerciseId()}'/> </c:url>">등록하기</a>
 					</span> 
 				</div>

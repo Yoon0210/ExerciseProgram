@@ -21,25 +21,40 @@
 <body>
 	<%@include file="/WEB-INF/header.jsp"%>
 	
-	<section>
-	인기 수업 TOP 3
-	<c:forEach var="ex" items='${topEList}'>
-			<div class="card bg-light mt-3">
-				<div class="card-body bg-light">
-					<div class="col-10 text-left" >${ex.getExerciseName() } &#40;${ex.getExerciseType()}&#41; -  ${ex.getTrainerName()} 
-					</div>	
+	<section class="container text-center">
+	<br><br>
+	<br>
+	<div class="row">
+		<div class="col">
+			<div class="card center border-dark w-80">
+				<h3 class="card-header ">인기 수업 TOP 3</h3>
+				<div class="card-body">
+					<ul class="list-group list-group-flush">
+						<c:forEach var="ex" items='${topEList}'>
+								<li class="list-group-item" ><h4> ${ex.getExerciseName() } &#40;${ex.getExerciseType()}&#41; -  ${ex.getTrainerName()}</h4> 
+								</li>	
+						</c:forEach>
+					</ul>
 				</div>
 			</div>
-		</c:forEach>
-		인기 강사 TOP 3
-		<c:forEach var="tr" items='${topTrList}'>
-			<div class="card bg-light mt-3">
-				<div class="card-body bg-light">
-					<div class="col-10 text-left" >${tr.getName() } 
-					</div>	
+		</div>
+		<div class="col">
+			<div class="card border-dark w-80" >
+				<h3 class="card-header">인기 강사 TOP 3</h3>
+				<div class="card-body">
+					<ul class="list-group list-group-flush">
+						<c:forEach var="tr" items='${topTrList}'>
+								<li class="list-group-item" ><h4>${tr.getName()}</h4>
+								</li>	
+						</c:forEach>
+					</ul>
 				</div>
 			</div>
-		</c:forEach>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
 	</section>
 
 	<%@include file="/WEB-INF/footer.jsp"%>

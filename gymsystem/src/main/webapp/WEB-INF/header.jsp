@@ -43,7 +43,7 @@
 						href='<c:url value="/user/mypage" />'>마이페이지</a>
 				</div>
 				<div class="col">
-					<a style="text-decoration: none; color: inherit;"
+					<a onclick="return confirm('로그아웃하시겠습니까?')"style="text-decoration: none; color: inherit;"
 						href='<c:url value="/user/logout" />'>로그아웃</a>
 				</div>
 			</div>

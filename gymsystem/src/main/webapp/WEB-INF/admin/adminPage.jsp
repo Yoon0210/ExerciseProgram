@@ -19,6 +19,8 @@
 	<a href='<c:url value="/admin/user" />'> 사용자 목록 </a> <br>
 	<a href='<c:url value="/admin/report" />'> 신고 처리 </a> <br>
 	</section>
-	<%@include file="/WEB-INF/footer.jsp"%>
 </body>
+<footer>
+<%@include file="/WEB-INF/footer.jsp"%>
+</footer>
 </html>
