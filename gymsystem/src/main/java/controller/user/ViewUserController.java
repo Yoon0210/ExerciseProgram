@@ -54,6 +54,16 @@ public class ViewUserController implements Controller {
 			return "redirect:/user/mypage";
 		}
 		
+		if(request.getServletPath().equals("/user/mypage/delete")) {
+			resId = Integer.parseInt(request.getParameter("reservationId"));
+			int success = reservationdao.delete(resId);
+			
+			if(success == 0) {
+				System.out.print("삭제 실패");
+			}
+			return "redirect:/user/mypage";
+		}
+		
     	User user = null;
 		try {
 			user = manager.findUser(userId);	// 사용자 정보 검색

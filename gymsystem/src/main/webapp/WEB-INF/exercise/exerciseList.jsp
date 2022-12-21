@@ -110,5 +110,10 @@
 	<!-- 	</ul> -->
 	<%@include file="/WEB-INF/footer.jsp"%>
 </body>
+<c:if test='${reservationFailed }'>
+	<script type="text/javascript">
+		confirm('${exception}')
+	</script>
+</c:if>
 
 </html>

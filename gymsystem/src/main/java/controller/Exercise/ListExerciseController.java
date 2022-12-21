@@ -9,12 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
-
+import controller.user.UserSessionUtils;
 import model.Exercise;
 
 import model.User;
+import model.dao.jdbc.ExerciseDAO;
+import model.dao.jdbc.ReservationDAO;
 import model.dao.jdbc.UserDAO;
 import model.dao.mybatis.ExerciseSessionRepository;
+import model.service.UserManager;
 
 public class ListExerciseController implements Controller {
 
@@ -69,6 +72,14 @@ public class ListExerciseController implements Controller {
 			} else {
 				session.setAttribute("exerciseType", null);
 				condition.put("exerciseType", null);
+			}
+		}
+		if(request.getServletPath().equals("/exercise/reservation")) {
+			ReservationDAO reservationDAO = new ReservationDAO();
+			int insert = reservationDAO.create(Integer.parseInt(request.getParameter("exerciseId")), UserSessionUtils.getLoginUserId(session));
+			if(insert==0) {
+				request.setAttribute("reservationFailed", true);
+				request.setAttribute("exception", "이미 신청했습니다.");
 			}
 		}
 		try {

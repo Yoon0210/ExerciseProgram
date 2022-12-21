@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Exercise;
 import model.Reservation;
 
 public class ReservationDAO {
@@ -50,9 +49,10 @@ public class ReservationDAO {
 	//대기상태인 신청 목록 반환 (name=신청자이름)
 	public List<Reservation> searchReservationByTrainer(String trainerId){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
-				+ "r.status, u.userName, e.exerciseName "
-				+"FROM reservation r, Userinfo t, Exercise e, UserInfo u "
-				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND r.status='대기' AND r.userId = u.userId AND e.trainerId = ?";
+				+ "r.status, u.userName, e.exerciseName, e.exerciseType "
+				+ "FROM reservation r, Userinfo t, Exercise e, UserInfo u "
+				+ "WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND r.status='대기' AND r.userId = u.userId AND e.trainerId = ? "
+				+ "ORDER BY r.reservationDate";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {trainerId});
 		
@@ -67,7 +67,8 @@ public class ReservationDAO {
 						rs.getString("reservationDate"),
 						rs.getString("status"),
 						rs.getString("userName"),
-						rs.getString("exerciseName")
+						rs.getString("exerciseName"),
+						rs.getString("exerciseType")
 						);
 				reservations.add(reservation);
 				
@@ -84,8 +85,9 @@ public class ReservationDAO {
 	public List<Reservation> searchReservationByUser(String userid){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, t.userName, e.exerciseName, e.exerciseType, e.exerciseDay, e.exerciseTime "
-				+"FROM reservation r, Userinfo t, Exercise e, UserInfo u "
-				+"WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND  r.userId = u.userId AND r.userId = ?";
+				+ "FROM reservation r, Userinfo t, Exercise e, UserInfo u "
+				+ "WHERE r.exerciseId = e.exerciseId AND e.trainerId = t.userId AND  r.userId = u.userId AND r.userId = ? "
+				+ "ORDER BY r.reservationDate";
 		
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid});
 		List<Reservation> reservations = new ArrayList<Reservation>();
@@ -114,15 +116,28 @@ public class ReservationDAO {
 
 	//exerciseId랑 userId받아서 운동 예약하기
 	public int create(int exerciseid, String userid) {
-		String sql = "INSERT INTO reservation "
+		
+		String sql1 = "SELECT COUNT(*) "
+				+ "FROM RESERVATION "
+				+ "WHERE exerciseId = ? "
+				+ "AND userId = ? AND status='대기'"; 
+				
+		String sql2 = "INSERT INTO reservation "
 					+"VALUES (reservationId_seq.nextval, ?, ?, SYSDATE, ?)";
 		
-		jdbcUtil.setSqlAndParameters(sql, new Object[] {userid, exerciseid,"대기"});
+		
+		jdbcUtil.setSqlAndParameters(sql1, new Object[] {exerciseid, userid});
 		
 		try {
-			int result = jdbcUtil.executeUpdate(); // insert 문 실행
+			ResultSet rs =jdbcUtil.executeQuery();
+			int result = 0;
+			if (rs.next()) {
+				if (rs.getInt(1) == 0) {
+					jdbcUtil.setSqlAndParameters(sql2, new Object[] { userid, exerciseid, "대기" });
+					result = jdbcUtil.executeUpdate(); // insert 문 실행
+				}
+			}
 			return result;
-			
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
 			ex.printStackTrace();
@@ -185,7 +200,28 @@ public class ReservationDAO {
 			}
 		}
 		return 0;
-}
+	}
+	public int delete(int resid) {
+		String sql = "DELETE FROM reservation "
+				+ "WHERE reservationId=?";
+		Object[] param = new Object[] {resid};				
+		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
+			
+		int result = 0;
+		
+		try {
+			result = jdbcUtil.executeUpdate(); // update 문 실행
+			return result;
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.commit();
+			jdbcUtil.close(); // resource 반환
+		}
+		
+		return 0;
+	}
 }
 
 	

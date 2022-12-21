@@ -63,13 +63,10 @@ public class CheckReservationController implements Controller {
 		if (request.getServletPath().equals("/trainer/check")) {
 			try {
 				List<Exercise> exerciseList = exerciseDao.findExerciseByTrainer(trainerId);
-//				exerciseList = ExerciseDao.findExerciseByTrainer(TrainerId); //가이드가 맡은 상품객체 리스트 반환
 
 				List<Reservation> reservations = reservationDAO.searchReservationByTrainer(trainerId);
-				System.out.println("69");
 				request.setAttribute("exerciseList", exerciseList);
 				request.setAttribute("resList", reservations);
-				System.out.println("72");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
