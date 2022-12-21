@@ -13,9 +13,12 @@ public class User implements Serializable {
 	private String phone;
 	private String name;
 	private String userType;
+	
+	public User(String name) {
+		super();
+		this.name = name;
+	}
 
-	
-	
 	public User(String userId, String password, String email, String phone, String name, String userType) {
 		super();
 		this.userId = userId;

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import controller.Exercise.ListExerciseController;
 import controller.admin.ReportPageController;
 import controller.likey.ClickLikeyController;
+import controller.main.MainPageController;
 import controller.review.CreateReviewController;
 import controller.review.ListReviewController;
 import controller.trainer.AddReservationController;
@@ -74,7 +75,7 @@ public class RequestMapping {
         mappings.put("/reservation/accept", new CheckReservationController());
         mappings.put("/reservation/reject", new CheckReservationController());
         
-        
+        mappings.put("/main", new MainPageController());
         
         logger.info("Initialized Request Mapping!");
     }

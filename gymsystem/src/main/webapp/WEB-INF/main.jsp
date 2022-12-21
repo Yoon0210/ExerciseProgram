@@ -20,8 +20,25 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/header.jsp"%>
-
 	
+	<section>
+	<c:forEach var="ex" items='${topEList}'>
+			<div class="card bg-light mt-3">
+				<div class="card-body bg-light">
+					<div class="col-10 text-left" >${ex.getExerciseName() } &#40;${ex.getExerciseType()}&#41; -  ${ex.getTrainerName()} 
+					</div>	
+				</div>
+			</div>
+		</c:forEach>
+		<c:forEach var="tr" items='${topTrList}'>
+			<div class="card bg-light mt-3">
+				<div class="card-body bg-light">
+					<div class="col-10 text-left" >${tr.getName() } 
+					</div>	
+				</div>
+			</div>
+		</c:forEach>
+	</section>
 
 	<%@include file="/WEB-INF/footer.jsp"%>
 </body>

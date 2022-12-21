@@ -1,1 +1,1 @@
-<% response.sendRedirect(request.getContextPath() + "/review/list"); %>
+<% response.sendRedirect(request.getContextPath() + "/main"); %>

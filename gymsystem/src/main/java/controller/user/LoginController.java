@@ -25,7 +25,7 @@ public class LoginController implements Controller {
 			session.setAttribute(UserSessionUtils.USER_SESSION_KEY, userId);
 			session.setAttribute(UserSessionUtils.USER_TYPE, loginType);
 
-			return "redirect:/review/list";
+			return "redirect:/main";
 		} catch (Exception e) {
 			/*
 			 * UserNotFoundException이나 PasswordMismatchException 발생 시 다시 login form을 사용자에게
