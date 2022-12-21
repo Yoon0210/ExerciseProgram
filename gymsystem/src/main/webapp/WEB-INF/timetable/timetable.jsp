@@ -41,7 +41,7 @@
 <title>내 시간표</title>
 </head>
 <body>
-	<%@include file="/WEB-INF/header.jsp"%>
+	<%@include file="/WEB-INF/header.jsp"%>	
 	<div>
 	<br><br>
     <table align="center"; style="width:80%";>
@@ -66,7 +66,9 @@
 		  }
 		  out.println("</tr>");
 	}
-%>
+%></table>
 </div>
+
+<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

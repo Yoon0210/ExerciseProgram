@@ -57,5 +57,6 @@
 			<a class="btn btn-primary mx-1 mt-2" href="<c:url value='/admin/report/return' > <c:param name='reviewId' value='${report.getReviewId()}'/><c:param name='reportUserId' value='${report.getUserId()}'/> </c:url>">기각</a>
 	<br>   
 </div>
+<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

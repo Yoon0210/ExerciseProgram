@@ -43,5 +43,6 @@
 	<br>   
 	<a href="<c:url value='/user/register' />" class="btn btn-primary">사용자 추가 </a>    		     
 </div>
+<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

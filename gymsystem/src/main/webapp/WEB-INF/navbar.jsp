@@ -21,6 +21,9 @@
 				<div class="dropdown-menu">
 					<c:if test="${userId ne null}">
 						<a class="dropdown-item" href="<c:url value='/user/logout'/>">로그아웃 ( ${userId} )</a>
+						<c:if test="${userType eq 'trainer' }">
+							<a class="dropdown-item" href="<c:url value='/trainer/exercise/form'/>">운동 추가 </a>
+							<a class="dropdown-item" href="<c:url value='/trainer/check'/>">운동 조회 </a></c:if>
 					</c:if>
 					<c:if test="${userId eq null}">
 						<a class="dropdown-item" href="<c:url value='/user/login/form' />">로그인</a>

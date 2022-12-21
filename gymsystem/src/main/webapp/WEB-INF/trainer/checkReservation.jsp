@@ -59,7 +59,6 @@
 			<th> 수락</th>
 			<th> 거절</th>
 		</tr> 
-		  
 		<c:forEach var="reservation" items="${resList}">
 		<tr>
 			<td align ="center"> ${reservation.getExerciseType()} </td>
@@ -79,7 +78,7 @@
 		</tr>
 		</c:forEach>
 	</table>	
-	
+	<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 <c:if test='${deleteFailed }'>
 	<script type="text/javascript">
