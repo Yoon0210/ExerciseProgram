@@ -47,6 +47,7 @@ public class ReservationDAO {
 		return null;
 	}
 	
+	//대기상태인 신청 목록 반환 (name=신청자이름)
 	public List<Reservation> searchReservationByTrainer(String trainerId){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, u.userName, e.exerciseName "
@@ -78,6 +79,8 @@ public class ReservationDAO {
 		}
 		return reservations;
 	}
+	
+	//userid로 신청 목록 반환 (name=강사이름)
 	public List<Reservation> searchReservationByUser(String userid){
 		String sql = "SELECT r.reservationId, r.userId, r.exerciseId, r.reservationDate, "
 				+ "r.status, t.userName, e.exerciseName, e.exerciseType, e.exerciseDay, e.exerciseTime "
@@ -160,15 +163,25 @@ public class ReservationDAO {
 					jdbcUtil.setSqlAndParameters(sql, new Object[] {userId, exerciseId});
 					result = jdbcUtil.executeUpdate();
 				}
-				
-				
+				return result;
 			} catch (Exception ex) {
 				jdbcUtil.rollback();
 				ex.printStackTrace();
 			} finally {
 				jdbcUtil.commit();
 				jdbcUtil.close(); // resource 반환
+			}
+			
+		} else if(status.equals("취소")) {
+			try {
+				result = jdbcUtil.executeUpdate(); // update 문 실행
 				return result;
+			} catch (Exception ex) {
+				jdbcUtil.rollback();
+				ex.printStackTrace();
+			} finally {
+				jdbcUtil.commit();
+				jdbcUtil.close(); // resource 반환
 			}
 		}
 		return 0;
