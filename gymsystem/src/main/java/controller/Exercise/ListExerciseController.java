@@ -1,16 +1,20 @@
 package controller.Exercise;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
-import controller.user.UserSessionUtils;
+
 import model.Exercise;
-import model.dao.jdbc.ExerciseDAO;
-import model.service.UserManager;
+
+import model.User;
+import model.dao.jdbc.UserDAO;
+import model.dao.mybatis.ExerciseSessionRepository;
 
 public class ListExerciseController implements Controller {
 
@@ -25,64 +29,60 @@ public class ListExerciseController implements Controller {
 //		if (currentPageStr != null && !currentPageStr.equals("")) {
 //			currentPage = Integer.parseInt(currentPageStr);
 //		}
-		
-		ExerciseDAO exerciseDao = new ExerciseDAO();
-		List<Exercise> exerciseList = null;
-		
-		try {
-			UserManager manager = UserManager.getInstance();
-			
-			HttpSession session = request.getSession();
-			request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(session));
-			
-			if(request.getServletPath().equals("/exercise/list")) {
-//				session.setAttribute("allContent", -1);
-//				session.setAttribute("searchContent", "-");
-				exerciseList = exerciseDao.allExerciseList();
-			}
-			
-			if(request.getServletPath().equals("exercise/reservation")) {
-				
-			}
-			
-//			if(request.getServletPath().equals("/exercise/search")) {
-//				if (request.getParameter("allContent") != null) {
-//					session.setAttribute("allContent", Integer.parseInt(request.getParameter("allContent")));
-//				}
-//				if (request.getParameter("searchContent") != null && !request.getParameter("searchContent").equals("")) {
-//					session.setAttribute("searchContent", request.getParameter("searchContent"));
-//				} else {
-//					session.setAttribute("searchContent", "-");
-//				}
-//				exerciseList = exerciseDao.searchStringExercisename(request.getParameter("searchContent"));
-//				
-//			}
-			
-//			List<Exercise> exerciseList = manager.findReviewList(Integer.parseInt(session.getAttribute("workoutType").toString()),
-//					session.getAttribute("orderType").toString(),
-//					session.getAttribute("searchContent").toString());
-			
-		
-			session.setAttribute("exerciseList", exerciseList);
-			
-			return "/exercise/exerciseList.jsp";
-		} catch(Exception e) {
-			return "redirect:/user/login.jsp";
+
+
+		ExerciseSessionRepository exerciseSessionRepository = new ExerciseSessionRepository();
+
+		HttpSession session = request.getSession();
+
+		Map<String, Object> condition = new HashMap<String, Object>();
+
+		condition.put("trainerId", null);
+		condition.put("difficultyType", null);
+		condition.put("exerciseType", null);
+
+		if (request.getServletPath().equals("/exercise/list")) {
+			session.setAttribute("trainerId", null);
+			session.setAttribute("difficultyType", null);
+			session.setAttribute("exerciseType", null);
 		}
-		
-		
-		
-//		if(request.getServletPath().equals("/exercise/delete")) {
-//			int reviewId = Integer.parseInt(request.getParameter("exerciseId"));
-//			try {
-//				manager.removeReview(reviewId);
-//			} catch (Exception e) {		
-//	            request.setAttribute("removeFailed", true);
-//	            request.setAttribute("exception", e);
-//				return "/exercise/exerciseList.jsp";
-//			}
-//			return "redirect:/review/list";
-//		}
+		if (request.getServletPath().equals("/exercise/search")) {
+			if (request.getParameter("trainerId") != null && !request.getParameter("trainerId").equals("")) {
+				session.setAttribute("trainerId", request.getParameter("trainerId"));
+				condition.put("trainerId", request.getParameter("trainerId"));
+			} else {
+				session.setAttribute("trainerId", null);
+				condition.put("trainerId", null);
+			}
+
+			if (request.getParameter("difficultyType") != null && !request.getParameter("difficultyType").equals("")) {
+				session.setAttribute("difficultyType", request.getParameter("difficultyType"));
+				condition.put("difficultyType", request.getParameter("difficultyType"));
+			} else {
+				session.setAttribute("difficultyType", null);
+				condition.put("difficultyType", null);
+			}
+
+			if (request.getParameter("exerciseType") != null && !request.getParameter("exerciseType").equals("")) {
+				session.setAttribute("exerciseType", request.getParameter("exerciseType"));
+				condition.put("exerciseType", request.getParameter("exerciseType"));
+			} else {
+				session.setAttribute("exerciseType", null);
+				condition.put("exerciseType", null);
+			}
+		}
+		try {
+			List<Exercise> exerciseList = exerciseSessionRepository.findExerciseByCondition(condition);
+			session.setAttribute("exerciseList", exerciseList);
+
+			List<User> trainerList = new UserDAO().FindTrainerListByType("trainer");
+			session.setAttribute("trainerList", trainerList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "/exercise/exerciseList.jsp";
 
 	}
 
