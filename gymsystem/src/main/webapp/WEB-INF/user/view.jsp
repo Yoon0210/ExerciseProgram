@@ -27,11 +27,15 @@ function userRemove() {
     	<tbody> 
 	  	  <tr>
 			<td>사용자 ID</td>
+			<td>이름</td>
 			<td>이메일 주소</td>
+			<td>핸드폰 번호</td>
 		  </tr>
 		  <tr>
 			<td>${user.userId}</td>
+			<td>${user.name}</td>
 			<td>${user.email}</td>
+			<td>${user.phone}</td>
 		  </tr>
 		</tbody>
 	</table>
@@ -63,6 +67,7 @@ function userRemove() {
 			<th> <font size="4px">운동</font></th>
 			<th> <font size="4px">예약날짜</font></th>
 			<th> <font size="4px">예약상태</font></th>
+			<th> <font size-"4px">신청취소</font>
 		</tr> 
 
 		<c:forEach var="res" items="${reservation}">
@@ -71,7 +76,7 @@ function userRemove() {
 			<td align ="center"><font size="4px"> ${res.exerciseName}</font></td>
 			<td align ="center"><font size="4px"> ${res.reservationDate}</font></td>
 			<td align ="center"><font size="4px"> ${res.status}</font></td>
-			<td><a href="<c:url value='/user/mypage/cancel'><c:param name='reservationId' value='${res.getResId()}'/>
+			<td><a onclick="return confirm('취소하시겠습니까?')" href="<c:url value='/user/mypage/cancel'><c:param name='reservationId' value='${res.getResId()}'/>
 							<c:param name='resUserId' value='${res.getUserId()}'/>
 							<c:param name='resExerId' value='${res.getExerciseId()}'/></c:url>">취소</a></td>
 		</tr>
