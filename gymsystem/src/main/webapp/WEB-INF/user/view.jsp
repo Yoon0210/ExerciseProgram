@@ -47,7 +47,7 @@ function userRemove() {
 			<th> <font size="4px">예약상태</font></th>
 		</tr> 
 
-		<c:forEach var="res" items="${reservationList}">
+		<c:forEach var="res" items="${reservation}">
 		<tr>
 			<td align ="center"><font size="4px"> ${res.trainerName} </font></td>
 			<td align ="center"><font size="4px"> ${res.exerciseName}</font></td>
