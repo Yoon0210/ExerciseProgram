@@ -68,6 +68,7 @@ private JDBCUtil jdbcUtil = null;
 		return null;
 	}
 	
+	//top3 강사 검색
 	public List<User> findTop3Trainer() {
 		String sql = "SELECT ROWNUM, trainerName "
 				+ "	FROM "

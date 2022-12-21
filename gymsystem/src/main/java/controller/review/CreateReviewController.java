@@ -17,6 +17,8 @@ public class CreateReviewController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		//리뷰 등록 컨트롤러
+		
 		Review review = new Review(null,
 				Integer.parseInt(request.getParameter("workoutId")),
 				request.getParameter("reviewTitle"),

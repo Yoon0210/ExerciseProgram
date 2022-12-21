@@ -16,6 +16,7 @@ public class ExerciseDAO {
 		jdbcUtil = new JDBCUtil();
 	}
 	
+	//시간 중복 검색
 	public boolean existingTrainerSchedule(String id, String day, String time) {
 		String sql = "SELECT count(*) AS \"count\" FROM exercise WHERE trainerid=? AND exerciseDay=? AND exerciseTime=?";              
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { id, day, time } );	// JDBCUtil에 query문과 매개 변수 설정
@@ -263,7 +264,7 @@ public class ExerciseDAO {
 		return null;
 	}
 	
-	//미경 make
+	//운동 이름-강사 이름 (review 페이지에 사용)
 	public List<Exercise> findExerciseName() {
 		String sql = "SELECT e.exerciseId, e.exercisename, t.userId, t.username " 
      		   + "FROM Exercise e, UserInfo t "
@@ -291,6 +292,7 @@ public class ExerciseDAO {
 		return null;
 	}
 	
+	//top3 운동 검색
 	public List<Exercise> findTop3Exercise() {
 		String sql = "SELECT ROWNUM, exerciseName, exerciseType, trainerName "
 				+ "	FROM "

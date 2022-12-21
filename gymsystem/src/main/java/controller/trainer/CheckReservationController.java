@@ -28,6 +28,7 @@ public class CheckReservationController implements Controller {
 		ExerciseDAO exerciseDao = new ExerciseDAO();
 		ReservationDAO reservationDAO = new ReservationDAO();
 
+		//운동 강좌 삭제
 		if (request.getServletPath().equals("/trainer/delete")) {
 			int exerciseId = Integer.parseInt(request.getParameter("exerciseReservation"));
 			try {
@@ -44,6 +45,7 @@ public class CheckReservationController implements Controller {
 		String resUserId;
 		int resExerId;
 
+		//신청 거절
 		if (request.getServletPath().equals("/reservation/reject")) {
 			resId = Integer.parseInt(request.getParameter("reservationId"));
 			resUserId = request.getParameter("resUserId");
@@ -51,6 +53,8 @@ public class CheckReservationController implements Controller {
 			reservationDAO.updateStatus(resId, resUserId, resExerId, "거절");
 			return "redirect:/trainer/check";
 		}
+		
+		//신청 승인
 		if (request.getServletPath().equals("/reservation/accept")) {
 			resId = Integer.parseInt(request.getParameter("reservationId"));
 			resUserId = request.getParameter("resUserId");
@@ -60,6 +64,7 @@ public class CheckReservationController implements Controller {
 
 		}
 
+		//내가 개설한 강좌, 내 강좌 신청자 보기
 		if (request.getServletPath().equals("/trainer/check")) {
 			try {
 				List<Exercise> exerciseList = exerciseDao.findExerciseByTrainer(trainerId);

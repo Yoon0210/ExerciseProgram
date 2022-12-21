@@ -44,11 +44,10 @@ public class UserDAO {
 	 */
 	public int update(User user) throws SQLException {
 		String sql = "UPDATE UserInfo "
-					+ "SET password=?, email=?, phone=?, username=?, usertype=? "
+					+ "SET password=?, email=?, phone=?, username=? "
 					+ "WHERE userid=?";
-		Object[] param = new Object[] {user.getPassword(), 
-					user.getEmail(),  
-					user.getUserId(), user.getPhone(), user.getName(), user.getUserType()};				
+		Object[] param = new Object[] {user.getPassword(), user.getEmail(), user.getPhone(), user.getName(), 
+				user.getUserId() };				
 		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil에 update문과 매개 변수 설정
 			
 		try {				

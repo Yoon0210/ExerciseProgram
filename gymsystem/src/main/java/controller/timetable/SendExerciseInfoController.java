@@ -68,6 +68,8 @@ public class SendExerciseInfoController implements Controller {
 				dayIndex = Exercise.getWeekday(exerDay);
 				timeIndex = Exercise.getTime(exerTime);
 				
+				
+				//시간표 강좌마다 색 지정
 				String r = Integer.toHexString((ex.getExerciseDay() + ex.getExerciseId()).hashCode()%128+128);
 				String g = Integer.toHexString((ex.getExerciseId() + ex.getDifficulty()).hashCode()%128+128);
 				String b = Integer.toHexString((ex.getDifficulty() + ex.getExerciseTime()).hashCode()%128+128);

@@ -20,14 +20,13 @@ public class MyPageController implements Controller{
     	UserDAO userDao = new UserDAO();
     	HttpSession session = request.getSession();
     	String userId = (String) session.getAttribute("userId");
-    	//String userId = request.getParameter("userId");
     	System.out.println("현재 요청의 userId 파라미터 값: " + userId);
     	request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));		
     	User member = new User();
     	
     	try {
     		member = userDao.findUser(userId);
-        	//member객체를 request에 저장하여 뷰로 전달
+        	//user객체를 request에 저장하여 뷰로 전달
         	request.setAttribute("user", member);
     		return "/user/myPage.jsp";
     		

@@ -22,14 +22,14 @@ public class ViewUserController implements Controller {
         }
     	
 		UserManager manager = UserManager.getInstance();
-		String userId = UserSessionUtils.getLoginUserId(request.getSession());// = request.getParameter("userId");
+		String userId = UserSessionUtils.getLoginUserId(request.getSession());
 		
 		ReservationDAO reservationdao = new ReservationDAO();
 	    List <Reservation> reservation = new ArrayList<Reservation>();
 		
-		//여기 컨트롤러로 잘 들어왔는지 확인점..
 		System.out.println("뷰 유저 컨트롤러 내부");
 
+		//마이페이지로 들어온 경우 userId==현재 유저 아이디로 설정
 		if(request.getServletPath().equals("/user/mypage")) {
 			userId = UserSessionUtils.getLoginUserId(request.getSession());
 
@@ -42,6 +42,7 @@ public class ViewUserController implements Controller {
 		String resUserId;
 		int resExerId;
 
+		//신청 취소
 		if(request.getServletPath().equals("/user/mypage/cancel")) {
 			resId = Integer.parseInt(request.getParameter("reservationId"));
 			resUserId = request.getParameter("resUserId");
@@ -54,6 +55,7 @@ public class ViewUserController implements Controller {
 			return "redirect:/user/mypage";
 		}
 		
+		//신청 취소/거절 상태인 목록 삭제
 		if(request.getServletPath().equals("/user/mypage/delete")) {
 			resId = Integer.parseInt(request.getParameter("reservationId"));
 			int success = reservationdao.delete(resId);
