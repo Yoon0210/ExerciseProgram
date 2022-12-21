@@ -101,6 +101,6 @@ function exerciseReservation() {
 	<c:param name='exerciseReservation' value='${viewExercise.exerciseId}'/></c:url>"
 	 onclick="exerciseReservation();"><font size="2">예약하기</font></a> &nbsp;
 	 </p>
-	
+	<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

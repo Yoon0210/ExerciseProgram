@@ -53,26 +53,7 @@
 <body>
 	<%@include file="/WEB-INF/header.jsp"%>
 	<%@include file="/WEB-INF/navbar.jsp" %>
-
-	<ul class="mod_menu">
-		<!-- 회원용 상단바 -->
-		<c:if test="${userType eq 'user' }">
-			<li><a href="<c:url value='/user/mypage'></c:url>">마이페이지</a></li>
-			<li><a href="<c:url value='/user/myreservation'></c:url>">예약확인</a></li>
-			<li>커뮤니티</li>
-
-		</c:if>
-
-		<!-- 트레이너용 상단바 -->
-
-		<c:if test="${userType eq 'trainer' }">
-			<li><a href="<c:url value='/trainer/exercise/form'></c:url>">운동추가</a></li>
-			<li><a href="<c:url value='/trainer/check'></c:url>">운동조회</a></li>
-		</c:if>
-	</ul>
-
-	<hr>
-
+	<br>
 	<!-- register ExerciseForm -->
 	<form name="form" method="POST" action="<c:url value='/trainer/add' />">
 		<h1 align="center">새로운 운동 등록</h1>
@@ -142,7 +123,7 @@
 
 	</form>
 	
-	
+	<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 <c:if test='${registerFailed }'>
 	<script type="text/javascript">

@@ -26,21 +26,37 @@ function userRemove() {
 	<table class="table table-sm table-striped" style="text-align: center;">
     	<tbody> 
 	  	  <tr>
-			<th>사용자 ID</th>
-			<td>${user.userId}</td>
+			<td>사용자 ID</td>
+			<td>이메일 주소</td>
 		  </tr>
 		  <tr>
-			<th>이메일 주소</th>
+			<td>${user.userId}</td>
 			<td>${user.email}</td>
 		  </tr>
 		</tbody>
 	</table>
 	<br> 	
+	
+	<a class="btn btn-primary" 
+    	href="<c:url value='/user/update' >
+     		     <c:param name='userId' value='${user.userId}'/>
+		 	  </c:url>">회원정보 수정</a>
+    <a class="btn btn-warning" 
+   		href="<c:url value='/user/delete'>
+		     	 <c:param name='userId' value='${user.userId}'/>
+	 	      </c:url>" onclick="return userRemove();">회원 탈퇴</a>
+	
+	<c:if test="${userId eq 'admin' }">   
+	    <a class="btn btn-success" href="<c:url value='/user/list' />">사용자 목록</a> 	    
+	    <br>	
+    </c:if>
+    
 		     
 	<!-- 예약확인 테이블 (이거는 유저일 때만 나옴)-->
 	<c:if test="${userType eq 'user' }">
 	<hr color="black" size="10px"><br>
 	<h4 align="center"> 나의 운동 예약확인</h4><br><br>
+	
 	<table class="table table-sm table-striped" style="text-align: center;">
 		<tr>
 			<th> <font size="4px">강사</font></th>
@@ -62,22 +78,12 @@ function userRemove() {
 		</c:forEach>
 	</table>
 	</c:if>
-	
-    <a class="btn btn-primary" 
-    	href="<c:url value='/user/update' >
-     		     <c:param name='userId' value='${user.userId}'/>
-		 	  </c:url>">수정</a>
-    <a class="btn btn-warning" 
-   		href="<c:url value='/user/delete'>
-		     	 <c:param name='userId' value='${user.userId}'/>
-	 	      </c:url>" onclick="return userRemove();">삭제</a>
-    <a class="btn btn-success" href="<c:url value='/user/list' />">사용자 목록</a> 	    
-    <br>	   
 	    
 	<!-- 수정 또는 삭제가  실패한 경우 exception 객체에 저장된 오류 메시지를 출력 -->
 	<c:if test="${updateFailed || deleteFailed}">
 		<h6 class="text-danger"><c:out value="${exception.getMessage()}"/></h6>
     </c:if>  
 </div>  
+<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>

@@ -67,5 +67,6 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 </html>
