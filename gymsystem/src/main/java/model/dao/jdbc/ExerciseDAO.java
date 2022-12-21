@@ -290,4 +290,37 @@ public class ExerciseDAO {
 		}
 		return null;
 	}
+	
+	public List<Exercise> findTop3Exercise() {
+		String sql = "SELECT ROWNUM, exerciseName, exerciseType, trainerName "
+				+ "	FROM "
+				+ "	( SELECT e.exerciseName, e.exerciseType, u.userName AS trainerName, COUNT(*) "
+				+ "	FROM EXERCISE e, USERINFO u, RESERVATION r "
+				+ "	WHERE r.exerciseId = e.exerciseId AND e.trainerId = u.userId "
+				+ "	group by e.exerciseName, e.exerciseType, u.userName "
+				+ "	ORDER BY COUNT(*) DESC) "
+				+ "	WHERE ROWNUM < 4";
+		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
+					
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();			// query 실행			
+			List<Exercise> eList = new ArrayList<Exercise>();	// User들의 리스트 생성
+			while (rs.next()) {
+				Exercise exercise = new Exercise(			// User 객체를 생성하여 현재 행의 정보를 저장
+					rs.getString("exerciseName"),
+					rs.getString("exerciseType"), rs.getString("trainerName")
+					);
+				eList.add(exercise);				// List에 User 객체 저장
+			}		
+			return eList;					
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return null;
+	}
+	
+	
 }

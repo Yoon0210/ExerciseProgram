@@ -32,7 +32,7 @@ public class MyPageController implements Controller{
     		return "/user/myPage.jsp";
     		
     	}catch(Exception e) {
-    		return "redirect:/user/main";
+    		return "redirect:/main";
     	}
     	
 	}

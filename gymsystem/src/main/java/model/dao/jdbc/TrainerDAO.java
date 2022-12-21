@@ -67,5 +67,35 @@ private JDBCUtil jdbcUtil = null;
 		}
 		return null;
 	}
+	
+	public List<User> findTop3Trainer() {
+		String sql = "SELECT ROWNUM, trainerName "
+				+ "	FROM "
+				+ "	( SELECT u.userName AS trainerName, COUNT(*) "
+				+ "	FROM EXERCISE e, USERINFO u, RESERVATION r "
+				+ "	WHERE r.exerciseId = e.exerciseId AND e.trainerId = u.userId "
+				+ "	group by u.userName "
+				+ "	ORDER BY COUNT(*) DESC) "
+				+ "	WHERE ROWNUM < 4";
+		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil에 query문 설정
+					
+		try {
+			ResultSet rs = jdbcUtil.executeQuery();			// query 실행			
+			List<User> trList = new ArrayList<User>();	// User들의 리스트 생성
+			while (rs.next()) {
+				User trainer = new User(			// User 객체를 생성하여 현재 행의 정보를 저장
+					rs.getString("trainerName")
+					);
+				trList.add(trainer);				// List에 User 객체 저장
+			}		
+			return trList;					
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();		// resource 반환
+		}
+		return null;
+	}
 
 }
