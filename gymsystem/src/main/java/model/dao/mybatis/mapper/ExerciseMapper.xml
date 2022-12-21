@@ -20,14 +20,17 @@
 		FROM EXERCISE e, USERINFO u
 		<where>
 			e.trainerId = u.userId
-			<if test="searchType != null">
-				AND e.exerciseType = #{searchType}
+			<if test="trainerId != null">
+				AND e.trainerId = #{trainerId}
 			</if>
-			<if test="searchContent != null">
-				AND e.exerciseName Like '%'||#{searchContent}||'%'  
+			<if test="difficultyType != null">
+				AND e.difficulty = #{difficultyType}
 			</if>
+			<if test="exerciseType != null">
+				AND e.exerciseType = #{exerciseType}
+			</if>
+			
 		</where>
-		ORDER BY ${orderType} DESC
 	</select>
 	
 </mapper>

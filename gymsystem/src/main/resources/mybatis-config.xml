@@ -25,5 +25,6 @@
 	</environments>
 	<mappers>
 		<mapper resource="model/dao/mybatis/mapper/ReviewMapper.xml" />
+		<mapper resource="model/dao/mybatis/mapper/ExerciseMapper.xml" />
 	</mappers>
 </configuration>

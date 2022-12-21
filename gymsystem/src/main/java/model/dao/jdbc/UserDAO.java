@@ -118,7 +118,7 @@ public class UserDAO {
 	}
 	
 	public List<User> FindTrainerListByType(String userType){
-		String sql = "SELECT password, email, phone, username, userType "
+		String sql = "SELECT userId, password, email, phone, username, userType "
     			+ "FROM UserInfo "
     			+ "WHERE userType=? ";              
 	jdbcUtil.setSqlAndParameters(sql, new Object[] {userType});	// JDBCUtil에 query문과 매개 변수 설정

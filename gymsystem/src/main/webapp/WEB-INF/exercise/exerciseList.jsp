@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>모든 운동 리스트 보기</title>
+<title>운동 검색</title>
 
 <!-- 부트스트랩 -->
 <link rel="stylesheet"
@@ -30,37 +30,33 @@
 		<!-- 운동 검색 폼 -->
 		<form method="get" action="<c:url value="/exercise/search" />"
 			class="form-inline mt-3">
-			<select name="allContent" class="form-control mx-1 mt-2">
-				<option value="-1">전체</option>
-				<c:forEach var="all" items="${allList}">
-					<option value="${all.getExerciseId()}"
-						<c:if test='${all.getExerciseId() eq allContent}'> selected="selected" </c:if>>${all.toString()}</option>
-				</c:forEach>
-			</select>
-			<select name="trainerType" class="form-control mx-1 mt-2">
-				<option value="-1">강사</option>
+			<select name="trainerId" class="form-control mx-1 mt-2">
+				<option value="">강사</option>
 				<c:forEach var="trainer" items="${trainerList}">
-					<option value="${trainer.getTrainerId()}"
-						<c:if test='${trainer.getExerciseId() eq trainerType}'> selected="selected" </c:if>>${trainer.toString()}</option>
+					<option value="${trainer.getUserId()}"
+						<c:if test='${trainer.getUserId() eq trainerId}'> selected="selected" </c:if>>${trainer.getName()}</option>
 					</c:forEach>
 			</select>
 			<select name="difficultyType" class="form-control mx-1 mt-2">
-				<option value="-1">난이도</option>
-				<c:forEach var="difficulty" items="${difficultyList}">
-					<option value="${difficulty.getDifficulty()}"
-						<c:if test='${difficulty.getExerciseId() eq difficultyType}'> selected="selected" </c:if>>${difficulty.toString()}</option>
-					</c:forEach>
+				<option value="">난이도</option>
+				<option value="상"
+					<c:if test='${difficultyType eq "상"}'> selected="selected" </c:if>>상</option>
+				<option value="중"
+					<c:if test='${difficultyType eq "중"}'> selected="selected" </c:if>>중</option>
+				<option value="하"
+					<c:if test='${difficultyType eq "하"}'> selected="selected" </c:if>>하</option>
 			</select>
 			<select name="exerciseType" class="form-control mx-1 mt-2">
-				<option value="-1">종목</option>
-				<c:forEach var="exercise" items="${exerciseTypeList}">
-					<option value="${exercise.getExerciseType()}"
-						<c:if test='${exercise.getExerciseId() eq exerciseType}'> selected="selected" </c:if>>${exercise.toString()}</option>
-					</c:forEach>
+				<option value="">종목</option>
+				<option value="헬스"
+					<c:if test='${exerciseType eq "헬스"}'> selected="selected" </c:if>>헬스</option>
+				<option value="요가"
+					<c:if test='${exerciseType eq "요가"}'> selected="selected" </c:if>>요가</option>
+				<option value="필라테스"
+					<c:if test='${exerciseType eq "필라테스"}'> selected="selected" </c:if>>필라테스</option>
+				<option value="PT"
+					<c:if test='${exerciseType eq "PT"}'> selected="selected" </c:if>>PT</option>
 			</select>	
-				<input type="text" name="searchContent"
-				class="form-control mx-1 mt-2" placeholder="내용을 입력하세요"
-				<c:if test='${searchContent ne "-"}'>value='${searchContent }'</c:if>>
 			<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
 		</form>
 		<div class="col-lg-12 text-center text-danger">
