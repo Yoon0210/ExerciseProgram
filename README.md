@@ -2,6 +2,12 @@
 
 ### 테스트용 계정
 ```
+(관리자 계정)
+Type: 회원
+id: admin
+password: admi
+```
+```
 Type: 강사
 id: trainer1
 password: trainer1
@@ -20,10 +26,4 @@ password: user
 Type: 회원
 id: vfrbgt
 password: vfrbgt
-```
-```
-(관리자 계정)
-Type: 회원
-id: admin
-password: admi
 ```
