@@ -47,7 +47,9 @@ public class UpdateUserController implements Controller {
     	User updateUser = new User(
     		request.getParameter("userId"),
     		request.getParameter("password"),
-    		request.getParameter("email")
+    		request.getParameter("email"),
+    		request.getParameter("phone"),
+    		request.getParameter("name")
     		);
 
     	log.debug("Update User : {}", updateUser);

@@ -67,7 +67,7 @@ function userRemove() {
 			<th> <font size="4px">운동</font></th>
 			<th> <font size="4px">예약날짜</font></th>
 			<th> <font size="4px">예약상태</font></th>
-			<th> <font size-"4px">신청취소</font>
+			<th> <font size="4px">신청취소</font>
 		</tr> 
 
 		<c:forEach var="res" items="${reservation}">

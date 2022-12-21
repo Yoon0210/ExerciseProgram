@@ -100,19 +100,6 @@ function userModify() {
 						value="${user.phone}">
 				</div>
 			</div>
-			<div class="form-group row">
-				<label for="commId" class="col-lg-2 col-form-label">커뮤니티</label>
-				<!-- 화면 로드 시 서버로부터 커뮤니티 목록을 가져와 commSelect 메뉴 생성  -->
-				<div class="col-lg-10">
-					<select id="commSelect" name="commId" class="form-control">
-						<option value="0">없음</option>
-						<c:forEach var="comm" items="${commList}">
-							<option value="${comm.id}"
-								<c:if test="${comm.id eq user.commId}">selected="selected"</c:if>>${comm.name}</option>
-						</c:forEach>
-					</select>
-				</div>
-			</div>
 			<br>
 			<div class="form-group">
 				<input type="button" class="btn btn-primary" value="수정"

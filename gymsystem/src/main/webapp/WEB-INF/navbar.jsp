@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="/gymsystem/css/custom.css">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="index.jsp">피트니스 센터 다운</a>
+	<a class="navbar-brand" href="<c:url value='/'/>" >피트니스 센터 다운</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbar">
 		<span class="navbar-toggler-icon"></span>
@@ -17,7 +17,7 @@
 
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" id="navbardrop"
-				data-toggle="dropdown" href="<c:url value='/user/list' />"> 회원관리 </a>
+				data-toggle="dropdown" href="<c:url value='/user/list' />"> 관리 </a>
 				<div class="dropdown-menu">
 					<c:if test="${userId ne null}">
 						<a class="dropdown-item" href="<c:url value='/user/logout'/>">로그아웃 ( ${userId} )</a>
