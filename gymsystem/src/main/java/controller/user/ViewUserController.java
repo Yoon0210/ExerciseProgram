@@ -22,7 +22,7 @@ public class ViewUserController implements Controller {
         }
     	
 		UserManager manager = UserManager.getInstance();
-		String userId;// = request.getParameter("userId");
+		String userId = UserSessionUtils.getLoginUserId(request.getSession());// = request.getParameter("userId");
 		
 		ReservationDAO reservationdao = new ReservationDAO();
 	    List <Reservation> reservation = new ArrayList<Reservation>();
@@ -38,11 +38,27 @@ public class ViewUserController implements Controller {
 			userId = request.getParameter("userId");
 		}
 		
+		int resId;
+		String resUserId;
+		int resExerId;
+
+		if(request.getServletPath().equals("/user/mypage/cancel")) {
+			resId = Integer.parseInt(request.getParameter("reservationId"));
+			resUserId = request.getParameter("resUserId");
+			resExerId = Integer.parseInt(request.getParameter("resExerId"));
+			int success = reservationdao.updateStatus(resId, resUserId, resExerId, "취소");
+			
+			if(success == 0) {
+				System.out.print("취소 실패");
+			}
+			return "redirect:/user/mypage";
+		}
+		
     	User user = null;
 		try {
 			user = manager.findUser(userId);	// 사용자 정보 검색
 			reservation = reservationdao.searchReservationByUser(userId); //사용자의 운동 정보 검색
-			System.out.println(reservation.size());
+			//System.out.println(reservation.size());
 		} catch (UserNotFoundException e) {				
 	        return "redirect:/user/list";
 		}	

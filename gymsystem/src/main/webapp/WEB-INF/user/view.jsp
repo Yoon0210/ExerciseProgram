@@ -55,6 +55,9 @@ function userRemove() {
 			<td align ="center"><font size="4px"> ${res.exerciseName}</font></td>
 			<td align ="center"><font size="4px"> ${res.reservationDate}</font></td>
 			<td align ="center"><font size="4px"> ${res.status}</font></td>
+			<td><a href="<c:url value='/user/mypage/cancel'><c:param name='reservationId' value='${res.getResId()}'/>
+							<c:param name='resUserId' value='${res.getUserId()}'/>
+							<c:param name='resExerId' value='${res.getExerciseId()}'/></c:url>">취소</a></td>
 		</tr>
 		</c:forEach>
 	</table>
