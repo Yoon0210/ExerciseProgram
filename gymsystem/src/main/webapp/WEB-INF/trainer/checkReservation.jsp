@@ -37,8 +37,7 @@
 		<c:forEach var="exercise" items="${exerciseList}">
 		<tr>
 			<td align ="center"> ${exercise.getExerciseType()} </td>
-			<td align ="center"> ${exercise.getExerciseName()}
-			</td>
+			<td align ="center"> ${exercise.getExerciseName()}</td>
 			<td align ="center"> ${exercise.getDifficulty()}</td>
 			<td align ="center"> ${exercise.getExerciseDay()}</td>
 			<td align ="center"> ${exercise.getExerciseTime()}</td>

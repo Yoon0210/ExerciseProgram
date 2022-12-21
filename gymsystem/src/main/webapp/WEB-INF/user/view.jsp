@@ -79,7 +79,11 @@ function userRemove() {
 			<td><a onclick="return confirm('취소하시겠습니까?')" href="<c:url value='/user/mypage/cancel'><c:param name='reservationId' value='${res.getResId()}'/>
 							<c:param name='resUserId' value='${res.getUserId()}'/>
 							<c:param name='resExerId' value='${res.getExerciseId()}'/></c:url>">취소</a></td>
-		</tr>
+						<c:if test="${res.getStatus() eq '취소' || res.getStatus() eq '거절' }">
+							<td><a href="<c:url value='/user/mypage/delete'><c:param name='reservationId' value='${res.getResId()}'/>
+							</c:url>">삭제</a></td>
+						</c:if>
+					</tr>
 		</c:forEach>
 	</table>
 	</c:if>

@@ -5,7 +5,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import controller.Exercise.ExerciseReservationController;
 import controller.Exercise.ListExerciseController;
 import controller.admin.ReportPageController;
 import controller.likey.ClickLikeyController;
@@ -43,6 +42,7 @@ public class RequestMapping {
         mappings.put("/user/mypage", new ViewUserController());
         mappings.put("/user/update", new UpdateUserController());
         mappings.put("/user/mypage/cancel", new ViewUserController());
+        mappings.put("/user/mypage/delete", new ViewUserController());
         
         mappings.put("/user/delete", new DeleteUserController());
         
@@ -67,7 +67,6 @@ public class RequestMapping {
         
         mappings.put("/trainer/add", new AddReservationController());
         mappings.put("/trainer/exercise/form", new ForwardController("/trainer/addReservation.jsp"));
-        mappings.put("/trainer/exercise/search", new ExerciseReservationController());
         
         mappings.put("/trainer/check", new CheckReservationController());
         mappings.put("/trainer/delete", new CheckReservationController());
