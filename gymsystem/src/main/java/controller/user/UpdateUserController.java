@@ -56,6 +56,6 @@ public class UpdateUserController implements Controller {
 
 		UserManager manager = UserManager.getInstance();
 		manager.update(updateUser);			
-        return "redirect:/user/list";			
+        return "redirect:/user/mypage";			
     }
 }
