@@ -35,8 +35,10 @@ function userRemove() {
 		  </tr>
 		</tbody>
 	</table>
-	<br> 		     
-		<!-- 예약확인 테이블 -->
+	<br> 	
+		     
+	<!-- 예약확인 테이블 (이거는 유저일 때만 나옴)-->
+	<c:if test="${userType eq 'user' }">
 	<hr color="black" size="10px"><br>
 	<h4 align="center"> 나의 운동 예약확인</h4><br><br>
 	<table class="table table-sm table-striped" style="text-align: center;">
@@ -56,7 +58,7 @@ function userRemove() {
 		</tr>
 		</c:forEach>
 	</table>
-	
+	</c:if>
 	
     <a class="btn btn-primary" 
     	href="<c:url value='/user/update' >
