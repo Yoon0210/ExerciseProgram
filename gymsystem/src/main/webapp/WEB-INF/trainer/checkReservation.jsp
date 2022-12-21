@@ -19,8 +19,8 @@
 <title>운동목록 확인</title>
 </head>
 <body>
-<%@include file="/WEB-INF/header.jsp"%>
 <%@include file="/WEB-INF/navbar.jsp" %>
+<%@include file="/WEB-INF/header.jsp"%>
 
 	<br>
 	<h1 align="center">내가 맡은 운동 조회</h1>

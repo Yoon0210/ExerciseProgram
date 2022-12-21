@@ -51,8 +51,8 @@
 <title>운동 추가</title>
 </head>
 <body>
-	<%@include file="/WEB-INF/header.jsp"%>
 	<%@include file="/WEB-INF/navbar.jsp" %>
+	<%@include file="/WEB-INF/header.jsp"%>
 	<br>
 	<!-- register ExerciseForm -->
 	<form name="form" method="POST" action="<c:url value='/trainer/add' />">
