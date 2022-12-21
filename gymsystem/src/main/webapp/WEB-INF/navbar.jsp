@@ -20,7 +20,7 @@
 				data-toggle="dropdown" href="<c:url value='/user/list' />"> 관리 </a>
 				<div class="dropdown-menu">
 					<c:if test="${userId ne null}">
-						<a class="dropdown-item" href="<c:url value='/user/logout'/>">로그아웃 ( ${userId} )</a>
+						<a onclick="return confirm('로그아웃하시겠습니까?')"class="dropdown-item" href="<c:url value='/user/logout'/>">로그아웃 ( ${userId} )</a>
 						<c:if test="${userType eq 'trainer' }">
 							<a class="dropdown-item" href="<c:url value='/trainer/exercise/form'/>">운동 추가 </a>
 							<a class="dropdown-item" href="<c:url value='/trainer/check'/>">운동 조회 </a></c:if>

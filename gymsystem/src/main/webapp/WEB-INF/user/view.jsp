@@ -26,10 +26,10 @@ function userRemove() {
 	<table class="table table-sm table-striped" style="text-align: center;">
     	<tbody> 
 	  	  <tr>
-			<td>사용자 ID</td>
-			<td>이름</td>
-			<td>이메일 주소</td>
-			<td>핸드폰 번호</td>
+			<th scope="col">사용자 ID</th>
+			<th scope="col">이름</th>
+			<th scope="col">이메일 주소</th>
+			<th scope="col">핸드폰 번호</th>
 		  </tr>
 		  <tr>
 			<td>${user.userId}</td>
@@ -63,19 +63,20 @@ function userRemove() {
 	
 	<table class="table table-sm table-striped" style="text-align: center;">
 		<tr>
-			<th> <font size="4px">강사</font></th>
-			<th> <font size="4px">운동</font></th>
-			<th> <font size="4px">예약날짜</font></th>
-			<th> <font size="4px">예약상태</font></th>
-			<th> <font size="4px">신청취소</font>
+			<th scope="col">강사</th>
+			<th scope="col">운동</th>
+			<th scope="col">예약날짜</th>
+			<th scope="col">예약상태</th>
+			<th scope="col">신청취소</th>
+			
 		</tr> 
 
 		<c:forEach var="res" items="${reservation}">
 		<tr>
-			<td align ="center"><font size="4px"> ${res.trainerName} </font></td>
-			<td align ="center"><font size="4px"> ${res.exerciseName}</font></td>
-			<td align ="center"><font size="4px"> ${res.reservationDate}</font></td>
-			<td align ="center"><font size="4px"> ${res.status}</font></td>
+			<td> ${res.trainerName}</td>
+			<td> ${res.exerciseName}</td>
+			<td> ${res.reservationDate}</td>
+			<td> ${res.status}</td>
 			<td><a onclick="return confirm('취소하시겠습니까?')" href="<c:url value='/user/mypage/cancel'><c:param name='reservationId' value='${res.getResId()}'/>
 							<c:param name='resUserId' value='${res.getUserId()}'/>
 							<c:param name='resExerId' value='${res.getExerciseId()}'/></c:url>">취소</a></td>

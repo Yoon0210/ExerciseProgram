@@ -22,16 +22,17 @@
 <%@include file="/WEB-INF/navbar.jsp" %>
 <%@include file="/WEB-INF/header.jsp"%>
 
+	<section class="container text-center">
 	<br>
 	<h1 align="center">내가 맡은 운동 조회</h1>
-	<table align="center" width="600" height="70" style="border:1px solid" style="border-collapse:collapse" >
-		<tr>
-			<th> 운동종목명</th>
-			<th> 운동이름</th>
-			<th> 운동강도</th>
-			<th> 요일</th>
-			<th> 시간</th>
-			<th> 삭제</th>
+	<table class="table" >
+		<tr class="table-primary">
+			<th scope="col"> 운동종목명</th>
+			<th scope="col"> 운동이름</th>
+			<th scope="col"> 운동강도</th>
+			<th scope="col"> 요일</th>
+			<th scope="col"> 시간</th>
+			<th scope="col"> 삭제</th>
 		</tr> 
 		  
 		<c:forEach var="exercise" items="${exerciseList}">
@@ -49,14 +50,14 @@
 	</table>	
 	<br>
 	<h1 align="center">고객 신청 목록</h1>
-	<table align="center" width="600" height="70" style="border:1px solid" style="border-collapse:collapse" >
-		<tr>
-			<th> 운동종목명</th>
-			<th> 운동이름</th>
-			<th> 신청자 이름</th>
-			<th> 상태</th>
-			<th> 수락</th>
-			<th> 거절</th>
+	<table class="table"  >
+		<tr class="table-primary">
+			<th scope="col"> 운동종목명</th>
+			<th scope="col"> 운동이름</th>
+			<th scope="col"> 신청자 이름</th>
+			<th scope="col"> 상태</th>
+			<th scope="col"> 수락</th>
+			<th scope="col"> 거절</th>
 		</tr> 
 		<c:forEach var="reservation" items="${resList}">
 		<tr>
@@ -77,6 +78,7 @@
 		</tr>
 		</c:forEach>
 	</table>	
+	</section>
 	<%@include file="/WEB-INF/footer.jsp"%>
 </body>
 <c:if test='${deleteFailed }'>

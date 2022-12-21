@@ -42,9 +42,9 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/header.jsp"%>	
-	<div>
+	<section class="container text-center">
 	<br><br>
-    <table align="center"; style="width:80%";>
+    <table style="width:100%";>
     <tr>
         <th>&nbsp;</th>
         <th>일</th>
@@ -67,7 +67,7 @@
 		  out.println("</tr>");
 	}
 %></table>
-</div>
+</section>
 
 <%@include file="/WEB-INF/footer.jsp"%>
 </body>

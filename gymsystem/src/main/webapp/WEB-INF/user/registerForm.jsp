@@ -126,6 +126,7 @@
 				<div class="form-group">
 					<input type="button" class="btn btn-primary" value="가입"
 						onClick="userCreate()">
+						<input class="btn btn-light" type="reset" value="초기화">
 				</div>
 			</form>
 		</section>
