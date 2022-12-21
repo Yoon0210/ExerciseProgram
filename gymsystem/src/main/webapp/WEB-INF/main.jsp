@@ -22,6 +22,7 @@
 	<%@include file="/WEB-INF/header.jsp"%>
 	
 	<section>
+	인기 수업 TOP 3
 	<c:forEach var="ex" items='${topEList}'>
 			<div class="card bg-light mt-3">
 				<div class="card-body bg-light">
@@ -30,6 +31,7 @@
 				</div>
 			</div>
 		</c:forEach>
+		인기 강사 TOP 3
 		<c:forEach var="tr" items='${topTrList}'>
 			<div class="card bg-light mt-3">
 				<div class="card-body bg-light">
