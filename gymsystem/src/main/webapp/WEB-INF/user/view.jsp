@@ -59,7 +59,7 @@ function userRemove() {
 	<!-- 예약확인 테이블 (이거는 유저일 때만 나옴)-->
 	<c:if test="${userType eq 'user' && userId != 'admin'}">
 	<hr color="black" size="10px"><br>
-	<h4 align="center"> 나의 운동 예약확인</h4><br><br>
+	<h4 align="center">나의 운동 예약확인</h4><br><br>
 	
 	<table class="table table-sm table-striped" style="text-align: center;">
 		<tr>
