@@ -44,7 +44,7 @@ public class CheckReservationController implements Controller {
 		int resId;
 		String resUserId;
 		int resExerId;
-
+		
 		//신청 거절
 		if (request.getServletPath().equals("/reservation/reject")) {
 			resId = Integer.parseInt(request.getParameter("reservationId"));
@@ -59,7 +59,7 @@ public class CheckReservationController implements Controller {
 			resId = Integer.parseInt(request.getParameter("reservationId"));
 			resUserId = request.getParameter("resUserId");
 			resExerId = Integer.parseInt(request.getParameter("resExerId"));
-			reservationDAO.updateStatus(resId, resUserId, resExerId, "승인");
+			reservationDAO.updateStatusAccept(resId, resUserId, resExerId);
 			return "redirect:/trainer/check";
 
 		}

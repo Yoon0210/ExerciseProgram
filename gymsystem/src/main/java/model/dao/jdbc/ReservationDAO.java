@@ -120,7 +120,7 @@ public class ReservationDAO {
 		String sql1 = "SELECT COUNT(*) "
 				+ "FROM RESERVATION "
 				+ "WHERE exerciseId = ? "
-				+ "AND userId = ? AND status='대기'"; 
+				+ "AND userId = ? AND (status='대기' OR status='승인')"; 
 				
 		String sql2 = "INSERT INTO reservation "
 					+"VALUES (reservationId_seq.nextval, ?, ?, SYSDATE, ?)";
@@ -168,25 +168,6 @@ public class ReservationDAO {
 				jdbcUtil.commit();
 				jdbcUtil.close(); // resource 반환
 			}
-		}
-		else if(status.equals("승인")) {
-			try {
-				result = jdbcUtil.executeUpdate(); // update 문 실행
-				
-				if(result==1) {
-					sql = "INSERT INTO SCHEDULE VALUES (?, ?)";
-					jdbcUtil.setSqlAndParameters(sql, new Object[] {userId, exerciseId});
-					result = jdbcUtil.executeUpdate();
-				}
-				return result;
-			} catch (Exception ex) {
-				jdbcUtil.rollback();
-				ex.printStackTrace();
-			} finally {
-				jdbcUtil.commit();
-				jdbcUtil.close(); // resource 반환
-			}
-			
 		} else if(status.equals("취소")) {
 			try {
 				result = jdbcUtil.executeUpdate(); // update 문 실행
@@ -221,6 +202,63 @@ public class ReservationDAO {
 		}
 		
 		return 0;
+	}
+
+	public int updateStatusAccept(int resId, String resUserId, int resExerId) {
+		int result = 0;
+		String sql;
+		String resExerDay;
+		String resExerTime;
+		try {
+			String sql3 = "SELECT exerciseDay, exerciseTime "
+					+ "FROM exercise "
+					+ "WHERE exerciseId = ?";
+			jdbcUtil.setSqlAndParameters(sql3, new Object[] { resExerId });
+			ResultSet rs = jdbcUtil.executeQuery(); // update 문 실행
+			
+			if(rs.next()) {
+				resExerDay = rs.getString("exerciseDay");
+				resExerTime = rs.getString("exerciseTime");
+				
+				String sql2 = "SELECT COUNT(*) AS \"count\" FROM schedule s, exercise e, userinfo u "
+						+ "WHERE u.userId = s.userId AND e.exerciseDay = ? AND e.exerciseTime = ? "
+						+ "AND s.exerciseId = e.exerciseId AND s.userId = ?";
+				
+				jdbcUtil.setSqlAndParameters(sql2, new Object[] { resExerDay, resExerTime, resUserId });
+				rs = jdbcUtil.executeQuery(); // update 문 실행
+				
+				if(rs.next()) {
+					if(rs.getInt("count") == 0) {
+						System.out.println("count");
+						sql = "INSERT INTO SCHEDULE VALUES (?, ?)";
+						jdbcUtil.setSqlAndParameters(sql, new Object[] { resUserId, resExerId });
+						result = jdbcUtil.executeUpdate();
+						if(result == 1) {
+							sql = "UPDATE reservation " + "SET status= ? " + "WHERE reservationId=?";
+							Object[] param = new Object[] { "승인" ,resId };
+							jdbcUtil.setSqlAndParameters(sql, param);
+							result = jdbcUtil.executeUpdate();
+						}
+					}
+					else {
+						System.out.println("false");
+						sql = "UPDATE reservation SET status='취소' WHERE reservationId = ?";
+						jdbcUtil.setSqlAndParameters(sql, new Object[] { resId });
+						result = jdbcUtil.executeUpdate();
+						return 0;
+					}
+				}
+			}
+			
+			return result;
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
+			ex.printStackTrace();
+			return 0;
+		} finally {
+			jdbcUtil.commit();
+			jdbcUtil.close(); // resource 반환
+		}
 	}
 }
 
