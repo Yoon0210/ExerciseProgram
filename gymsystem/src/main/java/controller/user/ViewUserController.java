@@ -72,7 +72,7 @@ public class ViewUserController implements Controller {
 			reservation = reservationdao.searchReservationByUser(userId); //사용자의 운동 정보 검색
 			//System.out.println(reservation.size());
 		} catch (UserNotFoundException e) {				
-	        return "redirect:/user/list";
+	        return "redirect:/admin/user";
 		}	
 		
 		request.setAttribute("reservation", reservation);
