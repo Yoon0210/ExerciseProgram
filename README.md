@@ -5,7 +5,7 @@
 (관리자 계정)
 Type: 회원
 id: admin
-password: admi
+password: admin
 ```
 ```
 Type: 강사
