@@ -47,7 +47,7 @@ function report(a, b){
 			</select> <select name="orderType" class="form-control mx-1 mt-2">
 				<option value="r.reviewId">최신순</option>
 				<option value="r.likeCount"
-					<c:if test='${orderType eq "likeCount"}'>selected="selected"</c:if>>추천순</option>
+					<c:if test='${orderType eq "r.likeCount"}'>selected="selected"</c:if>>추천순</option>
 
 			</select> <input type="text" name="searchContent"
 				class="form-control mx-1 mt-2" placeholder="내용을 입력하세요"
