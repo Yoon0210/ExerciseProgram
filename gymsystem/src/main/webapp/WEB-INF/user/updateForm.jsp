@@ -104,8 +104,13 @@ function userModify() {
 			<div class="form-group">
 				<input type="button" class="btn btn-primary" value="수정"
 					onClick="userModify()"> 
+					<a class="btn btn-warning" href="<c:url value='/user/delete'>
+		     	 <c:param name='userId' value='${user.userId}'/>
+	 	      </c:url>" onclick="return userRemove();">회원 탈퇴</a>
 			</div>
+			
 		</form>
+		
 	</div>
 	<%@include file="/WEB-INF/footer.jsp"%>
 </body>

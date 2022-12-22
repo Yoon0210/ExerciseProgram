@@ -31,7 +31,12 @@
 		<c:forEach var="user" items="${userList}">  			  	
 	  	    <tr>
 			  <td>
-			  	${user.userId}     
+			  
+			  <a href="<c:url value='/user/update'>
+						   <c:param name='userId' value='${user.getUserId()} '/>
+				 		 </c:url>">		
+				${user.userId} </a>
+			  	    
 			  </td>
 			  <td>
 			    ${user.email} 
