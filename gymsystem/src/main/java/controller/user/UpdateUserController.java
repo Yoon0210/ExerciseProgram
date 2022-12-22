@@ -20,7 +20,7 @@ public class UpdateUserController implements Controller {
     	if (request.getMethod().equals("GET")) {	
     		// GET request: 회원정보 수정 form 요청	
     		// 원래는 UpdateUserFormController가 처리하던 작업을 여기서 수행
-    		String updateId = request.getParameter("userId");
+    		String updateId = request.getParameter("userId").trim();
 
     		log.debug("UpdateForm Request : {}", updateId);
     		
