@@ -24,7 +24,7 @@
       <thead class="thead-inverse">
       	<tr>
 		  <td>사용자 ID</td>
-		  <td>이름</td>
+		  <td일이메일</td>
 		</tr>
       </thead>
       <tbody> 
