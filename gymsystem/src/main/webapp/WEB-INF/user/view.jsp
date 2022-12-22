@@ -68,7 +68,7 @@ function userRemove() {
 			<th scope="col">예약날짜</th>
 			<th scope="col">예약상태</th>
 			<th scope="col">신청취소</th>
-			
+			<th scope="col">삭제</th>
 		</tr> 
 
 		<c:forEach var="res" items="${reservation}">
