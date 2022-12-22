@@ -104,10 +104,6 @@ function userModify() {
 			<div class="form-group">
 				<input type="button" class="btn btn-primary" value="수정"
 					onClick="userModify()"> 
-					<c:if test="${userType eq 'trainer' && userId != 'admin'}">
-					<a href="<c:url value='/user/list' />" class="btn btn-link">사용자 목록
-				</a>
-				</c:if>
 			</div>
 		</form>
 	</div>
